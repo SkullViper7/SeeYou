@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Vector3 direction;
-    float speed;
-    private void Start()
+    private float x;
+    private float y;
+    public float sensitivity = -1f;
+    private Vector3 rotate; 
+
+    // Start is called before the first frame update
+    void Start()
     {
-        PlayerManager.Instance.playerMovement = this;
-        speed = 5;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void FixedUpdate()
     {
-        transform.Translate(direction * speed * Time.deltaTime);
+        y = Input.GetAxis("Mouse X");
+        x = Input.GetAxis("Mouse Y");
+        rotate = new Vector3 (x, y * sensitivity, 0);
+        transform.eulerAngles = transform.eulerAngles - rotate;
     }
 }
