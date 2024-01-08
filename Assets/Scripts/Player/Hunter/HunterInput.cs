@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HunterInput : PlayerInput
+public class HunterInput : PlayerInputs
 {
     // Start is called before the first frame update
     void Start()

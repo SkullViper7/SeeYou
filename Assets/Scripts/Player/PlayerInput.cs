@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInput : MonoBehaviour
+public class PlayerInputs : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public PlayerInput playerInput;
 
-    // Update is called once per frame
-    void Update()
+    void Awake()
     {
-        
+        playerInput = GetComponent<PlayerInput>();
     }
 }

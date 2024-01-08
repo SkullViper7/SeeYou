@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    public PlayerInputs playerInput;
+
+    public PlayerMovement playerMovement;
+
     private static PlayerManager instance = null;
     public static PlayerManager Instance => instance;
     private void Awake()
