@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Shoot : MonoBehaviour
 {
@@ -8,13 +9,17 @@ public class Shoot : MonoBehaviour
 
     [SerializeField]private Transform shoot;
     [SerializeField] private float power;
-    [SerializeField] private GameObject Fire;
+    private GameObject Fire;
 
     public void Shooting()
     {
-        Fire = Instantiate(bullet, shoot.position, Quaternion.identity);
+        if (Keyboard.current.fKey.wasPressedThisFrame)
+        {
+            Fire = Instantiate(bullet, shoot.position, Quaternion.identity);
 
-        Fire.GetComponent<Rigidbody>().AddForce(shoot.forward * power);
-        Destroy(Fire, 1.5f);
+            Fire.GetComponent<Rigidbody>().AddForce(shoot.forward * power);
+            Destroy(Fire, 1.5f);
+        }
     }
+
 }
