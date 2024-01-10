@@ -1,25 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class PlayerManager : MonoBehaviour
-{
-    public PlayerInputs playerInput;
-
-    public PlayerMovement playerMovement;
-
-    private static PlayerManager instance = null;
-    public static PlayerManager Instance => instance;
-    private void Awake()
+    public class PlayerManager : MonoBehaviour
     {
-        if (instance != null && instance != this)
+        public PlayerInputs playerInput;
+
+
+        /*
+        private static PlayerManager instance = null;
+        public static PlayerManager Instance => instance;
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if (instance != null && instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            else
+            {
+                instance = this;
+            }
         }
-        else
-        {
-            instance = this;
-        }
+        */
     }
-}
+

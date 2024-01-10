@@ -1,17 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-namespace Unity.Netcode.Samples
-{
-
-    public class HunterInput : PlayerInputs
+    public class HunterMovement : PlayerMovement
     {
-        Shoot shoot;
         // Start is called before the first frame update
         void Start()
         {
-
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         // Update is called once per frame
@@ -20,4 +15,4 @@ namespace Unity.Netcode.Samples
 
         }
     }
-}
+
