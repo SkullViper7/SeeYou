@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputs : MonoBehaviour
-{
-    public PlayerInput playerInput;
-
-    void Awake()
+    public class PlayerInputs : MonoBehaviour
     {
-        playerInput = GetComponent<PlayerInput>();
+        public PlayerInput playerInput;
+
+        void Awake()
+        {
+            playerInput = GetComponent<PlayerInput>();
+        }
     }
-}
+

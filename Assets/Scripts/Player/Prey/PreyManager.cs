@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode.Samples;
 using UnityEngine;
-using UnityEngine.InputSystem;
-namespace Unity.Netcode.Samples
-{
-
-    public class HunterInput : PlayerInputs
+    public class PreyManager : PlayerManager
     {
-        Shoot shoot;
-        // Start is called before the first frame update
+        public PreyMovement preyMovement;
+
         void Start()
         {
 
@@ -20,4 +17,4 @@ namespace Unity.Netcode.Samples
 
         }
     }
-}
+
