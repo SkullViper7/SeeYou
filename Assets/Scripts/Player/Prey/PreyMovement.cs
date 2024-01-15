@@ -22,25 +22,18 @@ namespace Unity.Netcode.Samples
 
         protected override void FixedUpdate()
         {
-            MoveOnServer();
+            Move();
+            MoveCamera();
         }
 
         void Move()
         {
-            
             transform.Translate(direction * speed * Time.deltaTime);
         }
 
         void MoveCamera()
         {
             base.FixedUpdate();
-        }
-
-        [ServerRpc]
-        void MoveOnServer()
-        {
-            Move();
-            MoveCamera();
         }
     }
 }

@@ -21,11 +21,11 @@ public class PreyInput : PlayerInputs
             if (network.LocalClient.PlayerObject.TryGetComponent(out PreyManager preyManager))
             {
                 // Invoke a `ServerRpc` from client-side to teleport player to a random position on the server-side
-                preyManager.preyMovement.direction = _move.Get<Vector3>(); ;
+                preyManager.preyMovement.direction = _move.Get<Vector3>(); 
             }
         }
         //manager.preyMovement.direction = _move.Get<Vector3>();
-        Debug.Log(_move.Get<Vector3>());
+        
     }
 
 }

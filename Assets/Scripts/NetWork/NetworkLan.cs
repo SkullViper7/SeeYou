@@ -26,6 +26,12 @@ namespace Unity.Netcode.Samples
             InvokeRepeating("assignPlayerController", 0.1f, 0.1f);
         }
 
+        public void StartServer()
+        {
+            NetworkManager.Singleton.StartServer();
+            GetLocalIPAddress();
+        }
+
         // To Host a game
         public void StartHost()
         {

@@ -20,4 +20,10 @@ namespace Unity.Netcode.Samples
 
         }
     }
+
+    public void OnShooting()
+    {
+        shoot.Shooting();
+    }
+
 }
