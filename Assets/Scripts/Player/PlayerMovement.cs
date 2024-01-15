@@ -19,13 +19,13 @@ public class PlayerMovement : NetworkBehaviour
 
     protected virtual void FixedUpdate()
     {
-        if (IsOwner)
-        {
+        //if (IsOwner)
+        //{
             y = Input.GetAxis("Mouse X");
             x = Input.GetAxis("Mouse Y");
             rotate = new Vector3(x, y * sensitivity, 0);
             transform.eulerAngles = transform.eulerAngles - rotate;
-        }
+        //}
 
     }
 }

@@ -13,14 +13,11 @@ public class Shoot : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.eKey.wasPressedThisFrame)
-        {
-            
-        }
+        
     }
 
     public void Shooting()
-    {
+    {        
         GameObject boule = Instantiate(bullet, shoot.position, Quaternion.identity) as GameObject;
         boule.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * power);
         Destroy(boule, 2f);
