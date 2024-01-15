@@ -1,26 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode.Samples;
+using Unity.Netcode;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
+
     private float x;
     private float y;
     public float sensitivity = -1f;
-    private Vector3 rotate; 
-
+    private Vector3 rotate;
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected virtual void FixedUpdate()
     {
-        y = Input.GetAxis("Mouse X");
-        x = Input.GetAxis("Mouse Y");
-        rotate = new Vector3 (x, y * sensitivity, 0);
-        transform.eulerAngles = transform.eulerAngles - rotate;
+        if (IsOwner)
+        {
+            y = Input.GetAxis("Mouse X");
+            x = Input.GetAxis("Mouse Y");
+            rotate = new Vector3(x, y * sensitivity, 0);
+            transform.eulerAngles = transform.eulerAngles - rotate;
+        }
+
     }
 }
+
