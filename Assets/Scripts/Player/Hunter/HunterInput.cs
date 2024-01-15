@@ -18,4 +18,10 @@ public class HunterInput : PlayerInput
     {
         
     }
+
+    public void OnShooting()
+    {
+        shoot.Shooting();
+    }
+
 }
