@@ -21,6 +21,8 @@ public class PreyManager : PlayerManager
 
     public override void OnNetworkSpawn()
     {
+        GameManager.Instance.players.Add(gameObject);
+
         if (IsOwner)
         {
             cam.SetActive(true);

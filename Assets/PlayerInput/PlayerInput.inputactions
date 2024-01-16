@@ -6,24 +6,24 @@
             "id": "0452f0cc-df34-4af1-bfac-30d3382dc4ae",
             "actions": [
                 {
-                    "name": "New action",
-                    "type": "Button",
-                    "id": "5a571cdb-8024-482e-b91d-dbbcc75330ac",
-                    "expectedControlType": "Button",
+                    "name": "Shooting",
+                    "type": "Value",
+                    "id": "8ee530a2-1539-411c-978f-a47614415c87",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
                     "name": "",
-                    "id": "9550ce30-1639-47b1-866e-23c05f50e67f",
+                    "id": "5ac4c3ff-dff7-49fa-acf7-90a68d197d8f",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "New action",
+                    "groups": "Control",
+                    "action": "Shooting",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -124,5 +124,22 @@
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "Control",
+            "bindingGroup": "Control",
+            "devices": [
+                {
+                    "devicePath": "<Gamepad>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
 }
