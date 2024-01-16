@@ -5,23 +5,34 @@ using UnityEngine;
     public class PlayerManager : NetworkBehaviour
     {
         public PlayerInputs playerInput;
+    public override void OnNetworkSpawn()
+    {
+        GameManager.Instance.players.Add(gameObject);
 
-
-        /*
-        private static PlayerManager instance = null;
-        public static PlayerManager Instance => instance;
-        private void Awake()
+        if (IsOwner)
         {
-            if (instance != null && instance != this)
+            if(GameManager.Instance.players.Count > 6)
             {
-                Destroy(gameObject);
-                return;
-            }
-            else
-            {
-                instance = this;
+
             }
         }
-        */
     }
+
+    /*
+    private static PlayerManager instance = null;
+    public static PlayerManager Instance => instance;
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            instance = this;
+        }
+    }
+    */
+}
 

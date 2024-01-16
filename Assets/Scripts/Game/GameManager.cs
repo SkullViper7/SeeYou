@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector]
     public List<GameObject> players = new();
+    [HideInInspector]
     public List<GameObject> preys = new();
 
     private void Awake()

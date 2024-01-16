@@ -26,6 +26,7 @@ public class PreyManager : PlayerManager
         if (IsOwner)
         {
             cam.SetActive(true);
+            GameManager.Instance.players.Add(gameObject);
         }
         Spawn();
     }

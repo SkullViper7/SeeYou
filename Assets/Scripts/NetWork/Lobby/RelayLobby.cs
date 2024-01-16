@@ -17,6 +17,7 @@ public class RelayLobby : NetworkBehaviour
 
     private Lobby hostLobby;
     private float heartbeatTimer;
+    public List<Lobby> lobies;
     private async void Awake()
     {
         await UnityServices.InitializeAsync();
@@ -163,6 +164,7 @@ public class RelayLobby : NetworkBehaviour
             };
             QueryResponse queryResponse = await Lobbies.Instance.QueryLobbiesAsync();
             Debug.Log("Lobbies found: " + queryResponse.Results.Count);
+            lobies = queryResponse.Results;
             foreach(Lobby lobby in queryResponse.Results) 
             { 
                 Debug.Log(lobby.Name + " " + lobby.MaxPlayers);
@@ -175,36 +177,10 @@ public class RelayLobby : NetworkBehaviour
 
     }
 
-    public async List<Lobby> ShowAListOfLobbies()
+    public List<Lobby> ShowAListOfLobbies()
     {
-        try
-        {
-            QueryLobbiesOptions queryLobbiesOptions = new QueryLobbiesOptions
-            {
-                Count = 25,
-                Filters = new List<QueryFilter>
-                {
-                    new QueryFilter(QueryFilter.FieldOptions.AvailableSlots, "0", QueryFilter.OpOptions.GT),
-                    new QueryFilter(QueryFilter.FieldOptions.S1, "Default", QueryFilter.OpOptions.EQ)
-                },
-                Order = new List<QueryOrder>
-                {
-                    new QueryOrder(false, QueryOrder.FieldOptions.Created)
-                }
-            };
-            QueryResponse queryResponse = await Lobbies.Instance.QueryLobbiesAsync();
-            Debug.Log("Lobbies found: " + queryResponse.Results.Count);
-            foreach (Lobby lobby in queryResponse.Results)
-            {
-                Debug.Log(lobby.Name + " " + lobby.MaxPlayers);
-            }
-            return queryResponse.Results;
-        }
-        catch (LobbyServiceException e)
-        {
-            Debug.Log(e);
-        }
-        
+        ListLobbies();
+        return lobies;
     }
 
     //[Command]
