@@ -26,4 +26,9 @@ public class Shoot : MonoBehaviour
         Destroy(boule, 2f);
     }
 
+    public void InitPlayerMain(PlayerMain _PM)
+    {
+        _PM.shoot = this;
+    }
+
 }

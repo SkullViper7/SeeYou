@@ -15,6 +15,10 @@ public class TeamManager : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.teamManager = this;
+    }
+    public void StartRotation()
+    {
         GameManager.Instance.preys = GameManager.Instance.players;
 
         for (int i = 0; i < GameManager.Instance.preys.Count; i++)
@@ -31,12 +35,16 @@ public class TeamManager : MonoBehaviour
         GameManager.Instance.preys.RemoveAt(randomPrey);
 
         _hunter = GameManager.Instance.preys[randomPrey];
+        _hunter.GetComponent<PlayerMain>().IsHunter = true;
 
-        Invoke("TeamRotation", 3);
     }
 
-    void TeamRotation()
+    public void TeamRotation()
     {
+        if(GameManager.Instance.preys.Count == 0)
+        {
+            GameManager.Instance.preys.AddRange(GameManager.Instance.players);
+        }
         int randomPrey = Random.Range(0, GameManager.Instance.preys.Count);
 
         GameManager.Instance.preys[randomPrey].transform.SetParent(_hunterParent);
@@ -45,10 +53,12 @@ public class TeamManager : MonoBehaviour
         GameManager.Instance.preys.RemoveAt(randomPrey);
 
         _hunter.layer = 6;
+        _hunter.GetComponent<PlayerMain>().IsHunter = false;
         _hunter.transform.SetParent(_preyParent);
+        
 
         _hunter = GameManager.Instance.preys[randomPrey];
+        _hunter.GetComponent<PlayerMain>().IsHunter = true;
 
-        Invoke("TeamRotation", 3);
     }
 }
