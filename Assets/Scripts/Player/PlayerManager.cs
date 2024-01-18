@@ -2,37 +2,61 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
-    public class PlayerManager : NetworkBehaviour
+public class PlayerManager : NetworkBehaviour
+{
+    
+    public GameObject cam;
+    private bool isHunter;
+    public bool IsHunter
     {
-        public PlayerInputs playerInput;
-    public override void OnNetworkSpawn()
-    {
-        GameManager.Instance.players.Add(gameObject);
-
-        if (IsOwner)
-        {
-            if(GameManager.Instance.players.Count > 6)
+        get { return isHunter; }
+        set { isHunter = value;
+            if (isHunter)
             {
-
+                BecomeHunter();
+            }
+            else
+            {
+                BecomePrey();
             }
         }
     }
 
-    /*
-    private static PlayerManager instance = null;
-    public static PlayerManager Instance => instance;
-    private void Awake()
+    public override void OnNetworkSpawn()
     {
-        if (instance != null && instance != this)
+        if (GameManager.Instance.players.Count < 6)
         {
-            Destroy(gameObject);
-            return;
+            GameManager.Instance.players.Add(gameObject);
+
+            if (IsOwner)
+            {
+                cam.SetActive(true);
+            }
+            Spawn();
         }
         else
         {
-            instance = this;
+            //En faire un spectateur
         }
+        
     }
-    */
+
+    void Spawn()
+    {
+        transform.position = SpawnManager.Instance.GiveSpawnToAPlayer().transform.position;
+        Debug.Log(transform.position);
+    }
+
+    void BecomeHunter()
+    {
+
+    }
+
+    void BecomePrey()
+    {
+
+    }
 }
+
+
 

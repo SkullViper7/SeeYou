@@ -7,9 +7,9 @@
             "actions": [
                 {
                     "name": "Shooting",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "8ee530a2-1539-411c-978f-a47614415c87",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true

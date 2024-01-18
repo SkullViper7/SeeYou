@@ -12,7 +12,6 @@ public class PreyInput : PlayerInputs
     {
         network = NetworkManager.Singleton;
         manager = GetComponent<PreyManager>();
-        manager.playerInput = this;
     }
     public void OnMove(InputValue _move)
     {

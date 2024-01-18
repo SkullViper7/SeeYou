@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Unity.Netcode.Samples
 {
 
-    public class PreyMovement : PlayerMovement
+    public class PreyMovement : MonoBehaviour
     {
 
         public Vector3 direction;
@@ -12,18 +12,16 @@ namespace Unity.Netcode.Samples
         PreyManager manager;
         
 
-        protected override void Start()
+        protected void Start()
         {
             manager = GetComponent<PreyManager>();
             manager.preyMovement = this;
             speed = 5;
-            base.Start();
         }
 
-        protected override void FixedUpdate()
+        protected void FixedUpdate()
         {
             Move();
-            MoveCamera();
         }
 
         void Move()
@@ -31,10 +29,6 @@ namespace Unity.Netcode.Samples
             transform.Translate(direction * speed * Time.deltaTime);
         }
 
-        void MoveCamera()
-        {
-            base.FixedUpdate();
-        }
     }
 }
 

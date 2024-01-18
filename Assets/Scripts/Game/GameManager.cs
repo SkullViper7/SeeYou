@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance = null;
     public static GameManager Instance => _instance;
 
+    public TeamManager teamManager;
+
     [HideInInspector]
     public List<GameObject> players = new();
     [HideInInspector]
@@ -25,5 +27,21 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    public void StartTheGame()
+    {
+        teamManager.StartRotation();
+    }
+
+    public void ChangeRoles()
+    {
+        StartCoroutine(WaitBeforeChangeRoles());
+    }
+
+    IEnumerator WaitBeforeChangeRoles()
+    {
+        yield return new WaitForSeconds(3f);
+        teamManager.TeamRotation();
     }
 }
