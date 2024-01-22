@@ -25,13 +25,21 @@ public class PlayerMovement : NetworkBehaviour
 
     protected virtual void FixedUpdate()
     {
-        if (_playerMain.playerNetwork.IsOwner)
+        if(_playerMain != null)
         {
-            MoveCamera();
+            if (_playerMain.playerNetwork.IsOwner)
+            {
+                MoveCamera();
 
-            //si il est une proie
-            Move();
+                //si il est une proie
+                Move();
+            }
         }
+        else
+        {
+            this.GetComponent<PlayerMain>().InitPlayer();
+        }
+        
     }
 
     void Move()
