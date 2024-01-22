@@ -39,16 +39,20 @@ public class PlayerNetwork : NetworkBehaviour
     {
         if (GameManager.Instance.players.Count < 6)
         {
+            Debug.Log("IsOwner");
+            Debug.Log(this.IsOwner);
             GameManager.Instance.players.Add(gameObject);
             if(GameManager.Instance.players.Count == 6)
             {
 
             }
 
-            if (IsOwner)
+            if (this.IsOwner)
             {
-                GetComponent<PlayerMain>().InitPlayer();
+                this.GetComponent<PlayerMain>().InitPlayer();
+                this.GetComponent<PlayerMain>().ActiveCam();
             }
+            this.GetComponent<SpawnPlayer>().Spawn();
             /*    GetComponent<PlayerMain>().cam.gameObject.SetActive(true);
             }
             GetComponent<SpawnPlayer>().Spawn();*/
