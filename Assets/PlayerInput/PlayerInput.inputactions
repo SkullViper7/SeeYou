@@ -22,6 +22,17 @@
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
+                    "groups": "",
+                    "action": "Shooting",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "61fc5674-cede-426e-b622-1d99a7b10f40",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
                     "groups": "Control",
                     "action": "Shooting",
                     "isComposite": false,

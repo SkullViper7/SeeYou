@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Unity.Netcode.Samples;
 using Unity.Netcode;
 
 public class PlayerMovement : NetworkBehaviour
@@ -17,45 +14,52 @@ public class PlayerMovement : NetworkBehaviour
     float speed;
 
     PlayerMain _playerMain;
+
     protected virtual void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        speed = 5;
+        this.speed = 5;
     }
 
     protected virtual void FixedUpdate()
     {
-        if (_playerMain.playerNetwork.IsOwner)
+        if (_playerMain != null)
         {
-            MoveCamera();
+            if (_playerMain.playerNetwork.IsOwner)
+            {
+                this.MoveCamera();
 
-            //si il est une proie
-            Move();
+                //si il est une proie
+                this.Move();
+            }
+        }
+        else
+        {
+            this.GetComponent<PlayerMain>().InitPlayer();
         }
     }
 
     void Move()
     {
-        transform.Translate(direction * speed * Time.deltaTime);
+        this.transform.Translate(this.direction * this.speed * Time.deltaTime);
     }
 
     void MoveCamera()
     {
-        y = Input.GetAxis("Mouse X");
-        x = Input.GetAxis("Mouse Y");
-        rotate = new Vector3(x, y * sensitivity, 0);
-        transform.eulerAngles = transform.eulerAngles - rotate;
+        this.y = Input.GetAxis("Mouse X");
+        this.x = Input.GetAxis("Mouse Y");
+        this.rotate = new Vector3(this.x, this.y * this.sensitivity, 0);
+        this.transform.eulerAngles = this.transform.eulerAngles - this.rotate;
     }
 
     public void InitPlayerMain(PlayerMain _PM)
     {
-        _playerMain = _PM;
+        this._playerMain = _PM;
         _PM.playerMovement = this;
     }
 
     public void BecomeHunter()
     {
-        direction = Vector3.zero;
+        this.direction = Vector3.zero;
     }
 }
-

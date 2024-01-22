@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+
 public class PlayerManager : NetworkBehaviour
 {
-    
     public GameObject cam;
     private bool isHunter;
+
     public bool IsHunter
     {
         get { return isHunter; }
+
         set { isHunter = value;
             if (isHunter)
             {
@@ -26,25 +28,24 @@ public class PlayerManager : NetworkBehaviour
     {
         if (GameManager.Instance.players.Count < 6)
         {
-            GameManager.Instance.players.Add(gameObject);
+            GameManager.Instance.players.Add(this.gameObject);
 
-            if (IsOwner)
+            if (this.IsOwner)
             {
-                cam.SetActive(true);
+                this.cam.SetActive(true);
             }
-            Spawn();
+
+            this.Spawn();
         }
         else
         {
             //En faire un spectateur
         }
-        
     }
 
-    void Spawn()
+    private void Spawn()
     {
-        transform.position = SpawnManager.Instance.GiveSpawnToAPlayer().transform.position;
-        Debug.Log(transform.position);
+        this.transform.position = SpawnManager.Instance.GiveSpawnToAPlayer().transform.position;
     }
 
     void BecomeHunter()
@@ -57,6 +58,3 @@ public class PlayerManager : NetworkBehaviour
 
     }
 }
-
-
-

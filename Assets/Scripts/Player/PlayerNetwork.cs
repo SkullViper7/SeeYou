@@ -1,54 +1,71 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System.Diagnostics;
 using Unity.Netcode;
-using System.Globalization;
+using UnityEngine;
 
 public class PlayerNetwork : NetworkBehaviour
 {
     private NetworkManager _network;
 
     private PlayerMain _playerMain;
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
-        _network = NetworkManager.Singleton;
-        _playerMain = GetComponent<PlayerMain>();
+        if (this._network == null)
+        {
+            this._network = NetworkManager.Singleton;
+        }
+
+        this._playerMain = this.GetComponent<PlayerMain>();
     }
 
     public void InitPlayerMain(PlayerMain _PM)
     {
-        _playerMain = _PM;
+        this._playerMain = _PM;
         _PM.playerNetwork = this;
     }
 
     public bool ActionFromClient()
     {
         bool canDoTheAction = false;
-        if (_network.LocalClient != null)
+        if (this._network == null)
         {
-            if (_network.LocalClient.PlayerObject.TryGetComponent(out PlayerMain _playerMain))
+            this._network = NetworkManager.Singleton;
+        }
+
+        if (this._network.LocalClient != null)
+        {
+            if (this._network.LocalClient.PlayerObject.TryGetComponent(out PlayerMain playerMain))
             {
                 canDoTheAction = true;
             }
         }
+
         return canDoTheAction;
+    }
+
+    public bool IsOwnerOfTheGameObject()
+    {
+        return this.IsOwner;
     }
 
     public override void OnNetworkSpawn()
     {
-        if (GameManager.Instance.players.Count < 6)
+        if (GameManager.Instance.players.Count <= 6)
         {
-            GameManager.Instance.players.Add(gameObject);
-            if(GameManager.Instance.players.Count == 6)
+            GameManager.Instance.players.Add(this.gameObject);
+            this.gameObject.name += GameManager.Instance.players.Count;
+            if (this.IsOwner)
             {
-
+                this.GetComponent<PlayerMain>().InitPlayer();
+                this.GetComponent<PlayerMain>().ActiveCam();
             }
 
-            if (IsOwner)
+            this.GetComponent<SpawnPlayer>().Spawn();
+            if (GameManager.Instance.players.Count == 2)
             {
-                GetComponent<PlayerMain>().InitPlayer();
+                GameManager.Instance.teamManager.StartRotation();
             }
+
             /*    GetComponent<PlayerMain>().cam.gameObject.SetActive(true);
             }
             GetComponent<SpawnPlayer>().Spawn();*/
@@ -57,8 +74,5 @@ public class PlayerNetwork : NetworkBehaviour
         {
             //En faire un spectateur
         }
-
     }
-
-    
 }

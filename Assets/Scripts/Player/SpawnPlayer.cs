@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class SpawnPlayer : MonoBehaviour
 {
-
     public void Spawn()
     {
-        if(SpawnManager.Instance != null) 
+        if (SpawnManager.Instance != null) 
         {
-            transform.position = SpawnManager.Instance.GiveSpawnToAPlayer().transform.position;
+            this.transform.position = SpawnManager.Instance.GiveSpawnToAPlayer().transform.position;
         }
         else
         {
-            Debug.Log("C'est spawn mon reuf");
+            Debug.Log("C'est pas spawn mon reuf");
         }
-        
     }
 
     public void InitPlayerMain(PlayerMain _PM)
