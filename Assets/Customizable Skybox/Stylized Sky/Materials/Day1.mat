@@ -25,20 +25,20 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _HorizonLineContribution: 0.345
-    - _HorizonLineExponent: 4
-    - _SkyGradientExponent: 1.47
+    - _HorizonLineContribution: 0.163
+    - _HorizonLineExponent: 3
+    - _SkyGradientExponent: 1
     - _SunDiscContribution: 1
-    - _SunDiscExponent: 125000
+    - _SunDiscExponent: 10000
     - _SunDiscMultiplier: 25
-    - _SunHaloContribution: 0.765
-    - _SunHaloExponent: 125
+    - _SunHaloContribution: 0.201
+    - _SunHaloExponent: 50
     - _Title: 0
     - __dirty: 0
     m_Colors:
-    - _HorizonLineColor: {r: 0.5943396, g: 0.21780157, b: 0.12055002, a: 1}
-    - _SkyGradientBottom: {r: 0.754717, g: 0.4830931, b: 0.35243857, a: 1}
+    - _HorizonLineColor: {r: 0.31132078, g: 0.20529792, b: 0.17768781, a: 1}
+    - _SkyGradientBottom: {r: 0.6886792, g: 0.35803583, b: 0.3475881, a: 1}
     - _SkyGradientTop: {r: 0.1782218, g: 0.5678318, b: 0.8396226, a: 1}
-    - _SunDiscColor: {r: 0.9339623, g: 0.9308155, b: 0.9295568, a: 1}
+    - _SunDiscColor: {r: 0.9622642, g: 0.8198186, b: 0.7761659, a: 1}
     - _SunHaloColor: {r: 0.9150943, g: 0.71557873, b: 0.44459772, a: 1}
   m_BuildTextureStacks: []
