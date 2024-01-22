@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,53 +8,65 @@ public class PlayerInputs : MonoBehaviour
 
     private event Action _eventShoot;
 
-    void Awake()
+    private PlayerMain _playerMain;
+
+    private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
+        this.playerInput = this.GetComponent<PlayerInput>();
     }
 
-    PreyManager manager;
-
-    PlayerMain _playerMain;
-
-
-    private void Start()
-    {
-        playerInput = GetComponent<PlayerInput>();
-    }
     public void OnMove(InputValue _move)
     {
-        if (_playerMain.playerNetwork.ActionFromClient())
+        if (this._playerMain.playerNetwork.ActionFromClient())
         {
-            _playerMain.playerMovement.direction = _move.Get<Vector3>();
+            this._playerMain.playerMovement.direction = _move.Get<Vector3>();
         }
     }
 
     public void OnShooting()
     {
-        if (_eventShoot == null)
+        if (this._playerMain.playerNetwork.ActionFromClient())
         {
-            _eventShoot += _playerMain.shoot.Shooting;
-            _eventShoot += GameManager.Instance.ChangeRoles;
+            if (this._eventShoot == null)
+            {
+                this._eventShoot += this._playerMain.shoot.Shooting;
+                this._eventShoot += GameManager.Instance.ChangeRoles;
+            }
+
+            this._eventShoot?.Invoke();
         }
-        _eventShoot?.Invoke();
     }
 
     public void InitPlayerMain(PlayerMain _PM)
     {
-        _playerMain = _PM;
+        this._playerMain = _PM;
         _PM.playerInputs = this;
     }
+
     public void BecomeHunter()
     {
-        playerInput.SwitchCurrentActionMap("Hunter");
+        this.FindMain();
+        if (this._playerMain.playerNetwork.IsOwnerOfTheGameObject())
+        {
+            this.playerInput.SwitchCurrentActionMap("Hunter");
+        }
     }
 
     public void BecomePrey()
     {
-        playerInput.SwitchCurrentActionMap("Prey");
+        this.FindMain();
+        if (this._playerMain.playerNetwork.IsOwnerOfTheGameObject())
+        {
+            this.playerInput.SwitchCurrentActionMap("Prey");
+        }
     }
 
-    
+    private void FindMain()
+    {
+        if (this._playerMain == null)
+        {
+            this._playerMain = this.GetComponent<PlayerMain>();
+            this._playerMain.playerNetwork = this.GetComponent<PlayerNetwork>();
+        }
+    }
 }
-

@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+
 public class PlayerManager : NetworkBehaviour
 {
-    
     public GameObject cam;
     private bool isHunter;
+
     public bool IsHunter
     {
         get { return isHunter; }
+
         set { isHunter = value;
             if (isHunter)
             {
@@ -43,9 +45,7 @@ public class PlayerManager : NetworkBehaviour
 
     private void Spawn()
     {
-        Debug.Log("spaswn");
         this.transform.position = SpawnManager.Instance.GiveSpawnToAPlayer().transform.position;
-        Debug.Log(this.transform.position);
     }
 
     void BecomeHunter()
@@ -58,6 +58,3 @@ public class PlayerManager : NetworkBehaviour
 
     }
 }
-
-
-

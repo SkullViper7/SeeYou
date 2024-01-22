@@ -17,37 +17,37 @@ public class PlayerMain : MonoBehaviour
     public Camera cam;
 
     private bool isHunter;
+
     public bool IsHunter
     {
-        get { return isHunter; }
+        get { return this.isHunter; }
+
         set
         {
-            isHunter = value;
-            if (isHunter)
+            this.isHunter = value;
+            if (this.isHunter)
             {
-                //BecomeHunter();
-                gameObject.SendMessage("BecomeHunter");
+                this.gameObject.SendMessage("BecomeHunter");
             }
             else
             {
-                //BecomePrey();
-                gameObject.SendMessage("BecomePrey");
+                this.gameObject.SendMessage("BecomePrey");
             }
         }
     }
 
     private void Start()
     {
-       // InitPlayer();
+        // InitPlayer();
     }
 
     public void InitPlayer()
     {
-        gameObject.SendMessage("InitPlayerMain", this);
+        this.gameObject.SendMessage("InitPlayerMain", this);
     }
 
     public void ActiveCam()
     {
-        cam.gameObject.SetActive(true);
+        this.cam.gameObject.SetActive(true);
     }
 }
