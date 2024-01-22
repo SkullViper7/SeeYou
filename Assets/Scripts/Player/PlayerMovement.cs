@@ -6,27 +6,56 @@ using Unity.Netcode;
 
 public class PlayerMovement : NetworkBehaviour
 {
-
+    [Header("Move the camera")]
     private float x;
     private float y;
     public float sensitivity = -1f;
     private Vector3 rotate;
-    // Start is called before the first frame update
+
+    [Header("Move the player")]
+    public Vector3 direction;
+    float speed;
+
+    PlayerMain _playerMain;
     protected virtual void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        speed = 5;
     }
 
     protected virtual void FixedUpdate()
     {
-        if (IsOwner)
+        if (_playerMain.playerNetwork.IsOwner)
         {
-            y = Input.GetAxis("Mouse X");
-            x = Input.GetAxis("Mouse Y");
-            rotate = new Vector3(x, y * sensitivity, 0);
-            transform.eulerAngles = transform.eulerAngles - rotate;
-        }
+            MoveCamera();
 
+            //si il est une proie
+            Move();
+        }
+    }
+
+    void Move()
+    {
+        transform.Translate(direction * speed * Time.deltaTime);
+    }
+
+    void MoveCamera()
+    {
+        y = Input.GetAxis("Mouse X");
+        x = Input.GetAxis("Mouse Y");
+        rotate = new Vector3(x, y * sensitivity, 0);
+        transform.eulerAngles = transform.eulerAngles - rotate;
+    }
+
+    public void InitPlayerMain(PlayerMain _PM)
+    {
+        _playerMain = _PM;
+        _PM.playerMovement = this;
+    }
+
+    public void BecomeHunter()
+    {
+        direction = Vector3.zero;
     }
 }
 

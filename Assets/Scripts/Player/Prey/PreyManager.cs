@@ -6,7 +6,6 @@ using UnityEngine;
 public class PreyManager : PlayerManager
 {
     public PreyMovement preyMovement;
-    public GameObject cam;
 
     void Start()
     {
@@ -17,21 +16,6 @@ public class PreyManager : PlayerManager
     void Update()
     {
 
-    }
-
-    public override void OnNetworkSpawn()
-    {
-        GameManager.Instance.players.Add(gameObject);
-
-        if (IsOwner)
-        {
-            cam.SetActive(true);
-        }
-        Spawn();
-    }
-    void Spawn()
-    {
-        transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
     }
 }
 
