@@ -27,11 +27,6 @@ public class GetPlayerPrefs : MonoBehaviour
             }
         }
 
-        if (PlayerPrefs.HasKey("Framerate"))
-        {
-            Application.targetFrameRate = PlayerPrefs.GetInt("Framerate");
-        }
-
         if (PlayerPrefs.HasKey("Quality"))
         {
             QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("Quality"));
