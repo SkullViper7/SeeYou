@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance = null;
+
     public static GameManager Instance => _instance;
 
     public TeamManager teamManager;
@@ -26,22 +27,23 @@ public class GameManager : MonoBehaviour
             _instance = this;
         }
 
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public void StartTheGame()
     {
-        teamManager.StartRotation();
+        this.teamManager.StartRotation();
     }
 
     public void ChangeRoles()
     {
-        StartCoroutine(WaitBeforeChangeRoles());
+        Debug.Log("roles");
+        this.StartCoroutine(this.WaitBeforeChangeRoles());
     }
 
-    IEnumerator WaitBeforeChangeRoles()
+    private IEnumerator WaitBeforeChangeRoles()
     {
         yield return new WaitForSeconds(3f);
-        teamManager.TeamRotation();
+        this.teamManager.TeamRotation();
     }
 }
