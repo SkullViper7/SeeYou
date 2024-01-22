@@ -26,25 +26,26 @@ public class PlayerManager : NetworkBehaviour
     {
         if (GameManager.Instance.players.Count < 6)
         {
-            GameManager.Instance.players.Add(gameObject);
+            GameManager.Instance.players.Add(this.gameObject);
 
-            if (IsOwner)
+            if (this.IsOwner)
             {
-                cam.SetActive(true);
+                this.cam.SetActive(true);
             }
-            Spawn();
+
+            this.Spawn();
         }
         else
         {
             //En faire un spectateur
         }
-        
     }
 
-    void Spawn()
+    private void Spawn()
     {
-        transform.position = SpawnManager.Instance.GiveSpawnToAPlayer().transform.position;
-        Debug.Log(transform.position);
+        Debug.Log("spaswn");
+        this.transform.position = SpawnManager.Instance.GiveSpawnToAPlayer().transform.position;
+        Debug.Log(this.transform.position);
     }
 
     void BecomeHunter()
