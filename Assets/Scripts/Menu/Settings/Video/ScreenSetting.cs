@@ -10,9 +10,6 @@ public class ScreenSetting : MonoBehaviour
     TMP_Dropdown _screenModeDropdown;
 
     [SerializeField]
-    TMP_Dropdown _FPSDropdown;
-
-    [SerializeField]
     TMP_Dropdown _qualityDropdown;
 
     int _xResolution;
@@ -20,25 +17,23 @@ public class ScreenSetting : MonoBehaviour
 
     bool _isFullscreen;
 
-    int _framerate;
-
     int _quality;
 
     public void GetScreenResolution()
     {
-        if (_resolutionDropdown.options[_resolutionDropdown.value].text == "4K")
+        if (_resolutionDropdown.value == 2)
         {
             _xResolution = 3840;
             _yResolution = 2160;
         }
 
-        if (_resolutionDropdown.options[_resolutionDropdown.value].text == "2K")
+        if (_resolutionDropdown.value == 1)
         {
             _xResolution = 2560;
             _yResolution = 1440;
         }
 
-        if (_resolutionDropdown.options[_resolutionDropdown.value].text == "1080")
+        if (_resolutionDropdown.value == 0)
         {
             _xResolution = 1920;
             _yResolution = 1080;
@@ -47,48 +42,30 @@ public class ScreenSetting : MonoBehaviour
 
     public void GetScreenMode()
     {
-        if (_screenModeDropdown.options[_resolutionDropdown.value].text == "Fullscreen")
+        if (_screenModeDropdown.value == 0)
         {
             _isFullscreen = true;
         }
 
-        if (_screenModeDropdown.options[_resolutionDropdown.value].text == "Windowed")
+        if (_screenModeDropdown.value == 1)
         {
             _isFullscreen = false;
         }
     }
 
-    public void GetFPSLimiter()
-    {
-        if (_FPSDropdown.options[_FPSDropdown.value].text == "Unlimited")
-        {
-            _framerate = 0;
-        }
-
-        if (_FPSDropdown.options[_FPSDropdown.value].text == "144")
-        {
-            _framerate = 144;
-        }
-
-        if (_FPSDropdown.options[_FPSDropdown.value].text == "60")
-        {
-            _framerate = 60;
-        }
-    }
-
     public void GetQuality()
     {
-        if (_qualityDropdown.options[_qualityDropdown.value].text == "High")
+        if (_qualityDropdown.value == 0)
         {
             _quality = 2;
         }
 
-        if (_qualityDropdown.options[_qualityDropdown.value].text == "Medium")
+        if (_qualityDropdown.value == 1)
         {
             _quality = 1;
         }
 
-        if (_qualityDropdown.options[_qualityDropdown.value].text == "Low")
+        if (_qualityDropdown.value == 2)
         {
             _quality = 0;
         }
@@ -97,7 +74,6 @@ public class ScreenSetting : MonoBehaviour
     public void ApplyScreenSettings()
     {
         Screen.SetResolution(_xResolution, _yResolution, _isFullscreen);
-        Application.targetFrameRate = _framerate;
         QualitySettings.SetQualityLevel(_quality);
 
         PlayerPrefs.SetInt("xResolution", _xResolution);
