@@ -44,6 +44,10 @@ public class PlayerMain : MonoBehaviour
     public void InitPlayer()
     {
         gameObject.SendMessage("InitPlayerMain", this);
+    }
+
+    public void ActiveCam()
+    {
         cam.gameObject.SetActive(true);
     }
 }
