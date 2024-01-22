@@ -79,7 +79,6 @@ public class ScreenSetting : MonoBehaviour
         PlayerPrefs.SetInt("xResolution", _xResolution);
         PlayerPrefs.SetInt("yResolution", _yResolution);
         PlayerPrefs.SetString("isFullScreen", _isFullscreen.ToString());
-        PlayerPrefs.SetInt("Framerate", _framerate);
         PlayerPrefs.SetInt("Quality", _quality);
     }
 }
