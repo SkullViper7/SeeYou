@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Mine : MonoBehaviour
 {
-    public GameObject zone;
+    [SerializeField]
+    private GameObject zone;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -14,6 +15,5 @@ public class Mine : MonoBehaviour
             Debug.Log("aaaaa");
             zone.SetActive(true);
         }
-    }
-
+    } 
 }
