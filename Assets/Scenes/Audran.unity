@@ -6619,7 +6619,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &660363196
 Transform:
   m_ObjectHideFlags: 0
@@ -7322,8 +7322,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5903532539949182943, guid: a412106ff725a42478c92b7384a5663d,
         type: 3}
+      propertyPath: m_Antialiasing
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5903532539949182943, guid: a412106ff725a42478c92b7384a5663d,
+        type: 3}
       propertyPath: m_RenderPostProcessing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665185988251211327, guid: a412106ff725a42478c92b7384a5663d,
+        type: 3}
+      propertyPath: _boostedSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665185988251211327, guid: a412106ff725a42478c92b7384a5663d,
+        type: 3}
+      propertyPath: _movementSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665185988251211327, guid: a412106ff725a42478c92b7384a5663d,
+        type: 3}
+      propertyPath: _enableSpeedAcceleration
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
