@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class Zone : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerStay(Collider other)
     {
-        if (collision.gameObject.tag == "Prey")
+        if (other.gameObject.tag == "Prey")
         {
-            Destroy(collision.gameObject);
+            Destroy(other.gameObject);
             Debug.Log("aaaaa");
-            
         }
     }
 }
