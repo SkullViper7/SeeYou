@@ -36,7 +36,6 @@ public class ShootPrey : MonoBehaviour
             ApplyForce();
             isPressed = false;
             DrawTrajectory();
-            
         }
 
     }
