@@ -8,7 +8,7 @@ namespace Unity.Netcode.Samples
     {
 
         public Vector3 direction;
-        float speed;
+        public float speed;
         PreyManager manager;
         
 
