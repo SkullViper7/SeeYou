@@ -62,4 +62,9 @@ public class PlayerMovement : NetworkBehaviour
     {
         this.direction = Vector3.zero;
     }
+
+    public void BecomePrey()
+    {
+        this.direction = Vector3.zero;
+    }
 }

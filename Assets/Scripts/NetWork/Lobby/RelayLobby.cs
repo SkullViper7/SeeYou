@@ -121,7 +121,7 @@ public class RelayLobby : NetworkBehaviour
         }
         catch(LobbyServiceException e)
         {
-            Debug.Log(e);  
+            Debug.Log(e);
         }
     }
 
