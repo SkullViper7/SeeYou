@@ -14,7 +14,7 @@ public class Sound : MonoBehaviour
         if (collision.gameObject.tag == "Environement")
         {
             sound.PlayOneShot(clip);
-            if(sound.isPlaying)
+            if(!sound.isPlaying)
             {
                 Destroy(this.gameObject);
             }

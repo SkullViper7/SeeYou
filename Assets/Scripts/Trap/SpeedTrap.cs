@@ -7,6 +7,19 @@ public class SpeedTrap : MonoBehaviour
 {
     [SerializeField]
     PreyMovement preyMovement;
+    [SerializeField]
+    private GameObject zone;
+    [SerializeField]
+    private float time;
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Environement")
+        {
+            zone.SetActive(true);
+        }
+    }
+
 
     private void OnTriggerStay(Collider other)
     {
@@ -20,7 +33,7 @@ public class SpeedTrap : MonoBehaviour
 
     IEnumerator TimeZone()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(time);
         Destroy(this.gameObject);
     }
 }
