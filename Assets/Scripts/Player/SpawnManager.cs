@@ -25,30 +25,21 @@ public class SpawnManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        initSpawner();
-        Debug.Log("init");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        this.initSpawner();
     }
 
     void initSpawner()
     {
-        spawnList = GameObject.FindGameObjectsWithTag("Spawner").ToList();
+        this.spawnList = GameObject.FindGameObjectsWithTag("Spawner").ToList();
 
     }
 
     public GameObject GiveSpawnToAPlayer()
     {
-        GameObject spawner = spawnList[Random.Range(0, spawnList.Count)];
-        Debug.Log(spawner.transform.position);
-        spawnList.Remove(spawner);
+        GameObject spawner = this.spawnList[Random.Range(0, this.spawnList.Count)];
+        this.spawnList.Remove(spawner);
         return spawner;
     }
 

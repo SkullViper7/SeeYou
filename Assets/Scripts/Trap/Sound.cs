@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class Sound : MonoBehaviour
 {
-    public AudioSource sound;
+    [SerializeField]
+    private AudioSource sound;
+    [SerializeField]
+    private AudioClip clip;
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Environement")
         {
-            sound.Play();
+            sound.PlayOneShot(clip);
+            if(sound.isPlaying)
+            {
+                Destroy(this.gameObject);
+            }
+            Debug.Log("Bruit");
         }
     }
 }
