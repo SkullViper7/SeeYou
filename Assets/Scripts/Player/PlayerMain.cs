@@ -12,9 +12,9 @@ public class PlayerMain : MonoBehaviour
 
     public SpawnPlayer spawnPlayer;
 
-    public Shoot shoot;
+    public PlayerCamera playerCamera;
 
-    public Camera cam;
+    public Shoot shoot;
 
     private bool isHunter;
 
@@ -44,10 +44,5 @@ public class PlayerMain : MonoBehaviour
     public void InitPlayer()
     {
         this.gameObject.SendMessage("InitPlayerMain", this);
-    }
-
-    public void ActiveCam()
-    {
-        this.cam.gameObject.SetActive(true);
     }
 }

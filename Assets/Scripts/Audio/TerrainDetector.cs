@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Script by Jason Weimann on Youtube
+/// Script by Jason Weimann on Youtube.
 /// </summary>
 
 public class TerrainDetector

@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance => _instance;
 
     public TeamManager teamManager;
+    public NetworkMessageManager network;
+    public PlayerNetwork lastHunter;
 
     [HideInInspector]
     public List<GameObject> players = new();
@@ -30,20 +32,26 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public void StartTheGame()
+    /*public void StartTheGame()
     {
         this.teamManager.StartRotation();
-    }
+    }*/
 
-    public void ChangeRoles()
+    public void ChangeRoles(int newHunter)
     {
         Debug.Log("roles");
-        this.StartCoroutine(this.WaitBeforeChangeRoles());
+        this.StartCoroutine(this.WaitBeforeChangeRoles(newHunter));
     }
 
-    private IEnumerator WaitBeforeChangeRoles()
+    public IEnumerator WaitBeforeChangeRoles(int newHunter)
     {
-        yield return new WaitForSeconds(3f);
-        this.teamManager.TeamRotation();
+        yield return new WaitForSeconds(1f);
+        this.teamManager.TeamRotation(newHunter);
+    }
+
+    public IEnumerator WaitBeforeBegin(int newHunter)
+    {
+        yield return new WaitForSeconds(1f);
+        this.teamManager.StartRotation(newHunter);
     }
 }

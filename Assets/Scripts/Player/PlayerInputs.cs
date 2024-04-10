@@ -10,6 +10,8 @@ public class PlayerInputs : MonoBehaviour
 
     private PlayerMain _playerMain;
 
+    public bool _canShoot;
+
     private void Awake()
     {
         this.playerInput = this.GetComponent<PlayerInput>();
@@ -25,14 +27,15 @@ public class PlayerInputs : MonoBehaviour
 
     public void OnShooting()
     {
-        if (this._playerMain.playerNetwork.ActionFromClient())
+        if (this._eventShoot == null)
         {
-            if (this._eventShoot == null)
-            {
-                this._eventShoot += this._playerMain.shoot.Shooting;
-                this._eventShoot += GameManager.Instance.ChangeRoles;
-            }
+            this._eventShoot += this._playerMain.shoot.Shooting;
+            this._eventShoot += this._playerMain.playerNetwork.ChangeRoles;
+        }
 
+        if (this._canShoot)
+        {
+            _canShoot = false;
             this._eventShoot?.Invoke();
         }
     }
@@ -43,22 +46,18 @@ public class PlayerInputs : MonoBehaviour
         _PM.playerInputs = this;
     }
 
-    public void BecomeHunter()
+    public void SwitchToHunter()
     {
         this.FindMain();
-        if (this._playerMain.playerNetwork.IsOwnerOfTheGameObject())
-        {
-            this.playerInput.SwitchCurrentActionMap("Hunter");
-        }
+        Debug.Log("switchs");
+        _canShoot = true;
+        this.playerInput.SwitchCurrentActionMap("Hunter");
     }
 
-    public void BecomePrey()
+    public void SwitchToPrey()
     {
         this.FindMain();
-        if (this._playerMain.playerNetwork.IsOwnerOfTheGameObject())
-        {
-            this.playerInput.SwitchCurrentActionMap("Prey");
-        }
+        this.playerInput.SwitchCurrentActionMap("Prey");
     }
 
     private void FindMain()

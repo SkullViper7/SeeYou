@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Explosion
+  m_Shader: {fileID: -6465566751694194690, guid: f89b457f8ec0c8043bea445f35e7f40e,
+    type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _SampleTexture2D_09f31030013d4a50b9a67ed327dcbe96_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: ff43cc2afa626d14dbbc4d3f0b1df57c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_9ab6f0bd4a0b477b95686072b22ac2a0_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: ff43cc2afa626d14dbbc4d3f0b1df57c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_e45ed0b9579b469dbe8a18a8620f4ed7_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 2a601b767c6b5dc40a41c1fefadb916e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_ea01a9b107f5423486360cceb9bb0990_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 2a601b767c6b5dc40a41c1fefadb916e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _DissolveSlider: 0.34
+    - _DissolveSlider2: 0.31
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _SmoothStep: 0
+    m_Colors:
+    - _DarkColor: {r: 0.2264151, g: 0.2264151, b: 0.2264151, a: 0}
+    - _FireColor: {r: 7.999999, g: 1.7390766, b: 0, a: 0}
+  m_BuildTextureStacks: []
+--- !u!114 &554192941454326673
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
