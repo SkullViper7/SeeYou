@@ -15,6 +15,7 @@ public class Shoot : MonoBehaviour
     {
         if (Keyboard.current.eKey.wasPressedThisFrame)
         {
+            Shooting();
         }
     }
 
