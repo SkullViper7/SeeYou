@@ -2352,6 +2352,74 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4193e76fde2167b4e835c5b48a26f389, type: 3}
+--- !u!1001 &9125441166081737625
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5840938058218794925, guid: 25e4ce64576c5aa4c8de26e99507428f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.572
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840938058218794925, guid: 25e4ce64576c5aa4c8de26e99507428f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840938058218794925, guid: 25e4ce64576c5aa4c8de26e99507428f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 11.594
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840938058218794925, guid: 25e4ce64576c5aa4c8de26e99507428f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840938058218794925, guid: 25e4ce64576c5aa4c8de26e99507428f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840938058218794925, guid: 25e4ce64576c5aa4c8de26e99507428f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840938058218794925, guid: 25e4ce64576c5aa4c8de26e99507428f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840938058218794925, guid: 25e4ce64576c5aa4c8de26e99507428f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840938058218794925, guid: 25e4ce64576c5aa4c8de26e99507428f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840938058218794925, guid: 25e4ce64576c5aa4c8de26e99507428f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6504603704467961111, guid: 25e4ce64576c5aa4c8de26e99507428f,
+        type: 3}
+      propertyPath: m_Name
+      value: ChienAnimation
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 25e4ce64576c5aa4c8de26e99507428f, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2374,3 +2442,4 @@ SceneRoots:
   - {fileID: 1798969003}
   - {fileID: 1198024731976661206}
   - {fileID: 1267818175019255274}
+  - {fileID: 9125441166081737625}
