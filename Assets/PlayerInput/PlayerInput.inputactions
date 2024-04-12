@@ -322,7 +322,7 @@
                 {
                     "name": "",
                     "id": "3fe06685-d474-42b8-ad78-a4af49cc38d0",
-                    "path": "<Pointer>/delta",
+                    "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
