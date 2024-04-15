@@ -114,15 +114,16 @@ public class TeamManager : MonoBehaviour
 
     public void SetHunterForAllClients(int _hunterServer)
     {
+        this._hunter = GameManager.Instance.preys[_hunterServer];
+        GameManager.Instance.preys.RemoveAt(_hunterServer);
+
         if (GameManager.Instance.preys.Count == 0)
         {
             //  GameManager.Instance.network.SetAllPlayerInPreyServerRpc();
             GameManager.Instance.preys.AddRange(GameManager.Instance.players);
             SetAllPlayerInPrey();
         }
-
-        this._hunter = GameManager.Instance.preys[_hunterServer];
-        GameManager.Instance.preys.RemoveAt(_hunterServer);
+        
         this._hunter.transform.SetParent(this._hunterParent);
         this._hunter.layer = 3;
         this._hunter.GetComponent<PlayerMain>().IsHunter = true;

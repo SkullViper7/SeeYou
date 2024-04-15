@@ -358,7 +358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4014656757
+  GlobalObjectIdHash: 3420416147
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -379,7 +379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 1
-  SyncPositionY: 0
+  SyncPositionY: 1
   SyncPositionZ: 1
   SyncRotAngleX: 0
   SyncRotAngleY: 0
@@ -467,10 +467,10 @@ MonoBehaviour:
   cam: {fileID: 4616225930315098085}
   _hunterMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 191
   _preyMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
 --- !u!114 &4123249644927547933
 MonoBehaviour:
   m_ObjectHideFlags: 0
