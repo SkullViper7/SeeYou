@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -12,9 +10,9 @@ public class TeamManager : MonoBehaviour
     [SerializeField]
     Transform _hunterParent;
     [SerializeField]
-    GameObject _hunter;
+    public GameObject _hunter;
     public TMP_Text text;
-    bool CanChangeHungter = true;
+    bool CanChangeHunter = true;
 
     private void Start()
     {
@@ -23,7 +21,15 @@ public class TeamManager : MonoBehaviour
 
     public int FindAHunter()
     {
-        return (Random.Range(0, GameManager.Instance.preys.Count));
+        if (GameManager.Instance.preys.Count == 0)
+        {
+            //  GameManager.Instance.network.SetAllPlayerInPreyServerRpc();
+            GameManager.Instance.preys.AddRange(GameManager.Instance.players);
+            SetAllPlayerInPrey();
+        }
+
+        int randomPrey = Random.Range(0, GameManager.Instance.preys.Count);
+        return randomPrey;
        // return GameManager.Instance.preys[Random.Range(0, GameManager.Instance.preys.Count)];
     }
 
@@ -54,20 +60,17 @@ public class TeamManager : MonoBehaviour
         for (int i = 0; i < GameManager.Instance.preys.Count; i++)
         {
             SetPreys(GameManager.Instance.preys[i]);
-            Debug.Log(GameManager.Instance.preys[i].name);
             //GameManager.Instance.preys[i].layer = 6;
             //GameManager.Instance.preys[i].transform.SetParent(this._preyParent);
         }
     }
 
-    public void StartRotation(int newHunter)
+    public void StartRotation()
     {
         Debug.Log("startrot");
-        GameManager.Instance.preys = GameManager.Instance.players;
 
         SetAllPlayerInPrey();
-
-        SetHunter(newHunter);
+        //SetHunter(Random.Range(0, GameManager.Instance.preys.Count));
 
         // int randomPrey = Random.Range(0, GameManager.Instance.preys.Count);
         // GameManager.Instance.network.ChangeHunterServerRpc(GameManager.Instance.preys[randomPrey]);
@@ -81,19 +84,19 @@ public class TeamManager : MonoBehaviour
         //this.text.text = this._hunter.name;
     }
 
-    public void TeamRotation(int newHunter)
+    public void TeamRotation()
     {
         Debug.Log("teamrot");
         //GameManager.Instance.network.ChangePreyServerRpc(_hunter);
         if (GameManager.Instance.preys.Count == 0)
         {
             //  GameManager.Instance.network.SetAllPlayerInPreyServerRpc();
-            GameManager.Instance.preys = GameManager.Instance.players;
+            GameManager.Instance.preys.AddRange(GameManager.Instance.players);
             SetAllPlayerInPrey();
         }
 
         SetPreys(this._hunter);
-        SetHunter(newHunter);
+        SetHunter(Random.Range(0, GameManager.Instance.preys.Count));
         //int randomPrey = Random.Range(0, GameManager.Instance.preys.Count);
         //  GameManager.Instance.network.ChangeHunterServerRpc(GameManager.Instance.preys[randomPrey]);
         //GameManager.Instance.preys[randomPrey].transform.SetParent(this._hunterParent);
@@ -109,20 +112,57 @@ public class TeamManager : MonoBehaviour
         this.text.text = this._hunter.name;*/
     }
 
-    public void SetHunterForAllClients(GameObject _hunterServer)
+    public void SetHunterForAllClients(int _hunterServer)
     {
-        this._hunter = _hunterServer;
+        if (GameManager.Instance.preys.Count == 0)
+        {
+            //  GameManager.Instance.network.SetAllPlayerInPreyServerRpc();
+            GameManager.Instance.preys.AddRange(GameManager.Instance.players);
+            SetAllPlayerInPrey();
+        }
+
+        this._hunter = GameManager.Instance.preys[_hunterServer];
+        GameManager.Instance.preys.RemoveAt(_hunterServer);
         this._hunter.transform.SetParent(this._hunterParent);
         this._hunter.layer = 3;
         this._hunter.GetComponent<PlayerMain>().IsHunter = true;
         this.text.text = this._hunter.name;
-        GameManager.Instance.preys.Remove(this._hunter);
     }
 
-    public void SetPreyForAllClients(GameObject _preyServer)
+    public void SetPreyForAllClients(int _preyServer)
     {
-        _preyServer.layer = 6;
-        _preyServer.GetComponent<PlayerMain>().IsHunter = false;
-        _preyServer.transform.SetParent(this._preyParent);
+        if (GameManager.Instance.preys.Count == 0)
+        {
+            foreach (GameObject player in GameManager.Instance.players)
+            {
+                GameManager.Instance.preys.AddRange(GameManager.Instance.players);
+            }
+
+            SetAllPlayerInPrey();
+            GameObject _prey = GameManager.Instance.preys[_preyServer];
+            _prey.layer = 6;
+            _prey.GetComponent<PlayerMain>().IsHunter = false;
+            _prey.transform.SetParent(this._preyParent);
+        }
+    }
+
+    public void ManagerSet(int _hunter)
+    {
+        this._hunter = GameManager.Instance.preys[_hunter];
+        GameManager.Instance.preys.Remove(GameManager.Instance.preys[_hunter]);
+    }
+
+    public int FindAHunterServ()
+    {
+       /* if (GameManager.Instance.preys.Count == 0)
+        {
+            //  GameManager.Instance.network.SetAllPlayerInPreyServerRpc();
+            GameManager.Instance.preys.AddRange(GameManager.Instance.players);
+            SetAllPlayerInPrey();
+        }*/
+
+        int randomPrey = Random.Range(0, GameManager.Instance.preys.Count);
+        _hunter = GameManager.Instance.preys[randomPrey];
+        return randomPrey;
     }
 }
