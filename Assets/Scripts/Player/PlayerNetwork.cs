@@ -9,6 +9,8 @@ public class PlayerNetwork : NetworkBehaviour
 
     private PlayerMain _playerMain;
 
+    private List<GameObject> playerList = new List<GameObject>();
+
     private void Start()
     {
         if (this._network == null)
@@ -53,25 +55,25 @@ public class PlayerNetwork : NetworkBehaviour
     {
         if (GameManager.Instance.players.Count <= 6)
         {
-            //GameManager.Instance.players.Add(this.gameObject);
-            //AddPlayerServerRPC(NetworkManager.Singleton.LocalClientId);
-            if (IsHost)
-            {
-                AddPlayerServerRPC();
-            }
-
+            GameManager.Instance.players.Add(gameObject);
+            this.gameObject.name += GameManager.Instance.players.Count;
             if (this.IsOwner)
             {
                 this.GetComponent<PlayerMain>().InitPlayer();
                 this.GetComponent<PlayerMain>().playerCamera.ActiveCam();
             }
 
-            this.GetComponent<SpawnPlayer>().Spawn();
+            /*if (this.IsHost)
+            {
+                AddPlayerClientRpc(this.gameObject.name);
+                InitPlayerServerRPC();
+            }*/
 
-            InitPlayerServerRPC();
+            this.GetComponent<SpawnPlayer>().Spawn();
 
             if (GameManager.Instance.players.Count == 2)
             {
+                GameManager.Instance.preys.AddRange(GameManager.Instance.players);
                 this.StartCoroutine(this.SpawnClient());
             }
 
@@ -88,8 +90,7 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void AddPlayerServerRPC()
     {
-        this.gameObject.name += NetworkManager.Singleton.ConnectedClientsList.Count;
-       // AddPlayerClientRpc(gameObject, gameObject.name);
+
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -97,39 +98,37 @@ public class PlayerNetwork : NetworkBehaviour
     {
         if (NetworkManager.Singleton.ConnectedClientsList.Count == 2)
         {
-            List<GameObject> playerList = new List<GameObject>();
             foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
             {
                 GameObject playerObj = client.PlayerObject.gameObject;
                 playerList.Add(playerObj);
             }
 
-            //InitPlayerClientRpc(playerList);
+            InitPlayerClientRpc();
         }
     }
 
-   /* [ClientRpc]
-    private void AddPlayerClientRpc(GameObject newPlayer, string hisName)
+    [ClientRpc]
+    private void AddPlayerClientRpc(string hisName)
     {
-        newPlayer.name = hisName;
+        this.gameObject.name = hisName;
     }
 
     [ClientRpc]
-    private void InitPlayerClientRpc(List<GameObject> allPlayer)
+    private void InitPlayerClientRpc()
     {
-        GameManager.Instance.players.AddRange(allPlayer);
-    }*/
+        GameManager.Instance.players.AddRange(playerList);
+    }
 
     IEnumerator SpawnClient()
     {
         yield return new WaitForSeconds(2);
-        UnityEngine.Debug.Log(this.gameObject.name);
         this.SpawnServer();
     }
 
     void SpawnServer()
     {
-        if (IsServer)
+        if (IsHost)
         {
             BeginRotationClientRpc(GameManager.Instance.teamManager.FindAHunter());
         }
@@ -137,16 +136,60 @@ public class PlayerNetwork : NetworkBehaviour
 
     public void ChangeRoles()
     {
-        if (IsServer)
+        //Debug.Log("changeRole");
+        //RolesChangesServerRpc(GameManager.Instance.teamManager.FindAHunter());
+        if (IsOwner)
         {
             RolesChangesClientRpc(GameManager.Instance.teamManager.FindAHunter());
         }
+    }
+
+    [ServerRpc]
+    public void RolesChangesServerRpc()
+    {
+        //GameManager.Instance.network.SetHunterForManagersServerRpc();
+        //ChangeHunterClientRpc(GameManager.Instance.teamManager.FindAHunterServ());
+
+        StartCoroutine(DelayChangeHunter(GameManager.Instance.teamManager.FindAHunterServ()));
+        //RolesChangesClientRpc(GameManager.Instance.teamManager.FindAHunter());
     }
 
     [ClientRpc]
     private void RolesChangesClientRpc(int newHunter)
     {
         this.StartCoroutine(GameManager.Instance.WaitBeforeChangeRoles(newHunter));
+    }
+
+    [ClientRpc]
+    private void ChangeHunterClientRpc(int newHunter)
+    {
+        GameManager.Instance.teamManager.SetHunterForAllClients(newHunter);
+    }
+
+    IEnumerator DelayChangeHunter(int newHunter)
+    {
+        SearchAllPlayerClientRpc();
+        yield return new WaitForSeconds(0.1f);
+        ChangeHunterClientRpc(newHunter);
+    }
+
+    [ClientRpc]
+    private void SearchAllPlayerClientRpc()
+    {
+        if (GameManager.Instance.preys.Count == 0)
+        {
+            GameManager.Instance.preys.AddRange(GameManager.Instance.players);
+            foreach (GameObject player in GameManager.Instance.players)
+            {
+                player.layer = 6;
+                if (player.GetComponent<PlayerMain>().IsHunter)
+                {
+                    player.GetComponent<PlayerMain>().IsHunter = false;
+                }
+
+                //player.transform.SetParent(this._preyParent);
+            }
+        }
     }
 
     [ClientRpc]

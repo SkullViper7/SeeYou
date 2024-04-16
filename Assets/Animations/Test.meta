@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Animations/Test.meta
 guid: d1ccaaa57f64d8b44971fc3aebc4a608
 folderAsset: yes
+========
+guid: 0641e6bf4ea5b6f4fb7aebc7b5b72f2f
+>>>>>>>> Aure:Assets/Scenes/TestNetcode.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
