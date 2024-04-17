@@ -36,12 +36,93 @@ MonoBehaviour:
   DataFileBaseName: Acoustics_Audran
   ActiveJobID: 
   MaterialsListElements:
+  - m_name: Blocking-foin
+    m_absorptivity: 0.1
+    m_materialCode: 46
+  - m_name: Blocking-grass
+    m_absorptivity: 0.1
+    m_materialCode: 31
+  - m_name: Blocking-mat1
+    m_absorptivity: 0.1
+    m_materialCode: 24
   - m_name: Blocking-plant
     m_absorptivity: 0.1
     m_materialCode: 47
+  - m_name: Blocking-wood
+    m_absorptivity: 0.1
+    m_materialCode: 15
   - m_name: GreyBlue_Mat
     m_absorptivity: 0.1
-    m_materialCode: 44
-  - m_name: Lit
+    m_materialCode: 2
+  - m_name: MT-BarnDoor2
     m_absorptivity: 0.1
-    m_materialCode: 37
+    m_materialCode: 15
+  - m_name: MT-BarnDorn1
+    m_absorptivity: 0.1
+    m_materialCode: 27
+  - m_name: MT-BarnWindow1
+    m_absorptivity: 0.1
+    m_materialCode: 27
+  - m_name: MT-BarnWindow2
+    m_absorptivity: 0.1
+    m_materialCode: 27
+  - m_name: MT-BarnWindow3
+    m_absorptivity: 0.1
+    m_materialCode: 27
+  - m_name: MT-Base_Grange 2
+    m_absorptivity: 0.1
+    m_materialCode: 15
+  - m_name: MT-FenceShort1
+    m_absorptivity: 0.1
+    m_materialCode: 27
+  - m_name: MT-FenceShort2
+    m_absorptivity: 0.1
+    m_materialCode: 27
+  - m_name: MT-LongFence1
+    m_absorptivity: 0.1
+    m_materialCode: 27
+  - m_name: MT-LongFence2
+    m_absorptivity: 0.1
+    m_materialCode: 27
+  - m_name: MT-LongFence3
+    m_absorptivity: 0.1
+    m_materialCode: 27
+  - m_name: MT-PlankWall1
+    m_absorptivity: 0.1
+    m_materialCode: 15
+  - m_name: MT-PlankWall2
+    m_absorptivity: 0.1
+    m_materialCode: 15
+  - m_name: MT-PlankWall3
+    m_absorptivity: 0.1
+    m_materialCode: 15
+  - m_name: MT-PlankWall4
+    m_absorptivity: 0.1
+    m_materialCode: 15
+  - m_name: MT-PorcheBase
+    m_absorptivity: 0.1
+    m_materialCode: 27
+  - m_name: MT-Poutre-Corner1
+    m_absorptivity: 0.1
+    m_materialCode: 36
+  - m_name: MT-Poutre-horizontale1
+    m_absorptivity: 0.1
+    m_materialCode: 27
+  - m_name: MT-PoutreToit
+    m_absorptivity: 0.1
+    m_materialCode: 27
+  - m_name: MT-SideDoor1
+    m_absorptivity: 0.1
+    m_materialCode: 15
+  - m_name: MT-SideDoorSlider
+    m_absorptivity: 0.1
+    m_materialCode: 49
+  - m_name: MT-SoutientToit
+    m_absorptivity: 0.1
+    m_materialCode: 27
+  - m_name: MT-Toit
+    m_absorptivity: 0.1
+    m_materialCode: 54
+  - m_name: MT-ToitReverse
+    m_absorptivity: 0.1
+    m_materialCode: 54
