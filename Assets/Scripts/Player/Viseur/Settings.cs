@@ -8,11 +8,6 @@ public class Settings : MonoBehaviour
     public Slider Slider;
     public GameObject Cross;
 
-    void Start()
-    {
-
-    }
-
     public void OnValueChanged()
     {
         Animator cross = Cross.GetComponent<Animator>();

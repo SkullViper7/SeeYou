@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 0}
+  _canShoot: 0
 --- !u!114 &7432356678645813249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,7 +80,6 @@ MonoBehaviour:
   spawnPlayer: {fileID: 0}
   playerCamera: {fileID: 0}
   shoot: {fileID: 0}
-  cam: {fileID: 1507502903123666936}
 --- !u!114 &455277694397552248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1574745812
+  GlobalObjectIdHash: 2239382037
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
