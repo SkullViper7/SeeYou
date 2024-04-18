@@ -15,17 +15,17 @@ public class Shoot : NetworkBehaviour
     {
         if (Keyboard.current.eKey.wasPressedThisFrame)
         {
-            Shooting();
+            ShootingServerRpc();
         }
     }
 
     [ServerRpc]
-    public void Shooting()
+    public void ShootingServerRpc()
     {
         GameObject boule = Instantiate(bullet, _shoot.position, Quaternion.identity) as GameObject;
         boule.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * power);
         Destroy(boule, 2f);
-        _shoot.GetComponent<NetworkObject>().Spawn(); 
+        //_shoot.GetComponent<NetworkObject>().Spawn(); 
     }
 
     public void InitPlayerMain(PlayerMain _PM)

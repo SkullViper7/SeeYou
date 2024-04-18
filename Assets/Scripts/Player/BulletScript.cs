@@ -8,10 +8,10 @@ public class BulletScript : NetworkBehaviour
     private float _speed = 20f;
 
 
-    public override void OnNetworkSpawn()
+    /*public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
 
         GetComponent<Rigidbody>().velocity = this.transform.forward * _speed;
-    }
+    }*/
 }
