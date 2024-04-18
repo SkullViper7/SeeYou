@@ -19,7 +19,7 @@ public class Shoot : MonoBehaviour
 
     public void Shooting()
     {
-        GameObject boule = Instantiate(bullet, shoot.position, Quaternion.identity) as GameObject;
+        GameObject boule = Instantiate(bullet, shoot.position, Quaternion.identity);
         boule.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * power);
         Destroy(boule, 2f);
     }
