@@ -9,6 +9,7 @@ TagManager:
   - Spawner
   - Prey
   - Environement
+  - Test
   layers:
   - Default
   - TransparentFX

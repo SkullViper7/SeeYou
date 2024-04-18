@@ -71,6 +71,7 @@ namespace StarterAssets
 		private CharacterController _controller;
 		private StarterAssetsInputs _input;
 		private GameObject _mainCamera;
+		private CapsuleCollider _collider;
 
 		private const float _threshold = 0.01f;
 
@@ -88,6 +89,7 @@ namespace StarterAssets
 
 		private void Awake()
 		{
+			_collider = GetComponentInChildren<CapsuleCollider>();
 			// get a reference to our main camera
 			if (_mainCamera == null)
 			{
@@ -115,6 +117,7 @@ namespace StarterAssets
 			JumpAndGravity();
 			GroundedCheck();
 			Move();
+			Shader.SetGlobalVector("_Player", transform.position + Vector3.up * _collider.radius);
 		}
 
 		private void LateUpdate()

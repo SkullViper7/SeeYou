@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,7 +7,7 @@ public class SpawnManager : MonoBehaviour
     private static SpawnManager _instance = null;
     public static SpawnManager Instance => _instance;
 
-    List<GameObject> spawnList = new List<GameObject>();
+    private List<GameObject> spawnList = new List<GameObject>();
 
     private void Awake()
     {

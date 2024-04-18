@@ -3,44 +3,34 @@ using UnityEngine.InputSystem;
 
 public class FreeLookCamController : MonoBehaviour
 {
-    [SerializeField]
-    float _sensitivity = 2f;
-    [SerializeField]
-    float _moveSpeed = 5f;
+    [SerializeField] float _moveSpeed = 10f;
+    [SerializeField] float _rotateSpeed = 100f;
 
-    Vector2 _lookRotation;
-    Vector2 _velocity;
+    Rigidbody _rb;
 
-    public void OnLook(InputAction.CallbackContext value)
+    void Awake()
     {
-        _lookRotation = value.ReadValue<Vector2>();
-
-        transform.rotation = Quaternion.Euler(_lookRotation * _sensitivity);
+        Cursor.lockState = CursorLockMode.Locked;
+        _rb = GetComponent<Rigidbody>();
     }
 
-    public void OnMove(InputAction.CallbackContext value)
+    void Start()
     {
-        Vector3 deltaPosition = Vector3.zero;
+        transform.rotation = Quaternion.Euler(0, 0, 180);
+    }
 
-        _velocity = value.ReadValue<Vector2>();
+    public void OnMove(InputValue value)
+    {
+        Vector2 input = value.Get<Vector2>();
 
-        if (_velocity.x > 0)
-        {
-            deltaPosition += transform.forward;
-        }
-        if (_velocity.x < 0)
-        {
-            deltaPosition -= transform.forward;
-        }
-        if (_velocity.y > 0)
-        {
-            deltaPosition += transform.right;
-        }
-        if (_velocity.y < 0)
-        {
-            deltaPosition -= transform.right;
-        }
+        _rb.velocity = _moveSpeed * input.y * transform.forward + _moveSpeed * input.x * transform.right;
+    }
 
-        transform.position += deltaPosition * _moveSpeed;
+
+    public void OnLook(InputValue value)
+    {
+        Vector2 input = value.Get<Vector2>();
+
+        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(-input.y, input.x, 0) * _rotateSpeed * Time.deltaTime);
     }
 }

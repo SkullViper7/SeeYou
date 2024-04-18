@@ -12,9 +12,9 @@ public class GameManager : MonoBehaviour
     public NetworkMessageManager network;
     public PlayerNetwork lastHunter;
 
-    [HideInInspector]
+    //[HideInInspector]
     public List<GameObject> players = new();
-    [HideInInspector]
+    //[HideInInspector]
     public List<GameObject> preys = new();
 
     private void Awake()
@@ -37,21 +37,24 @@ public class GameManager : MonoBehaviour
         this.teamManager.StartRotation();
     }*/
 
-    public void ChangeRoles(int newHunter)
+    public void ChangeRoles()
     {
         Debug.Log("roles");
-        this.StartCoroutine(this.WaitBeforeChangeRoles(newHunter));
+        //this.StartCoroutine(this.WaitBeforeChangeRoles());
     }
 
-    public IEnumerator WaitBeforeChangeRoles(int newHunter)
+    public IEnumerator WaitBeforeChangeRoles(int hunter)
     {
+        Debug.Log("wait");
         yield return new WaitForSeconds(1f);
-        this.teamManager.TeamRotation(newHunter);
+        this.teamManager.SetHunter(hunter);
+        this.teamManager.TeamRotation();
     }
 
-    public IEnumerator WaitBeforeBegin(int newHunter)
+    public IEnumerator WaitBeforeBegin(int hunter)
     {
         yield return new WaitForSeconds(1f);
-        this.teamManager.StartRotation(newHunter);
+        this.teamManager.SetHunter(hunter);
+        this.teamManager.StartRotation();
     }
 }

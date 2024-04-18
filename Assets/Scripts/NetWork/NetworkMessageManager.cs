@@ -1,8 +1,7 @@
-using System;
 using Unity.Netcode;
 using UnityEngine;
 
-public class NetworkMessageManager : MonoBehaviour
+public class NetworkMessageManager : NetworkBehaviour
 {
 
     private void Start()
@@ -10,14 +9,15 @@ public class NetworkMessageManager : MonoBehaviour
         GameManager.Instance.network = this;
     }
 
-    [ServerRpc]
-    public void ChangeHunterServerRpc(GameObject _hunter)
+    [ClientRpc]
+    public void ChangeHunterClientRpc(int _hunter)
     {
+        Debug.Log("ici on change les hunter");
         GameManager.Instance.teamManager.SetHunterForAllClients(_hunter);
     }
 
     [ServerRpc]
-    public void ChangePreyServerRpc(GameObject _prey)
+    public void ChangePreyServerRpc(int _prey)
     {
         GameManager.Instance.teamManager.SetPreyForAllClients(_prey);
     }
@@ -26,5 +26,12 @@ public class NetworkMessageManager : MonoBehaviour
     public void SetAllPlayerInPreyServerRpc()
     {
         GameManager.Instance.teamManager.SetAllPlayerInPrey();
+    }
+
+    [ServerRpc]
+    public void SetHunterForManagersServerRpc()
+    {
+        Debug.Log("ici on change les hunter");
+        ChangeHunterClientRpc(GameManager.Instance.teamManager.FindAHunterServ());
     }
 }
