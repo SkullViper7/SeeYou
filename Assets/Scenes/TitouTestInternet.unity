@@ -2144,7 +2144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3018238666
+  GlobalObjectIdHash: 1744551319
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -2390,7 +2390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3949777956
+  GlobalObjectIdHash: 3342740776
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -2477,7 +2477,8 @@ MonoBehaviour:
     PlayerPrefab: {fileID: 3085833672856919535, guid: 0559bc571e10bf44ea51e7dac9e79a8d,
       type: 3}
     Prefabs:
-      NetworkPrefabsLists: []
+      NetworkPrefabsLists:
+      - {fileID: 11400000, guid: f41169547e96351489da3c84c0d6ecc0, type: 2}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
@@ -2524,7 +2525,7 @@ PrefabInstance:
     - target: {fileID: 455277694397552248, guid: 0559bc571e10bf44ea51e7dac9e79a8d,
         type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 737498068
+      value: 2951469589
       objectReference: {fileID: 0}
     - target: {fileID: 3085833672856919535, guid: 0559bc571e10bf44ea51e7dac9e79a8d,
         type: 3}
@@ -2611,7 +2612,7 @@ PrefabInstance:
     - target: {fileID: 453082307075021412, guid: 1c7116a1c99bf4c4a80845eeeef419e0,
         type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 3680197130
+      value: 2046990907
       objectReference: {fileID: 0}
     - target: {fileID: 682550864866799349, guid: 1c7116a1c99bf4c4a80845eeeef419e0,
         type: 3}
