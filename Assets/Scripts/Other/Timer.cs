@@ -25,7 +25,7 @@ public class Timer : MonoBehaviour
 
         /*if (time <= 0)
         {
-            timerText.color = Color.red;
+            timerText.color = ChoseColor.red;
             time = 0;
             Time.timeScale = 0;
             interfaceWin.SetActive(true);
