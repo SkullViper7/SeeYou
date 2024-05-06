@@ -123,7 +123,7 @@ public class PlayerNetwork : NetworkBehaviour
     IEnumerator SpawnClient()
     {
         yield return new WaitForSeconds(2);
-        this.SpawnServer();
+        SpawnServer();
     }
 
     void SpawnServer()
@@ -157,7 +157,7 @@ public class PlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void RolesChangesClientRpc(int newHunter)
     {
-        this.StartCoroutine(GameManager.Instance.WaitBeforeChangeRoles(newHunter));
+        StartCoroutine(GameManager.Instance.WaitBeforeChangeRoles(newHunter));
     }
 
     [ClientRpc]
@@ -195,33 +195,44 @@ public class PlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void BeginRotationClientRpc(int newHunter)
     {
-        this.StartCoroutine(GameManager.Instance.WaitBeforeBegin(newHunter));
+        StartCoroutine(GameManager.Instance.WaitBeforeBegin(newHunter));
     }
 
     public void BecomeHunter()
     {
         this.FindMain();
-        if (this.IsOwner)
+        if (IsOwner)
         {
-            this._playerMain.playerInputs.SwitchToHunter();
+            _playerMain.playerInputs.SwitchToHunter();
         }
     }
 
     public void BecomePrey()
     {
         this.FindMain();
-        if (this.IsOwner)
+        if (IsOwner)
         {
-            this._playerMain.playerInputs.SwitchToPrey();
+            _playerMain.playerInputs.SwitchToPrey();
         }
     }
 
     private void FindMain()
     {
-        if (this._playerMain == null)
+        if (_playerMain == null)
         {
-            this._playerMain = this.GetComponent<PlayerMain>();
-            this._playerMain.playerInputs = this.GetComponent<PlayerInputs>();
+            _playerMain = GetComponent<PlayerMain>();
+            _playerMain.playerInputs = GetComponent<PlayerInputs>();
+        }
+    }
+
+
+    [ClientRpc]
+    public void SyncShootClientRpc()
+    {
+        if (!_playerMain.IsHunter)
+        {
+            Debug.Log("sync");
+            GameManager.Instance.teamManager._hunter.GetComponent<Shoot>().Shooting();
         }
     }
 }
