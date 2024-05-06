@@ -29,7 +29,7 @@ public class PlayerInputs : MonoBehaviour
     {
         if (this._eventShoot == null)
         {
-            this._eventShoot += this._playerMain.shoot.ShootingServerRpc;
+            this._eventShoot += this._playerMain.shoot.Shooting;
             this._eventShoot += this._playerMain.playerNetwork.RolesChangesServerRpc;
         }
 
