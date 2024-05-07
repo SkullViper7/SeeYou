@@ -11,9 +11,9 @@ public class Shoot : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.eKey.wasPressedThisFrame)
+        if (Input.GetKeyDown(KeyCode.P))
         {
-
+            Shooting();
         }
     }
 
