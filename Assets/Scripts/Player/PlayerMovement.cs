@@ -27,7 +27,7 @@ public class PlayerMovement : NetworkBehaviour
         {
             if (_playerMain.playerNetwork.IsOwner)
             {
-                this.MoveCamera();
+                //this.MoveCamera();
 
                 //si il est une proie
                 this.Move();
@@ -44,13 +44,13 @@ public class PlayerMovement : NetworkBehaviour
         this.transform.Translate(this.direction * this.speed * Time.deltaTime);
     }
 
-    void MoveCamera()
+    /*void MoveCamera()
     {
         this.y = Input.GetAxis("Mouse X");
         this.x = Input.GetAxis("Mouse Y");
         this.rotate = new Vector3(this.x, this.y * this.sensitivity, 0);
         this.transform.eulerAngles = this.transform.eulerAngles - this.rotate;
-    }
+    } */
 
     public void InitPlayerMain(PlayerMain _PM)
     {
