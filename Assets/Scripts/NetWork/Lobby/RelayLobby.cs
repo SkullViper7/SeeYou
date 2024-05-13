@@ -207,7 +207,7 @@ public class RelayLobby : NetworkBehaviour
                 allocation.ConnectionData
                 );
             NetworkManager.Singleton.StartHost();
-            lobbyUI.LobbyCreated();
+            lobbyUI.LobbyCreated(joinCode);
         }
 
         catch (RelayServiceException e)
