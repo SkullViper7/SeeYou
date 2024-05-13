@@ -12,9 +12,9 @@ public class Shoot : MonoBehaviour
     private PlayerMain main;
     private void Update()
     {
-        if (Keyboard.current.eKey.wasPressedThisFrame)
+        if (Input.GetKeyDown(KeyCode.P))
         {
-
+            Shooting();
         }
     }
 
