@@ -2,13 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using Unity.Services.Lobbies.Models;
-using Unity.VisualScripting;
 
 
 public class LobbyUI : MonoBehaviour
 {
-    RelayLobby relayLobby;
+    private RelayLobby relayLobby;
+
+    public TextMeshProUGUI relayCode;
+
+    [SerializeField] 
+    private GameObject inLobbyObject;
+
+    [SerializeField] 
+    private GameObject LobbyUIToDesactivate;
+
+    [SerializeField] 
+    private GameObject LobbyUIToActivate;
+
     [SerializeField] private Transform lobbySingleTemplate;
     [SerializeField] private Transform container;
 
@@ -40,11 +52,25 @@ public class LobbyUI : MonoBehaviour
 
     public void CreateALobby()
     {
-        relayLobby.CreateLobby();
+        relayLobby.CreateRelay();
     }
 
     public void JoinALobbby()
     {
-        relayLobby.ListLobbies();
+        relayLobby.JoinRelay();
+    }
+
+    public void LobbyCreated()
+    {
+        inLobbyObject.SetActive(true);
+        LobbyUIToDesactivate.SetActive(false);
+        LobbyUIToActivate.SetActive(true);
+    }
+
+    public void LobbyJoined()
+    {
+        inLobbyObject.SetActive(true);
+        LobbyUIToDesactivate.SetActive(false);
+        LobbyUIToActivate.SetActive(true);
     }
 }

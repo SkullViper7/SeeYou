@@ -14,6 +14,8 @@ public class PlayerMain : MonoBehaviour
 
     public PlayerCamera playerCamera;
 
+    public PlayerCollider playerCollider;
+
     public Shoot shoot;
 
     private bool isHunter;

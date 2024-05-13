@@ -28,7 +28,7 @@ public class Shoot : MonoBehaviour
 
     public void SyncShoot()
     {
-        main.playerNetwork.SyncShootClientRpc();
+        main.playerNetwork.SyncShootServerRpc();
     }
 
     public void InitPlayerMain(PlayerMain _PM)
