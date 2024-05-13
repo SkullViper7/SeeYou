@@ -79,6 +79,7 @@ MonoBehaviour:
   playerNetwork: {fileID: 0}
   spawnPlayer: {fileID: 0}
   playerCamera: {fileID: 0}
+  playerCollider: {fileID: 0}
   shoot: {fileID: 0}
 --- !u!114 &455277694397552248
 MonoBehaviour:
@@ -355,6 +356,7 @@ GameObject:
   - component: {fileID: 1507502903123666936}
   - component: {fileID: 1716683741376919764}
   - component: {fileID: 4402289786067616448}
+  - component: {fileID: -365187355576921159}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -480,6 +482,19 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!114 &-365187355576921159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5521505886844427025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1 &7793104187270064400
 GameObject:
   m_ObjectHideFlags: 0
