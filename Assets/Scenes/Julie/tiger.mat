@@ -59,6 +59,7 @@ Material:
     - _CastShadows: 1
     - _Cull: 2
     - _DstBlend: 0
+    - _Erode: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _SrcBlend: 1
@@ -69,5 +70,5 @@ Material:
     - _erode: 0
     - _fresnelPower: 1
     m_Colors:
-    - _Color: {r: 0.83915454, g: 3.9533496, b: 3.253785, a: 1}
+    - _Color: {r: 1.0127659, g: 4.3817625, b: 3.8616557, a: 1}
   m_BuildTextureStacks: []

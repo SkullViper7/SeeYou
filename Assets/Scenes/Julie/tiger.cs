@@ -16,10 +16,17 @@ public class Tiger : MonoBehaviour
 
     IEnumerator ErodeObject()
     {
+        float t = 1;
+        while (t > 0)
+        {
+            t -= erodeRate;
+            erodeObject.material.SetFloat("_Erode", t);
+            yield return new WaitForSeconds(erodeRefreshRate);
+        }
+
         yield return new WaitForSeconds(erodeDelay);
 
 
-        float t = 0;
         while (t < 1)
         {
             t += erodeRate;
