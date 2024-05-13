@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -225,14 +226,23 @@ public class PlayerNetwork : NetworkBehaviour
         }
     }
 
-
+    [ServerRpc]
+    public void SyncShootServerRpc()
+    {
+        StartCoroutine(WaitPlayers());
+    }
     [ClientRpc]
     public void SyncShootClientRpc()
     {
-        if (!_playerMain.IsHunter)
+        if (!IsOwner)
         {
-            Debug.Log("sync");
             GameManager.Instance.teamManager._hunter.GetComponent<Shoot>().Shooting();
         }
+    }
+
+    private IEnumerator WaitPlayers()
+    {
+        yield return new WaitForSeconds(0.1f);
+        SyncShootClientRpc();
     }
 }
