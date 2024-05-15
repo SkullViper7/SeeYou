@@ -62,7 +62,7 @@ Material:
     - _TerrainOffset: 0
     - _TerrainSize: 100
     m_Colors:
-    - _BottomColor: {r: 0, g: 0.44339618, b: 0.16701105, a: 0}
+    - _BottomColor: {r: 0, g: 0.6603774, b: 0.10876811, a: 1}
     - _FarColor: {r: 0, g: 1, b: 0.5256791, a: 0}
     - _MainColor: {r: 0, g: 1, b: 0.16527534, a: 0}
     - _NearColor: {r: 0.5904937, g: 1, b: 0, a: 0}
