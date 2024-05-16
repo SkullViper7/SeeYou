@@ -1,6 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
-using UnityEngine.UIElements;
+using Unity.Mathematics;
 
 public class PlayerMovement : NetworkBehaviour
 {
@@ -20,17 +20,26 @@ public class PlayerMovement : NetworkBehaviour
     Vector3 rotate;
     public float sensitivity = -1f;
 
+    private Rigidbody rb;
+
+    public Transform cameraPosition;
+
 
     [Header("Move the player")]
     public Vector3 direction;
+
+    [SerializeField]
     float speed;
+
+    [SerializeField]
+    private float maxVelocity;
 
     PlayerMain _playerMain;
 
     protected virtual void Start()
     {
         //Cursor.lockState = CursorLockMode.Locked;
-        this.speed = 5;
+        rb = GetComponent<Rigidbody>();
     }
 
     protected virtual void FixedUpdate()
@@ -42,7 +51,9 @@ public class PlayerMovement : NetworkBehaviour
                 //this.MoveCamera();
 
                 //si il est une proie
-                this.Move();
+                this.MovePlayer();
+                MoveCamera();
+                //transform.position = cameraPosition.position;
             }
         }
         else
@@ -92,5 +103,37 @@ public class PlayerMovement : NetworkBehaviour
     public void BecomePrey()
     {
         this.direction = Vector3.zero;
+    }
+
+    void MovePlayer()
+    {
+        direction = Orientation.forward * direction.z + Orientation.right * direction.x;
+        //transform.Translate(this.moveDirection.normalized * this.speed * Time.deltaTime);
+        rb.AddForce(direction.normalized * speed * 10f, ForceMode.Force);
+        if (math.abs(rb.velocity.z) > maxVelocity)
+        {
+            if (rb.velocity.z > 0)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, maxVelocity);
+            }
+            else
+            {
+                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, -maxVelocity);
+            }
+        }
+
+        if (math.abs(rb.velocity.x) > maxVelocity)
+        {
+            if (rb.velocity.x > 0)
+            {
+                rb.velocity = new Vector3(maxVelocity, rb.velocity.y, rb.velocity.z);
+            }
+            else
+            {
+                rb.velocity = new Vector3(-maxVelocity, rb.velocity.y, rb.velocity.z);
+            }
+        }
+
+        //transform.Translate(moveDirection.normalized * speed * Time.deltaTime);
     }
 }

@@ -566,7 +566,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6863321857740289295}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a2299005cca2544bbe532d1751d4619, type: 3}
   m_Name: 
@@ -575,7 +575,9 @@ MonoBehaviour:
   SensY: 200
   Orientation: {fileID: 1273187167115241953}
   sensitivity: -1
+  cameraPosition: {fileID: 3579958899200716373}
   direction: {x: 0, y: 0, z: 0}
+  maxVelocity: 0
 --- !u!114 &5287118783029715993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598,13 +600,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6863321857740289295}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dea3ba40a9dcd4c49b1acf89797aa6a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
   Orientation: {fileID: 1273187167115241953}
+  maxVelocity: 5
 --- !u!114 &2943807968225555449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -612,7 +615,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6863321857740289295}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f602d4d413201ce4c86c7c4d07950bf8, type: 3}
   m_Name: 
