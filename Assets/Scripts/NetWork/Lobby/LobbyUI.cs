@@ -62,17 +62,21 @@ public class LobbyUI : MonoBehaviour
 
     public void LobbyCreated(string _code)
     {
-        inLobbyObject.SetActive(true);
-        LobbyUIToDesactivate.SetActive(false);
-        LobbyUIToActivate.SetActive(true);
-        LobbyUIToActivate.SendMessage("ShowCode", _code);
+        EnterInLobby();
+        inLobbyObject.SendMessage("ShowCode", _code);
     }
 
     public void LobbyJoined()
     {
+        EnterInLobby();
+        inLobbyObject.SendMessage("ShowCode", relayCode.text);
+    }
+
+    private void EnterInLobby()
+    {
         inLobbyObject.SetActive(true);
         LobbyUIToDesactivate.SetActive(false);
         LobbyUIToActivate.SetActive(true);
-        inLobbyObject.SendMessage("ShowCode", relayCode);
+        inLobbyObject.GetComponent<InLobby>().RelayLobby = relayLobby;
     }
 }
