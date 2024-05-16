@@ -1,13 +1,25 @@
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.UIElements;
 
 public class PlayerMovement : NetworkBehaviour
 {
     [Header("Move the camera")]
-    private float x;
-    private float y;
+    //public Camera cam;
+
+    [SerializeField]
+    public float SensX;
+    [SerializeField]
+    public float SensY;
+
+    public Transform Orientation;
+
+    float XRotation;
+    float YRotation;
+
+    Vector3 rotate;
     public float sensitivity = -1f;
-    private Vector3 rotate;
+
 
     [Header("Move the player")]
     public Vector3 direction;
@@ -17,7 +29,7 @@ public class PlayerMovement : NetworkBehaviour
 
     protected virtual void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         this.speed = 5;
     }
 
@@ -42,14 +54,28 @@ public class PlayerMovement : NetworkBehaviour
     void Move()
     {
         this.transform.Translate(this.direction * this.speed * Time.deltaTime);
+
     }
 
     void MoveCamera()
     {
-        this.y = Input.GetAxis("Mouse X");
-        this.x = Input.GetAxis("Mouse Y");
-        this.rotate = new Vector3(this.x, this.y * this.sensitivity, 0);
-        this.transform.eulerAngles = this.transform.eulerAngles - this.rotate;
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * SensX;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * SensY;
+
+        YRotation += mouseX;
+
+        XRotation -= mouseY;
+        XRotation = Mathf.Clamp(XRotation, -90, 90);
+
+        transform.rotation = Quaternion.Euler(XRotation, YRotation, 0);
+        Orientation.rotation = Quaternion.Euler(0, YRotation, 0);
+
+
+
+        /*this.SensY = Input.GetAxis("Mouse X");
+        this.SensX = Input.GetAxis("Mouse Y");
+        this.rotate = new Vector3(this.SensX, this.SensY * this.sensitivity, 0);
+        this.transform.eulerAngles = this.transform.eulerAngles - this.rotate;*/
     }
 
     public void InitPlayerMain(PlayerMain _PM)
