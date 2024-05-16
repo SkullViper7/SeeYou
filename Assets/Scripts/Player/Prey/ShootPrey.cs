@@ -18,7 +18,6 @@ public class ShootPrey : MonoBehaviour
     public GameObject projectil;
     public float force;
 
-    // Mettez à jour est appelé une fois par frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
