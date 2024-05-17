@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnPlayer : MonoBehaviour
@@ -8,7 +6,8 @@ public class SpawnPlayer : MonoBehaviour
     {
         if (SpawnManager.Instance != null) 
         {
-            this.transform.position = SpawnManager.Instance.GiveSpawnToAPlayer().transform.position;
+            transform.position = SpawnManager.Instance.GiveSpawnToAPlayer().transform.position;
+            transform.position = new Vector3(transform.position.x, 0.7f, transform.position.z);
         }
         else
         {
