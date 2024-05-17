@@ -168,8 +168,9 @@ public class PlayerNetwork : NetworkBehaviour
 
     IEnumerator DelayChangeHunter(int newHunter)
     {
+        yield return new WaitForSeconds(2f);
         SearchAllPlayerClientRpc();
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(2f);
         ChangeHunterClientRpc(newHunter);
     }
 
@@ -243,5 +244,43 @@ public class PlayerNetwork : NetworkBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         SyncShootClientRpc();
+    }
+
+
+    [ServerRpc(RequireOwnership = false)]
+    public void GetTouchedServerRpc()
+    {
+       GetTouchedClientRpc();
+    }
+    [ClientRpc]
+    public void GetTouchedClientRpc()
+    {
+        for (int i = 0; i < GameManager.Instance.preys.Count; i++)
+            {
+                if (GameManager.Instance.preys[i] != null)
+                {
+                    if (GameManager.Instance.preys[i] == gameObject)
+                    {
+                        GameManager.Instance.preys.Remove(GameManager.Instance.preys[i]);
+                    }
+                }
+            }
+
+            for (int i = 0; i < GameManager.Instance.players.Count; i++)
+            {
+                if (GameManager.Instance.players[i] != null)
+                {
+                    if (GameManager.Instance.players[i] == gameObject)
+                    {
+                        GameManager.Instance.players.Remove(GameManager.Instance.players[i]);
+                    }
+                }
+            }
+            
+            gameObject.SetActive(false);
+        if (GameManager.Instance.players.Count == 1)
+        {
+            GameManager.Instance.teamManager.Victory(GameManager.Instance.players[0].name);
+        }
     }
 }

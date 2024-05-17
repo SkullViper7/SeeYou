@@ -10,6 +10,7 @@ TagManager:
   - Prey
   - Environement
   - Test
+  - UIToRemove
   layers:
   - Default
   - TransparentFX
