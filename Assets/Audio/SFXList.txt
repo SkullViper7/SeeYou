@@ -5,12 +5,12 @@ Grenades
     Puff
 
 Rifle
-    Shoot
+    Shoot§
 
 Menu
-    Hover
-    Click
-    Back
+    Hover§
+    Click§
+    Back§
 
 Game
     Start
