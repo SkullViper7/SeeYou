@@ -499,6 +499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfe26e80d62564e4c935322df811ae1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delayBeforeChangeRoles: 2
 --- !u!114 &3669724927191624104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -518,7 +519,6 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   playerCollider: {fileID: 0}
   shoot: {fileID: 0}
-  playerUI: {fileID: 0}
 --- !u!114 &277534051553942239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,6 +580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 5863363392411627885, guid: 660917bfa629ba7409d7460dce7cb685, type: 3}
+  DelayBulletBeforeGetDestroy: 2
   shoot: {fileID: 7849006669961965001}
   power: 30
 --- !u!114 &3050383539736043553
