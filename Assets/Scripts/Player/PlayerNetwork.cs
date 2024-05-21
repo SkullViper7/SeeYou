@@ -278,4 +278,22 @@ public class PlayerNetwork : NetworkBehaviour
             GameManager.Instance.teamManager.Victory(GameManager.Instance.players[0].name);
         }
     }
+
+    [ServerRpc]
+    public void SoundEmitServerRpc()
+    {
+        StartCoroutine(WaitPlayersSounds());
+    }
+
+    private IEnumerator WaitPlayersSounds()
+    {
+        yield return new WaitForSeconds(0.1f);
+        SoundEmitClientRpc();
+    }
+
+    [ClientRpc]
+    private void SoundEmitClientRpc()
+    {
+
+    }
 }
