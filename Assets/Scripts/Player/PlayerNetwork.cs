@@ -279,7 +279,7 @@ public class PlayerNetwork : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void SoundEmitServerRpc()
     {
         StartCoroutine(WaitPlayersSounds());
@@ -287,13 +287,13 @@ public class PlayerNetwork : NetworkBehaviour
 
     private IEnumerator WaitPlayersSounds()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.01f);
         SoundEmitClientRpc();
     }
 
     [ClientRpc]
     private void SoundEmitClientRpc()
     {
-
+        SendMessage("Step");
     }
 }
