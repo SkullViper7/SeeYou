@@ -60,17 +60,23 @@ public class LobbyUI : MonoBehaviour
         relayLobby.JoinRelay();
     }
 
-    public void LobbyCreated()
+    public void LobbyCreated(string _code)
     {
-        inLobbyObject.SetActive(true);
-        LobbyUIToDesactivate.SetActive(false);
-        LobbyUIToActivate.SetActive(true);
+        EnterInLobby();
+        inLobbyObject.SendMessage("ShowCode", _code);
     }
 
     public void LobbyJoined()
     {
+        EnterInLobby();
+        inLobbyObject.SendMessage("ShowCode", relayCode.text);
+    }
+
+    private void EnterInLobby()
+    {
         inLobbyObject.SetActive(true);
         LobbyUIToDesactivate.SetActive(false);
         LobbyUIToActivate.SetActive(true);
+        inLobbyObject.GetComponent<InLobby>().RelayLobby = relayLobby;
     }
 }

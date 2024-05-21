@@ -12,15 +12,25 @@ public class TerrainDetector
     private float[,,] splatmapData;
     private int numTextures;
 
+    /// <summary>
+    /// Constructor for the TerrainDetector. Retrieves necessary terrain data from the active terrain.
+    /// </summary>
     public TerrainDetector()
     {
+        // Get the terrain data from the active terrain component
         terrainData = Terrain.activeTerrain.terrainData;
+        
+        // Get the width and height of the terrain's alphamap
         alphamapWidth = terrainData.alphamapWidth;
         alphamapHeight = terrainData.alphamapHeight;
 
+        // Get the alphamap data from the terrain data
         splatmapData = terrainData.GetAlphamaps(0, 0, alphamapWidth, alphamapHeight);
+
+        // Get the number of textures in the terrain's alphamap
         numTextures = splatmapData.Length / (alphamapWidth * alphamapHeight);
     }
+
 
     private Vector3 ConvertToSplatMapCoordinate(Vector3 worldPosition)
     {

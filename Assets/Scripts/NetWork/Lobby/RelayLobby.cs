@@ -10,6 +10,7 @@ using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
+using Unity.Networking.Transport;
 
 public class RelayLobby : NetworkBehaviour
 {
@@ -207,7 +208,7 @@ public class RelayLobby : NetworkBehaviour
                 allocation.ConnectionData
                 );
             NetworkManager.Singleton.StartHost();
-            lobbyUI.LobbyCreated();
+            lobbyUI.LobbyCreated(joinCode);
         }
 
         catch (RelayServiceException e)
@@ -238,5 +239,25 @@ public class RelayLobby : NetworkBehaviour
             Debug.Log(e);
         }
         
+    }
+
+    public async void QuitRelay()
+    {
+        try
+        {
+            //NetworkManager.Singleton.GetComponent<UnityTransport>().client
+           /* string playerId = AuthenticationService.Instance.PlayerId;
+            await LobbyService.Instance.RemovePlayerAsync("lobbyId", playerId);  */
+        }
+        catch (RelayServiceException e) 
+        {
+            Debug.Log(e);
+        }
+        
+    }
+
+    public void ShowAllPlayer()
+    {
+
     }
 }
