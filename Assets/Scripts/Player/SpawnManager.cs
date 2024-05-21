@@ -13,7 +13,7 @@ public class SpawnManager : MonoBehaviour
     {
         if (_instance != null && _instance != this)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
             return;
         }
         else
@@ -26,19 +26,19 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        this.initSpawner();
+        initSpawner();
     }
 
     void initSpawner()
     {
-        this.spawnList = GameObject.FindGameObjectsWithTag("Spawner").ToList();
+        spawnList = GameObject.FindGameObjectsWithTag("Spawner").ToList();
 
     }
 
     public GameObject GiveSpawnToAPlayer()
     {
-        GameObject spawner = this.spawnList[Random.Range(0, this.spawnList.Count)];
-        this.spawnList.Remove(spawner);
+        GameObject spawner = spawnList[Random.Range(0, spawnList.Count)];
+        spawnList.Remove(spawner);
         return spawner;
     }
 

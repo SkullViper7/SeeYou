@@ -9,7 +9,6 @@ public class Zone : MonoBehaviour
         if (other.gameObject.tag == "Prey")
         {
             Destroy(other.gameObject);
-            Debug.Log("aaaaa");
         }
     }
 }
