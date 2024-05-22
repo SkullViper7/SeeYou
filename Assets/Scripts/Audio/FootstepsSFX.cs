@@ -25,6 +25,7 @@ public class FootstepsSFX : MonoBehaviour
     {
         AudioClip _clip = GetRandomClip();
         _audioSource.PlayOneShot(_clip);
+        
     }
 
     AudioClip GetRandomClip()

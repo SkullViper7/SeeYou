@@ -1,17 +1,21 @@
 using UnityEngine;
+using System.Threading.Tasks;
+
 
 public class SpawnPlayer : MonoBehaviour
 {
-    public void Spawn()
+    public async void Spawn()
     {
         if (SpawnManager.Instance != null) 
         {
-            transform.position = SpawnManager.Instance.GiveSpawnToAPlayer().transform.position;
+            GameObject spawner = await SpawnManager.Instance.GiveSpawnToAPlayer();
+            transform.position = spawner.transform.position;
+            Debug.LogError($"SpawnPlayer : {transform.position} / {spawner.transform.position} / {Time.frameCount}");
             transform.position = new Vector3(transform.position.x, 0.7f, transform.position.z);
         }
         else
         {
-            Debug.Log("C'est pas spawn mon reuf");
+            Debug.LogError("C'est pas spawn mon reuf");
         }
     }
 
