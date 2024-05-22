@@ -17,13 +17,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/LobbyAure.unity
     guid: 54a7ade4c41ce3a45b2b7df716f33b00
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SceneV1.unity
     guid: cd9bb8a5e0a83b647b94a7e039904b80
   - enabled: 0
     path: Assets/Scenes/TestNetcode.unity
     guid: 6a0ca20f0d0798340b705c9d5e03a6be
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Audran.unity
     guid: d04b7d2182ace0a4d974e460e2c92a53
   - enabled: 0

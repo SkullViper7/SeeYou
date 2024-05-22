@@ -15,6 +15,9 @@ public class PlayerNetwork : NetworkBehaviour
     [SerializeField] 
     private float delayBeforeChangeRoles;
 
+    [SerializeField] 
+    private float maxNumberOfPlayer;
+
     private void Start()
     {
         if (this._network == null)
@@ -61,7 +64,7 @@ public class PlayerNetwork : NetworkBehaviour
     /// </summary>
     public override void OnNetworkSpawn()
     {
-        if (GameManager.Instance.players.Count <= 6)
+        if (GameManager.Instance.players.Count <= maxNumberOfPlayer)
         {
             GameManager.Instance.players.Add(gameObject);
             this.gameObject.name += GameManager.Instance.players.Count;
@@ -79,7 +82,7 @@ public class PlayerNetwork : NetworkBehaviour
 
             this.GetComponent<SpawnPlayer>().Spawn();
 
-            if (GameManager.Instance.players.Count == 2)
+            if (GameManager.Instance.players.Count == maxNumberOfPlayer)
             {
                 GameManager.Instance.preys.AddRange(GameManager.Instance.players);
                 this.StartCoroutine(this.SpawnClient());
