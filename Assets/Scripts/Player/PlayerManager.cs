@@ -45,7 +45,7 @@ public class PlayerManager : NetworkBehaviour
 
     private void Spawn()
     {
-        this.transform.position = SpawnManager.Instance.GiveSpawnToAPlayer().transform.position;
+        //this.transform.position = SpawnManager.Instance.GiveSpawnToAPlayer().transform.position;
     }
 
     void BecomeHunter()
