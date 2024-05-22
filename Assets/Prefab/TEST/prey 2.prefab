@@ -426,7 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2611500502
+  GlobalObjectIdHash: 1716683524
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -503,6 +503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayBeforeChangeRoles: 2
+  maxNumberOfPlayer: 5
 --- !u!114 &3669724927191624104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,7 +538,7 @@ MonoBehaviour:
   cam: {fileID: 4180570175528386560}
   _hunterMask:
     serializedVersion: 2
-    m_Bits: 191
+    m_Bits: 447
   _preyMask:
     serializedVersion: 2
     m_Bits: 4294967295
