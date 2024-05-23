@@ -36,24 +36,60 @@ MonoBehaviour:
   DataFileBaseName: Acoustics_Audran
   ActiveJobID: 
   MaterialsListElements:
-  - m_name: Blocking-foin
+  - m_name: Barrel
+    m_absorptivity: 0.1
+    m_materialCode: 27
+  - m_name: Blanc
+    m_absorptivity: 0.1
+    m_materialCode: 53
+  - m_name: Collier
+    m_absorptivity: 1
+    m_materialCode: 44
+  - m_name: Corde
     m_absorptivity: 0.1
     m_materialCode: 46
-  - m_name: Blocking-grass
+  - m_name: Corne
     m_absorptivity: 0.1
-    m_materialCode: 31
-  - m_name: Blocking-mat1
+    m_materialCode: 54
+  - m_name: Corps
     m_absorptivity: 0.1
-    m_materialCode: 24
-  - m_name: Blocking-plant
+    m_materialCode: 53
+  - m_name: Extension
     m_absorptivity: 0.1
-    m_materialCode: 47
-  - m_name: Blocking-wood
+    m_materialCode: 49
+  - m_name: FGris
     m_absorptivity: 0.1
-    m_materialCode: 15
+    m_materialCode: 53
+  - m_name: FNoir
+    m_absorptivity: 0.1
+    m_materialCode: 53
+  - m_name: "Fonc\xE9"
+    m_absorptivity: 0.1
+    m_materialCode: 53
+  - m_name: Frose
+    m_absorptivity: 0.1
+    m_materialCode: 53
+  - m_name: FRoux
+    m_absorptivity: 0.1
+    m_materialCode: 53
   - m_name: GreyBlue_Mat
     m_absorptivity: 0.1
-    m_materialCode: 2
+    m_materialCode: 53
+  - m_name: Gris
+    m_absorptivity: 0.1
+    m_materialCode: 53
+  - m_name: Hay
+    m_absorptivity: 0.1
+    m_materialCode: 46
+  - m_name: Ivy
+    m_absorptivity: 0.1
+    m_materialCode: 46
+  - m_name: Jaune
+    m_absorptivity: 0.1
+    m_materialCode: 49
+  - m_name: Metal
+    m_absorptivity: 0.1
+    m_materialCode: 49
   - m_name: MT-BarnDoor2
     m_absorptivity: 0.1
     m_materialCode: 15
@@ -72,6 +108,9 @@ MonoBehaviour:
   - m_name: MT-Base_Grange 2
     m_absorptivity: 0.1
     m_materialCode: 15
+  - m_name: MT-Chateau d'eau
+    m_absorptivity: 0.1
+    m_materialCode: 49
   - m_name: MT-FenceShort1
     m_absorptivity: 0.1
     m_materialCode: 27
@@ -117,6 +156,9 @@ MonoBehaviour:
   - m_name: MT-SideDoorSlider
     m_absorptivity: 0.1
     m_materialCode: 49
+  - m_name: MT-Silo
+    m_absorptivity: 0.1
+    m_materialCode: 49
   - m_name: MT-SoutientToit
     m_absorptivity: 0.1
     m_materialCode: 27
@@ -126,3 +168,39 @@ MonoBehaviour:
   - m_name: MT-ToitReverse
     m_absorptivity: 0.1
     m_materialCode: 54
+  - m_name: Noir
+    m_absorptivity: 0.1
+    m_materialCode: 53
+  - m_name: Pig
+    m_absorptivity: 0.1
+    m_materialCode: 53
+  - m_name: Remorque
+    m_absorptivity: 0.1
+    m_materialCode: 49
+  - m_name: Remorque2
+    m_absorptivity: 0.1
+    m_materialCode: 49
+  - m_name: Rock
+    m_absorptivity: 0.1
+    m_materialCode: 54
+  - m_name: Rose
+    m_absorptivity: 0.1
+    m_materialCode: 53
+  - m_name: Roue
+    m_absorptivity: 0.1
+    m_materialCode: 23
+  - m_name: Roue2
+    m_absorptivity: 0.1
+    m_materialCode: 23
+  - m_name: Roux
+    m_absorptivity: 0.1
+    m_materialCode: 53
+  - m_name: Tuiles
+    m_absorptivity: 0.1
+    m_materialCode: 10
+  - m_name: Wood
+    m_absorptivity: 0.1
+    m_materialCode: 27
+  - m_name: Yeux
+    m_absorptivity: 0.1
+    m_materialCode: 53
