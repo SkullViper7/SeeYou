@@ -153,7 +153,7 @@ public class PlayerNetwork : NetworkBehaviour
 
     private IEnumerator DelayChangeHunter(int newHunter)
     {
-        yield return new WaitForSeconds(_playerMain.shoot.DelayBulletBeforeGetDestroy);
+        yield return new WaitForSeconds(2);
         SearchAllPlayerClientRpc();
         yield return new WaitForSeconds(delayBeforeChangeRoles);
         ChangeHunterClientRpc(newHunter);
