@@ -1,10 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class InLobbyUI : MonoBehaviour
 {
     public List<GameObject> players = new();
+
+    [SerializeField]
+    private Button playButton;
+
+    [SerializeField]
+    private Button quitButton;
 
     [SerializeField]
     private TextMeshProUGUI relayCode;
@@ -12,6 +19,12 @@ public class InLobbyUI : MonoBehaviour
     public void InitInLobby(InLobby _inLobby)
     {
         _inLobby.inLobbyUI = this;
+        
+        playButton.onClick.AddListener(_inLobby.Play);
+        playButton.onClick.AddListener(Play);
+
+        quitButton.onClick.AddListener(_inLobby.QuitLobby);
+        quitButton.onClick.AddListener(QuitLobby);
     }
 
     public void SetPlayerInfo()
@@ -42,5 +55,6 @@ public class InLobbyUI : MonoBehaviour
     private void Play()
     {
         //Si tout les joueurs sont lock, lancer le jeu
+        Debug.Log("play");
     }
 }

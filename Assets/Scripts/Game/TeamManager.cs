@@ -14,6 +14,8 @@ public class TeamManager : MonoBehaviour
     public TMP_Text text;
     bool CanChangeHunter = true;
 
+    private bool hasAWinner;
+
     private void Start()
     {
         GameManager.Instance.teamManager = this;
@@ -86,7 +88,8 @@ public class TeamManager : MonoBehaviour
 
     public void TeamRotation()
     {
-        Debug.Log("teamrot");
+        if (!hasAWinner)
+        {
         //GameManager.Instance.network.ChangePreyServerRpc(_hunter);
         if (GameManager.Instance.preys.Count == 0)
         {
@@ -110,10 +113,13 @@ public class TeamManager : MonoBehaviour
 
         this._hunter.GetComponent<PlayerMain>().IsHunter = true;
         this.text.text = this._hunter.name;*/
+        }
     }
 
     public void SetHunterForAllClients(int _hunterServer)
     {
+        if (!hasAWinner)
+        {
         this._hunter = GameManager.Instance.preys[_hunterServer];
         GameManager.Instance.preys.RemoveAt(_hunterServer);
 
@@ -128,6 +134,7 @@ public class TeamManager : MonoBehaviour
         this._hunter.layer = 3;
         this._hunter.GetComponent<PlayerMain>().IsHunter = true;
         this.text.text = this._hunter.name;
+        }
     }
 
     public void SetPreyForAllClients(int _preyServer)
@@ -165,5 +172,11 @@ public class TeamManager : MonoBehaviour
         int randomPrey = Random.Range(0, GameManager.Instance.preys.Count);
         _hunter = GameManager.Instance.preys[randomPrey];
         return randomPrey;
+    }
+
+    public void Victory(string _winnerName)
+    {
+        hasAWinner = true;
+        this.text.text = _winnerName + " Win !";
     }
 }

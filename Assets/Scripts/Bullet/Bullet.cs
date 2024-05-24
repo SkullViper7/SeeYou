@@ -1,10 +1,19 @@
-using Unity.Netcode;
 using UnityEngine;
 
-public class Bullet : NetworkBehaviour
+public class Bullet : MonoBehaviour
 {
-    public override void OnNetworkSpawn()
+  private GameObject Hunter;
+  public void InitBullet(GameObject _hunter)
+  {
+    Hunter = _hunter;
+  }
+
+  private void OnCollisionEnter(Collision collision)
+  {
+    if (collision.gameObject.tag == "Player" && collision.gameObject != Hunter)
     {
-      base.OnNetworkSpawn();
+        collision.gameObject.SendMessage("Collision");
+        Destroy(gameObject);
     }
+  }
 }

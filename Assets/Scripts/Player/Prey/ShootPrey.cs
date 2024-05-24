@@ -7,8 +7,8 @@ public class ShootPrey : MonoBehaviour
     // ProjectileThrow ProjectileThrow;
 
     [SerializeField]
-    private float forceMultiplier = 5f;
-    private float maxForce = 10f;
+    private float forceMultiplier = 10f;
+    private float maxForce = 20f;
 
     private float pressStartTime;
     private float pressDuration;
@@ -18,22 +18,24 @@ public class ShootPrey : MonoBehaviour
     public GameObject projectil;
     public float force;
 
-    // Mettez à jour est appelé une fois par frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             isPressed = true;
             pressStartTime = Time.time;
+            if(force > maxForce)
+            {
+                maxForce = force;
+            }
         }
 
-        if (Input.GetKeyUp(KeyCode.Space) && isPressed)
+        if (Input.GetKeyUp(KeyCode.Q) && isPressed)
         {
             pressDuration = Time.time - pressStartTime;
             ApplyForce();
             isPressed = false;
         }
-
     }
 
     void ApplyForce()
@@ -42,7 +44,5 @@ public class ShootPrey : MonoBehaviour
         GetComponent<Rigidbody>().AddForce(Vector3.up * force, ForceMode.Impulse);
         var _projectile = Instantiate(projectil, lauchPoint.position, lauchPoint.rotation);
         _projectile.GetComponent<Rigidbody>().velocity = force * lauchPoint.up;
-    }
-
-    
+    }    
 }

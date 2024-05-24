@@ -4,26 +4,35 @@ using UnityEngine.InputSystem;
 
 public class Shoot : MonoBehaviour
 {
-    public GameObject bullet;
-
-    [SerializeField]private Transform shoot;
-    [SerializeField] private float power;
-    private GameObject fire;
     private PlayerMain main;
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Shooting();
-        }
-    }
+
+    [SerializeField] LayerMask _layerMask;
+    [SerializeField] bool _enabled = false;
+
+    RaycastHit _hits;
 
     public void Shooting()
     {
-        
-        GameObject boule = Instantiate(bullet, shoot.position, Quaternion.identity);
-        boule.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * power);
-        Destroy(boule, 2f);
+        Ray ray = new Ray(transform.position, transform.TransformDirection (Vector3.forward));
+
+        if(Physics.Raycast (ray, out _hits, 20f, _layerMask, QueryTriggerInteraction.Ignore))
+        {
+            Debug.Log("Hit Something");
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * _hits.distance, Color.green);
+            _enabled = true;
+        }
+        else
+        {
+            Debug.Log("Hit Nothing");
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 20f, Color.red);
+            _enabled = false;
+        }
+
+        if(Input.GetMouseButtonDown(0) && _enabled == true)
+        {
+            Debug.Log("Toucher");
+            Destroy(_hits.transform.gameObject);
+        }
     }
 
     public void SyncShoot()
@@ -36,5 +45,4 @@ public class Shoot : MonoBehaviour
         _PM.shoot = this;
         main = _PM;
     }
-
 }

@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -12,14 +12,18 @@ public class PlayerNetwork : NetworkBehaviour
 
     private List<GameObject> playerList = new List<GameObject>();
 
+    [SerializeField] 
+    private float delayBeforeChangeRoles;
+
+    [SerializeField] 
+    private float maxNumberOfPlayer;
+
     private void Start()
     {
         if (this._network == null)
         {
             this._network = NetworkManager.Singleton;
         }
-
-        this._playerMain = this.GetComponent<PlayerMain>();
     }
 
     public void InitPlayerMain(PlayerMain _PM)
@@ -52,9 +56,15 @@ public class PlayerNetwork : NetworkBehaviour
         return this.IsOwner;
     }
 
+
+    /// <summary>
+    /// Lorsqu'un joueur se connecte au serveur on lui créer un nouveau gameObject
+    /// De plus si il y a suffisament de joueur on lancer le jeu
+    /// Si un nouveau joueur se connecte au serveur alors que le jeu est lancer il sera seulement spectateur
+    /// </summary>
     public override void OnNetworkSpawn()
     {
-        if (GameManager.Instance.players.Count <= 6)
+        if (GameManager.Instance.players.Count <= maxNumberOfPlayer)
         {
             GameManager.Instance.players.Add(gameObject);
             this.gameObject.name += GameManager.Instance.players.Count;
@@ -72,7 +82,7 @@ public class PlayerNetwork : NetworkBehaviour
 
             this.GetComponent<SpawnPlayer>().Spawn();
 
-            if (GameManager.Instance.players.Count == 2)
+            if (GameManager.Instance.players.Count == maxNumberOfPlayer)
             {
                 GameManager.Instance.preys.AddRange(GameManager.Instance.players);
                 this.StartCoroutine(this.SpawnClient());
@@ -88,46 +98,20 @@ public class PlayerNetwork : NetworkBehaviour
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    public void AddPlayerServerRPC()
-    {
-
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void InitPlayerServerRPC()
-    {
-        if (NetworkManager.Singleton.ConnectedClientsList.Count == 2)
-        {
-            foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
-            {
-                GameObject playerObj = client.PlayerObject.gameObject;
-                playerList.Add(playerObj);
-            }
-
-            InitPlayerClientRpc();
-        }
-    }
-
-    [ClientRpc]
-    private void AddPlayerClientRpc(string hisName)
-    {
-        this.gameObject.name = hisName;
-    }
-
-    [ClientRpc]
-    private void InitPlayerClientRpc()
-    {
-        GameManager.Instance.players.AddRange(playerList);
-    }
-
-    IEnumerator SpawnClient()
+    /// <summary>
+    /// Permet d'attendre le spawn du serveur
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator SpawnClient()
     {
         yield return new WaitForSeconds(2);
         SpawnServer();
     }
 
-    void SpawnServer()
+    /// <summary>
+    /// Une fois tout les joueurs spawns on va rechercher un chasseur
+    /// </summary>
+    private void SpawnServer()
     {
         if (IsHost)
         {
@@ -167,10 +151,11 @@ public class PlayerNetwork : NetworkBehaviour
         GameManager.Instance.teamManager.SetHunterForAllClients(newHunter);
     }
 
-    IEnumerator DelayChangeHunter(int newHunter)
+    private IEnumerator DelayChangeHunter(int newHunter)
     {
+        yield return new WaitForSeconds(2);
         SearchAllPlayerClientRpc();
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(delayBeforeChangeRoles);
         ChangeHunterClientRpc(newHunter);
     }
 
@@ -226,11 +211,18 @@ public class PlayerNetwork : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// Quand un joueur tire
+    /// </summary>
     [ServerRpc]
     public void SyncShootServerRpc()
     {
         StartCoroutine(WaitPlayers());
     }
+
+    /// <summary>
+    /// On va montrer à tout les joueurs qu'un joueur tire
+    /// </summary>
     [ClientRpc]
     public void SyncShootClientRpc()
     {
@@ -244,5 +236,67 @@ public class PlayerNetwork : NetworkBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         SyncShootClientRpc();
+    }
+
+    /// <summary>
+    /// Quand un joueur est touché
+    /// </summary>
+    [ServerRpc(RequireOwnership = false)]
+    public void GetTouchedServerRpc()
+    {
+       GetTouchedClientRpc();
+    }
+
+    /// <summary>
+    /// On va le remove de la liste des joueurs vivants
+    /// </summary>
+    [ClientRpc]
+    public void GetTouchedClientRpc()
+    {
+        for (int i = 0; i < GameManager.Instance.preys.Count; i++)
+            {
+                if (GameManager.Instance.preys[i] != null)
+                {
+                    if (GameManager.Instance.preys[i] == gameObject)
+                    {
+                        GameManager.Instance.preys.Remove(GameManager.Instance.preys[i]);
+                    }
+                }
+            }
+
+            for (int i = 0; i < GameManager.Instance.players.Count; i++)
+            {
+                if (GameManager.Instance.players[i] != null)
+                {
+                    if (GameManager.Instance.players[i] == gameObject)
+                    {
+                        GameManager.Instance.players.Remove(GameManager.Instance.players[i]);
+                    }
+                }
+            }
+            
+            gameObject.SetActive(false);
+        if (GameManager.Instance.players.Count == 1)
+        {
+            GameManager.Instance.teamManager.Victory(GameManager.Instance.players[0].name);
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SoundEmitServerRpc()
+    {
+        StartCoroutine(WaitPlayersSounds());
+    }
+
+    private IEnumerator WaitPlayersSounds()
+    {
+        yield return new WaitForSeconds(0.01f);
+        SoundEmitClientRpc();
+    }
+
+    [ClientRpc]
+    private void SoundEmitClientRpc()
+    {
+        SendMessage("Step");
     }
 }
