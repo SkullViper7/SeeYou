@@ -83294,16 +83294,6 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 3171583696
       objectReference: {fileID: 0}
-    - target: {fileID: 5552550634689413938, guid: 0e7612e8fdc35f840bd47ae6322cfe4a,
-        type: 3}
-      propertyPath: RotationSpeed
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 6642140546583390852, guid: 0e7612e8fdc35f840bd47ae6322cfe4a,
-        type: 3}
-      propertyPath: _layerMask.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
     - target: {fileID: 7729877805908281407, guid: 0e7612e8fdc35f840bd47ae6322cfe4a,
         type: 3}
       propertyPath: m_Name
