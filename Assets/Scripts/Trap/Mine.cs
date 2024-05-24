@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Mine : MonoBehaviour
+public class MinePoint : MonoBehaviour
 {
     [SerializeField]
     private GameObject zone;

@@ -196,14 +196,14 @@ public class FreeFlyCamera : MonoBehaviour
         {
             // Pitch
             transform.rotation *= Quaternion.AngleAxis(
-                -Input.GetAxis("Mouse SensY") * _mouseSense,
+                -Input.GetAxis("Mouse Y") * _mouseSense,
                 Vector3.right
             );
 
             // Paw
             transform.rotation = Quaternion.Euler(
                 transform.eulerAngles.x,
-                transform.eulerAngles.y + Input.GetAxis("Mouse SensX") * _mouseSense,
+                transform.eulerAngles.y + Input.GetAxis("Mouse X") * _mouseSense,
                 transform.eulerAngles.z
             );
         }

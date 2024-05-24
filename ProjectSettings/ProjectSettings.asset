@@ -923,7 +923,10 @@ PlayerSettings:
   windowsGamepadBackendHint: 0
   cloudProjectId: 9adf602d-bf73-4d86-8f18-53c751052c08
   framebufferDepthMemorylessMode: 0
-  qualitySettingsNames: []
+  qualitySettingsNames:
+  - Low
+  - Medium
+  - HIgh
   projectName: SeeYou (2)
   organizationId: viper750
   cloudEnabled: 0
