@@ -5,11 +5,13 @@ using UnityEngine.InputSystem;
 public class Shoot : MonoBehaviour
 {
     public GameObject bullet;
+    public float DelayBulletBeforeGetDestroy;
 
     [SerializeField]private Transform shoot;
     [SerializeField] private float power;
     private GameObject fire;
     private PlayerMain main;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
@@ -23,7 +25,8 @@ public class Shoot : MonoBehaviour
         
         GameObject boule = Instantiate(bullet, shoot.position, Quaternion.identity);
         boule.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * power);
-        Destroy(boule, 2f);
+        boule.SendMessage("InitBullet", gameObject);
+        Destroy(boule, DelayBulletBeforeGetDestroy);
     }
 
     public void SyncShoot()

@@ -12,9 +12,13 @@ public class PlayerInputs : MonoBehaviour
 
     public bool _canShoot;
 
+    Animator _animator;
+
     private void Awake()
     {
         this.playerInput = this.GetComponent<PlayerInput>();
+
+        _animator = GetComponent<Animator>();
     }
 
     public void OnMove(InputValue _move)
@@ -22,6 +26,15 @@ public class PlayerInputs : MonoBehaviour
         if (this._playerMain.playerNetwork.ActionFromClient())
         {
             this._playerMain.playerMovement.direction = _move.Get<Vector3>();
+        }
+
+        if (_move.Get<Vector3>() != Vector3.zero)
+        {
+            _animator.Play("Run");
+        }
+        else
+        {
+            _animator.Play("Idle");
         }
     }
 

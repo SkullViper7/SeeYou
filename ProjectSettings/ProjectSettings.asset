@@ -921,11 +921,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 082de901-3976-48c3-868e-251dfd934213
+  cloudProjectId: 9adf602d-bf73-4d86-8f18-53c751052c08
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: SeeYou (1)
-  organizationId: bononoi
+  projectName: SeeYou (2)
+  organizationId: viper750
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
