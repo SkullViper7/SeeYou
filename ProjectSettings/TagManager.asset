@@ -11,6 +11,8 @@ TagManager:
   - Environement
   - Test
   - Terrain
+  - UIToRemove
+  - Item
   layers:
   - Default
   - TransparentFX

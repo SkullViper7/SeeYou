@@ -11,9 +11,16 @@ public class SpawnZoneObjects : MonoBehaviour
 
     void Update()
     {
-        int randomIndex = Random.Range(0, grenade.Length);
-        Vector3 randomSpawnPosition = new Vector3(Random.Range(range1, range2), 5, Random.Range(range1, range2));
+        for(int i = 0; i < grenade.Length; i++)
+        {
+            int randomIndex = Random.Range(0, grenade.Length);
+            Vector3 randomSpawnPosition = new Vector3(Random.Range(range1, range2), 5, Random.Range(range1, range2));
 
-        Instantiate(grenade[randomIndex], randomSpawnPosition, Quaternion.identity);
+            Instantiate(grenade[randomIndex], randomSpawnPosition, Quaternion.identity);
+        }
+        
     }
+
+    
+
 }
