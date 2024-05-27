@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Netcode;
+using Unity.Netcode.Samples;
 using UnityEngine;
 
 public class PlayerNetwork : NetworkBehaviour
@@ -20,29 +22,29 @@ public class PlayerNetwork : NetworkBehaviour
 
     private void Start()
     {
-        if (this._network == null)
+        if (_network == null)
         {
-            this._network = NetworkManager.Singleton;
+            _network = NetworkManager.Singleton;
         }
     }
 
     public void InitPlayerMain(PlayerMain _PM)
     {
-        this._playerMain = _PM;
+        _playerMain = _PM;
         _PM.playerNetwork = this;
     }
 
     public bool ActionFromClient()
     {
         bool canDoTheAction = false;
-        if (this._network == null)
+        if (_network == null)
         {
-            this._network = NetworkManager.Singleton;
+            _network = NetworkManager.Singleton;
         }
 
-        if (this._network.LocalClient != null)
+        if (_network.LocalClient != null)
         {
-            if (this._network.LocalClient.PlayerObject.TryGetComponent(out PlayerMain playerMain))
+            if (_network.LocalClient.PlayerObject.TryGetComponent(out PlayerMain playerMain))
             {
                 canDoTheAction = true;
             }
@@ -53,7 +55,7 @@ public class PlayerNetwork : NetworkBehaviour
 
     public bool IsOwnerOfTheGameObject()
     {
-        return this.IsOwner;
+        return IsOwner;
     }
 
 
@@ -64,33 +66,22 @@ public class PlayerNetwork : NetworkBehaviour
     /// </summary>
     public override void OnNetworkSpawn()
     {
-        if (GameManager.Instance.players.Count <= maxNumberOfPlayer)
+        if (GameManager.Instance.players.Count <= NetworkManager.Singleton.GetComponent<NetworkLan>().NumberOfPlayer.Value)
         {
             GameManager.Instance.players.Add(gameObject);
-            this.gameObject.name += GameManager.Instance.players.Count;
-            if (this.IsOwner)
+            gameObject.name += GameManager.Instance.players.Count;
+            if (IsOwner)
             {
-                this.GetComponent<PlayerMain>().InitPlayer();
-                this.GetComponent<PlayerMain>().playerCamera.ActiveCam();
+                GetComponent<PlayerMain>().InitPlayer();
+                GetComponent<PlayerMain>().playerCamera.ActiveCam();
             }
 
-            /*if (this.IsHost)
-            {
-                AddPlayerClientRpc(this.gameObject.name);
-                InitPlayerServerRPC();
-            }*/
-
-            this.GetComponent<SpawnPlayer>().Spawn();
-
-            if (GameManager.Instance.players.Count == maxNumberOfPlayer)
+            GetComponent<SpawnPlayer>().Spawn();
+            if (GameManager.Instance.players.Count == NetworkManager.Singleton.GetComponent<NetworkLan>().NumberOfPlayer.Value)
             {
                 GameManager.Instance.preys.AddRange(GameManager.Instance.players);
-                this.StartCoroutine(this.SpawnClient());
+                RolesChangesServerRpc();
             }
-
-            /*    GetComponent<PlayerMain>().cam.gameObject.SetActive(true);
-            }
-            GetComponent<SpawnPlayer>().Spawn();*/
         }
         else
         {
@@ -98,51 +89,10 @@ public class PlayerNetwork : NetworkBehaviour
         }
     }
 
-    /// <summary>
-    /// Permet d'attendre le spawn du serveur
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator SpawnClient()
-    {
-        yield return new WaitForSeconds(2);
-        SpawnServer();
-    }
-
-    /// <summary>
-    /// Une fois tout les joueurs spawns on va rechercher un chasseur
-    /// </summary>
-    private void SpawnServer()
-    {
-        if (IsHost)
-        {
-            BeginRotationClientRpc(GameManager.Instance.teamManager.FindAHunter());
-        }
-    }
-
-    public void ChangeRoles()
-    {
-        //Debug.Log("changeRole");
-        //RolesChangesServerRpc(GameManager.Instance.teamManager.FindAHunter());
-        if (IsOwner)
-        {
-            RolesChangesClientRpc(GameManager.Instance.teamManager.FindAHunter());
-        }
-    }
-
     [ServerRpc]
     public void RolesChangesServerRpc()
     {
-        //GameManager.Instance.network.SetHunterForManagersServerRpc();
-        //ChangeHunterClientRpc(GameManager.Instance.teamManager.FindAHunterServ());
-
         StartCoroutine(DelayChangeHunter(GameManager.Instance.teamManager.FindAHunterServ()));
-        //RolesChangesClientRpc(GameManager.Instance.teamManager.FindAHunter());
-    }
-
-    [ClientRpc]
-    private void RolesChangesClientRpc(int newHunter)
-    {
-        StartCoroutine(GameManager.Instance.WaitBeforeChangeRoles(newHunter));
     }
 
     [ClientRpc]
@@ -153,10 +103,15 @@ public class PlayerNetwork : NetworkBehaviour
 
     private IEnumerator DelayChangeHunter(int newHunter)
     {
-        yield return new WaitForSeconds(2);
+        GameObject actualHunter = GameManager.Instance.teamManager._hunter;
+        yield return new WaitForSeconds(_playerMain.shoot.DelayBulletBeforeGetDestroy);
         SearchAllPlayerClientRpc();
         yield return new WaitForSeconds(delayBeforeChangeRoles);
         ChangeHunterClientRpc(newHunter);
+        if (GameManager.Instance.teamManager._hunter != actualHunter)
+        {
+            GameManager.Instance.teamManager.SetPreys(actualHunter);
+        }
     }
 
     [ClientRpc]
@@ -172,30 +127,32 @@ public class PlayerNetwork : NetworkBehaviour
                 {
                     player.GetComponent<PlayerMain>().IsHunter = false;
                 }
-
-                //player.transform.SetParent(this._preyParent);
+                else
+                {
+                    player.SendMessage("BecomePrey");
+                }
             }
         }
     }
 
-    [ClientRpc]
-    private void BeginRotationClientRpc(int newHunter)
-    {
-        StartCoroutine(GameManager.Instance.WaitBeforeBegin(newHunter));
-    }
-
+    /// <summary>
+    /// Lorsqu'un joueur reçoit le message BecomeHunter
+    /// </summary>
     public void BecomeHunter()
     {
-        this.FindMain();
+        FindMain();
         if (IsOwner)
         {
             _playerMain.playerInputs.SwitchToHunter();
         }
     }
 
+    /// <summary>
+    /// Lorsqu'un joueur reçoit le message BecomePrey
+    /// </summary>
     public void BecomePrey()
     {
-        this.FindMain();
+        FindMain();
         if (IsOwner)
         {
             _playerMain.playerInputs.SwitchToPrey();
@@ -226,10 +183,7 @@ public class PlayerNetwork : NetworkBehaviour
     [ClientRpc]
     public void SyncShootClientRpc()
     {
-        if (!IsOwner)
-        {
-            GameManager.Instance.teamManager._hunter.GetComponent<Shoot>().Shooting();
-        }
+        GameManager.Instance.teamManager._hunter.GetComponent<Shoot>().Shooting();
     }
 
     private IEnumerator WaitPlayers()
@@ -285,12 +239,18 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SoundEmitServerRpc()
     {
-        StartCoroutine(WaitPlayersSounds());
+        WaitPlayersSounds();
     }
 
-    private IEnumerator WaitPlayersSounds()
+   /*private IEnumerator WaitPlayersSounds()
     {
         yield return new WaitForSeconds(0.01f);
+        SoundEmitClientRpc();
+    }*/
+
+    private async void WaitPlayersSounds()
+    {
+        await Task.CompletedTask;
         SoundEmitClientRpc();
     }
 

@@ -41,23 +41,10 @@ public class SpawnManager : MonoBehaviour
     {
         GameObject spawner = spawnList[Random.Range(0, spawnList.Count)];
         spawnList.Remove(spawner);
-        Debug.LogError(spawner.transform.position +"/" + spawnList.Count + "/" + spawner.name + "/" + Time.frameCount);
-
-        if(spawner.transform.position == Vector3.zero)
-        {
-            Debug.Log("zero");
-        }
 
         await Task.Delay(10);
 
         return spawner;
-
-        // return await Task.Run(() =>
-        // {
-        //     GameObject spawner = spawnList[Random.Range(0, spawnList.Count)];
-        //     spawnList.Remove(spawner);
-        //     return spawner;
-        // });
     }
 
 }
