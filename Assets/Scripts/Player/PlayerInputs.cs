@@ -29,7 +29,7 @@ public class PlayerInputs : MonoBehaviour
 
     private void Awake()
     {
-        this.playerInput = this.GetComponent<PlayerInput>();
+        playerInput = GetComponent<PlayerInput>();
 
         _animator = GetComponent<Animator>();
     }
@@ -68,17 +68,16 @@ public class PlayerInputs : MonoBehaviour
 
     public void OnShooting()
     {
-        if (this._eventShoot == null)
+        if (_eventShoot == null)
         {
-            this._eventShoot += this._playerMain.shoot.Shooting;
-            this._eventShoot += this._playerMain.shoot.SyncShoot;
-            this._eventShoot += this._playerMain.playerNetwork.RolesChangesServerRpc;
+            _eventShoot += _playerMain.shoot.SyncShoot;
+            _eventShoot += _playerMain.playerNetwork.RolesChangesServerRpc;
         }
 
-        if (this._canShoot)
+        if (_canShoot)
         {
             _canShoot = false;
-            this._eventShoot?.Invoke();
+            _eventShoot?.Invoke();
         }
     }
 
@@ -99,30 +98,30 @@ public class PlayerInputs : MonoBehaviour
 
     public void InitPlayerMain(PlayerMain _PM)
     {
-        this._playerMain = _PM;
+        _playerMain = _PM;
         _PM.playerInputs = this;
     }
 
     public void SwitchToHunter()
     {
-        this.FindMain();
+        FindMain();
         Debug.Log("switchs");
         _canShoot = true;
-        this.playerInput.SwitchCurrentActionMap("Hunter");
+        playerInput.SwitchCurrentActionMap("Hunter");
     }
 
     public void SwitchToPrey()
     {
-        this.FindMain();
-        this.playerInput.SwitchCurrentActionMap("Prey");
+        FindMain();
+        playerInput.SwitchCurrentActionMap("Prey");
     }
 
     private void FindMain()
     {
-        if (this._playerMain == null)
+        if (_playerMain == null)
         {
-            this._playerMain = this.GetComponent<PlayerMain>();
-            this._playerMain.playerNetwork = this.GetComponent<PlayerNetwork>();
+            _playerMain = GetComponent<PlayerMain>();
+            _playerMain.playerNetwork = GetComponent<PlayerNetwork>();
         }
     }
 }
