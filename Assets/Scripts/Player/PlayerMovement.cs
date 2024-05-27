@@ -82,17 +82,17 @@ public class PlayerMovement : NetworkBehaviour
 
     public void InitPlayerMain(PlayerMain _PM)
     {
-        this._playerMain = _PM;
+        _playerMain = _PM;
         _PM.playerMovement = this;
     }
 
     public void BecomeHunter()
     {
-        this.direction = Vector3.zero;
+        direction = Vector3.zero;
     }
 
     public void BecomePrey()
     {
-        this.direction = Vector3.zero;
+        direction = Vector3.zero;
     }
 }

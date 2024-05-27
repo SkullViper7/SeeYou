@@ -1,5 +1,4 @@
 using UnityEngine;
-using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using TMPro;
 using System.Net;
@@ -10,12 +9,17 @@ namespace Unity.Netcode.Samples
     public class NetworkLan : MonoBehaviour
     {
         public PreyInput preyInput;
+        public NetworkVariable<int> NumberOfPlayer = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
+
         private bool pcAssigned;
 
         [SerializeField] TextMeshProUGUI ipAddressText;
         [SerializeField] TMP_InputField ip;
 
         [SerializeField] string ipAddress;
+
+        [SerializeField] TMP_InputField numberOfPlayerField;
         [SerializeField] UnityTransport transport;
 
         void Start()
@@ -24,6 +28,7 @@ namespace Unity.Netcode.Samples
             SetIpAddress(); // Set the Ip to the above address
             pcAssigned = false;
             InvokeRepeating("assignPlayerController", 0.1f, 0.1f);
+            numberOfPlayerField.onValueChanged.AddListener(ValidateInput);
         }
 
         public void StartServer()
@@ -37,6 +42,9 @@ namespace Unity.Netcode.Samples
         {
             NetworkManager.Singleton.StartHost();
             GetLocalIPAddress();
+            UpdateNumberOfPlayerClientRpc(NumberOfPlayer.Value);
+
+            Debug.Log(int.Parse(numberOfPlayerField.text));
         }
 
         // To Join a game
@@ -47,6 +55,12 @@ namespace Unity.Netcode.Samples
             SetIpAddress();
             NetworkManager.Singleton.StartClient();
             Debug.Log(NetworkManager.Singleton.StartClient());
+            Invoke("LauncheCLient", 1.0f);
+            
+            /*if ()
+            {
+                NumberOfPlayer = int.Parse(numberOfPlayerField.text);
+            }*/
         }
 
         /* Gets the Ip Address of your connected network and
@@ -91,6 +105,48 @@ namespace Unity.Netcode.Samples
             }
         }
 
+        private void ValidateInput(string input)
+        {
+            int value;
+            if (int.TryParse(input, out value))
+            {
+                NumberOfPlayer.Value = int.Parse(input);
+            }
+            else
+            {
+                numberOfPlayerField.text = "";
+            }
+        }
+        
+        private void LauncheCLient()
+        {
+            RequestNumberOfPlayerServerRpc();
+        }
+
+         [ServerRpc(RequireOwnership = false)]
+        private void RequestNumberOfPlayerServerRpc(ServerRpcParams rpcParams = default)
+        {
+            // Répondre au client avec le nombre de joueurs
+            RespondNumberOfPlayerClientRpc(NumberOfPlayer.Value, rpcParams.Receive.SenderClientId);
+        }
+
+        // RPC pour envoyer le nombre de joueurs au client demandeur
+        [ClientRpc]
+        private void RespondNumberOfPlayerClientRpc(int numberOfPlayer, ulong clientId)
+        {
+            if (NetworkManager.Singleton.LocalClientId == clientId)
+            {
+                NumberOfPlayer.Value = numberOfPlayer;
+                Debug.Log("Received NumberOfPlayer from host: " + numberOfPlayer);
+            }
+        }
+
+        [ClientRpc]
+        private void UpdateNumberOfPlayerClientRpc(int numberOfPlayer)
+        {
+            NumberOfPlayer.Value = numberOfPlayer;
+            Debug.Log("Updated NumberOfPlayer on client: " + numberOfPlayer);
+        }
 
     }
 }

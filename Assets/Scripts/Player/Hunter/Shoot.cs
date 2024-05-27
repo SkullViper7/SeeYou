@@ -22,7 +22,7 @@ public class Shoot : MonoBehaviour
 
     public void Shooting()
     {
-        
+        Debug.LogError("The Shooter is " + gameObject.name + " and the hunter is " + GameManager.Instance.teamManager._hunter.name);
         GameObject boule = Instantiate(bullet, shoot.position, Quaternion.identity);
         boule.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * power);
         boule.SendMessage("InitBullet", gameObject);
