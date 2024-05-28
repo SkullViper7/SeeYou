@@ -115,13 +115,13 @@ namespace StarterAssets
 		private void Update()
 		{
 			GroundedCheck();
-			Move();
+			//Move();
 			Shader.SetGlobalVector("_Player", transform.position + Vector3.up * _collider.radius);
 		}
 
 		private void LateUpdate()
 		{
-			CameraRotation();
+			//CameraRotation();
 		}
 
 		private void GroundedCheck()
@@ -131,7 +131,7 @@ namespace StarterAssets
 			Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
 		}
 
-		private void CameraRotation()
+		/*private void CameraRotation()
 		{
 			// if there is an input
 			if (_input.look.sqrMagnitude >= _threshold)
@@ -151,9 +151,9 @@ namespace StarterAssets
 				// rotate the player left and right
 				transform.Rotate(Vector3.up * _rotationVelocity);
 			}
-		}
+		}*/
 
-		private void Move()
+		/*private void Move()
 		{
 			// set target speed based on move speed, sprint speed and if sprint is pressed
 			float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
@@ -198,7 +198,7 @@ namespace StarterAssets
 
 			// move the player
 			_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
-		}
+		}*/
 
 		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
 		{
