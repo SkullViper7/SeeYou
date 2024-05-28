@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class PlayerMain : MonoBehaviour
 {
-    public PlayerMovement playerMovement;
+    public FirstPersonController playerMovement;
 
-    public PlayerInputs playerInputs;
+    public StarterAssetsInputs playerInputs;
 
     public PlayerNetwork playerNetwork;
 
@@ -14,7 +14,7 @@ public class PlayerMain : MonoBehaviour
 
     public PlayerCollider playerCollider;
 
-    public Shoot shoot;
+    public RaycastShoot shoot;
 
     private bool isHunter;
 
