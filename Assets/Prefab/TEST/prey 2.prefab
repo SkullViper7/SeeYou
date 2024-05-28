@@ -259,7 +259,7 @@ GameObject:
   - component: {fileID: 8815403310859121549}
   - component: {fileID: 7571330431608595567}
   - component: {fileID: 8930209369374158320}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: prey 2
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -503,7 +503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayBeforeChangeRoles: 2
-  maxNumberOfPlayer: 5
+  maxNumberOfPlayer: 2
 --- !u!114 &3669724927191624104
 MonoBehaviour:
   m_ObjectHideFlags: 0

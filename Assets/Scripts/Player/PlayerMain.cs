@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMain : MonoBehaviour
@@ -22,18 +20,19 @@ public class PlayerMain : MonoBehaviour
 
     public bool IsHunter
     {
-        get { return this.isHunter; }
+        get { return isHunter; }
 
         set
         {
-            this.isHunter = value;
-            if (this.isHunter)
+            isHunter = value;
+            if (isHunter)
             {
-                this.gameObject.SendMessage("BecomeHunter");
+                SendMessage("BecomeHunter");
             }
             else
             {
-                this.gameObject.SendMessage("BecomePrey");
+                Debug.Log(gameObject.name);
+                SendMessage("BecomePrey");
             }
         }
     }
@@ -45,6 +44,6 @@ public class PlayerMain : MonoBehaviour
 
     public void InitPlayer()
     {
-        this.gameObject.SendMessage("InitPlayerMain", this);
+        SendMessage("InitPlayerMain", this);
     }
 }
