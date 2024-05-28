@@ -66,11 +66,7 @@ public class PlayerNetwork : NetworkBehaviour
     /// </summary>
     public override void OnNetworkSpawn()
     {
-        if (IsHost)
-        {
-            itemsToSpawn = NetworkManager.Singleton.GetComponent<NetworkLan>().ItemsToSpawn;
-
-        }
+        itemsToSpawn = NetworkManager.Singleton.GetComponent<NetworkLan>().ItemsToSpawn;
         //if (GameManager.Instance.players.Count <= NetworkManager.Singleton.GetComponent<NetworkLan>().NumberOfPlayer.Value)
         if (GameManager.Instance.players.Count <= 2)
         {
@@ -88,10 +84,6 @@ public class PlayerNetwork : NetworkBehaviour
             {
                 GameManager.Instance.preys.AddRange(GameManager.Instance.players);
                 RolesChangesServerRpc();
-                if (IsHost)
-                {
-                    itemsToSpawn.GetComponent<SpawnZoneObjects>().SpawnItems();
-                }
             }
         }
         else

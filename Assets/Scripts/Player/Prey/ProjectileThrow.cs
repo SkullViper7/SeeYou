@@ -6,8 +6,7 @@ public class ProjectileThrow : MonoBehaviour
 {
     TrajectoryPredictor trajectoryPredictor;
 
-    [SerializeField]
-    Rigidbody objectToThrow;
+    public Rigidbody objectToThrow;
 
     [SerializeField, Range(0.0f, 50.0f)]
     public float force;
@@ -17,6 +16,10 @@ public class ProjectileThrow : MonoBehaviour
 
     public InputAction fire;
 
+    public void GetAnotherItem(Rigidbody _objectToThrow) 
+    {
+        objectToThrow = _objectToThrow;
+    }
     void OnEnable()
     {
         trajectoryPredictor = GetComponent<TrajectoryPredictor>();
