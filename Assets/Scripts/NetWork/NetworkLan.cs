@@ -47,7 +47,7 @@ namespace Unity.Netcode.Samples
             GetLocalIPAddress();
             UpdateNumberOfPlayerClientRpc(NumberOfPlayer.Value);
 
-            Debug.Log(int.Parse(numberOfPlayerField.text));
+//            Debug.Log(int.Parse(numberOfPlayerField.text));
         }
 
         // To Join a game

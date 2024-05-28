@@ -83,7 +83,7 @@ public class PlayerMovement : NetworkBehaviour
     public void InitPlayerMain(PlayerMain _PM)
     {
         _playerMain = _PM;
-        _PM.playerMovement = this;
+        // _PM.playerMovement = this;
     }
 
     public void BecomeHunter()

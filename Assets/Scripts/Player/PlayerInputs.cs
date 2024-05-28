@@ -57,7 +57,7 @@ public class PlayerInputs : MonoBehaviour
     public void InitPlayerMain(PlayerMain _PM)
     {
         _playerMain = _PM;
-        _PM.playerInputs = this;
+        // _PM.playerInputs = this;
     }
 
     public void SwitchToHunter()

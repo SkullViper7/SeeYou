@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class PlayerMain : MonoBehaviour
 {
-    public PlayerMovement playerMovement;
+    public FirstPersonController playerMovement;
 
-    public PlayerInputs playerInputs;
+    public StarterAssetsInputs playerInputs;
 
     public PlayerNetwork playerNetwork;
 

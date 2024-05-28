@@ -72,7 +72,7 @@ public class PlayerNetwork : NetworkBehaviour
 
         }
         //if (GameManager.Instance.players.Count <= NetworkManager.Singleton.GetComponent<NetworkLan>().NumberOfPlayer.Value)
-        if (GameManager.Instance.players.Count <= 1)
+        if (GameManager.Instance.players.Count <= 2)
         {
             GameManager.Instance.players.Add(gameObject);
             gameObject.name += GameManager.Instance.players.Count;
@@ -84,7 +84,7 @@ public class PlayerNetwork : NetworkBehaviour
 
             GetComponent<SpawnPlayer>().Spawn();
             //if (GameManager.Instance.players.Count == NetworkManager.Singleton.GetComponent<NetworkLan>().NumberOfPlayer.Value)
-            if (GameManager.Instance.players.Count == 1)
+            if (GameManager.Instance.players.Count == 2)
             {
                 GameManager.Instance.preys.AddRange(GameManager.Instance.players);
                 RolesChangesServerRpc();
@@ -203,7 +203,7 @@ public class PlayerNetwork : NetworkBehaviour
         if (_playerMain == null)
         {
             _playerMain = GetComponent<PlayerMain>();
-            _playerMain.playerInputs = GetComponent<PlayerInputs>();
+            _playerMain.playerInputs = GetComponent<StarterAssetsInputs>();
         }
     }
 
