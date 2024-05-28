@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Buisson : MonoBehaviour
 {
     public ParticleSystem Feuille;
-    public GameObject Vfx;
+    public VisualEffect Vfx;
 
     private void OnCollisionEnter(Collision collision)
     {
-        Vfx.SetActive(true);
-        Feuille.Play();
+        if (collision.collider.CompareTag("Prey"))
+        {
+            Vfx.Play();
+            Feuille.Play();
+        }       
     }
-
 }

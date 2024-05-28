@@ -104,7 +104,7 @@ public class PlayerNetwork : NetworkBehaviour
     private IEnumerator DelayChangeHunter(int newHunter)
     {
         GameObject actualHunter = GameManager.Instance.teamManager._hunter;
-        yield return new WaitForSeconds(_playerMain.shoot.DelayBulletBeforeGetDestroy);
+        //yield return new WaitForSeconds(_playerMain.shoot.DelayBulletBeforeGetDestroy);
         SearchAllPlayerClientRpc();
         yield return new WaitForSeconds(delayBeforeChangeRoles);
         ChangeHunterClientRpc(newHunter);
