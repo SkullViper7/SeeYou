@@ -93,16 +93,27 @@ public class PlayerNetwork : NetworkBehaviour
     }
 
     /// <summary>
+    /// Se lance que lorsque tout les joueurs sont connectés
+    /// </summary>
+    [ServerRpc]
+    private void StartTheGame()
+    {
+        for (int i = 0; i < itemsToSpawn.GetComponent<SpawnZoneObjects>().Items.Length; i++)
+        {
+            SpawnItemsClientRPC(itemsToSpawn.GetComponent<SpawnZoneObjects>().SpawnItems(), i);
+        }
+
+        RolesChangesServerRpc();
+    }
+
+    /// <summary>
     /// Va appeler 
     /// </summary>
     [ServerRpc]
     public void RolesChangesServerRpc()
     {
         StartCoroutine(DelayChangeHunter(GameManager.Instance.teamManager.FindAHunterServ()));
-        /*for (int i = 0; i < itemsToSpawn.GetComponent<SpawnZoneObjects>().Items.Length; i++)
-        {
-            SpawnItemsClientRPC(itemsToSpawn.GetComponent<SpawnZoneObjects>().SpawnItems(), i);
-        }*/
+        
     }
 
     /// <summary>

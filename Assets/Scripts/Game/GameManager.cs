@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     //[HideInInspector]
     public List<GameObject> preys = new();
 
+    public List<GameObject> Traps = new();
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
