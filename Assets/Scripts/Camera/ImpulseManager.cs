@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
@@ -28,13 +26,17 @@ public class ImpulseManager : MonoBehaviour
 
     CinemachineImpulseSource _impulseSource;
 
+    // Singleton instance of ImpulseManager.
+    // Ensures there is only one instance of ImpulseManager in the scene.
     private void Awake()
     {
+        // If this is not the instance of ImpulseManager, destroy this object.
         if (this != Instance)
         {
             Destroy(this.gameObject);
         }
 
+        // Get the CinemachineImpulseSource component attached to this game object.
         _impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
@@ -91,8 +93,13 @@ public class ImpulseManager : MonoBehaviour
         _impulseSource.GenerateImpulse();
     }
 
+    /// <summary>
+    /// Generates an impulse without specifying the type, shape, velocity, or duration.
+    /// </summary>
     public void Impulse()
     {
+        // Generate an impulse using the Cinemachine Impulse Source.
+        // The impulse type, shape, default velocity, and duration are set in the Shake method.
         _impulseSource.GenerateImpulse();
     }
 }
