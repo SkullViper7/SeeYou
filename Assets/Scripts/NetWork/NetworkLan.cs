@@ -10,7 +10,7 @@ namespace Unity.Netcode.Samples
     {
         public PreyInput preyInput;
         public NetworkVariable<int> NumberOfPlayer = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-
+        public GameObject ItemsToSpawn;        
 
         private bool pcAssigned;
 
@@ -21,6 +21,9 @@ namespace Unity.Netcode.Samples
 
         [SerializeField] TMP_InputField numberOfPlayerField;
         [SerializeField] UnityTransport transport;
+
+        
+        
 
         void Start()
         {
@@ -44,7 +47,7 @@ namespace Unity.Netcode.Samples
             GetLocalIPAddress();
             UpdateNumberOfPlayerClientRpc(NumberOfPlayer.Value);
 
-            Debug.Log(int.Parse(numberOfPlayerField.text));
+//            Debug.Log(int.Parse(numberOfPlayerField.text));
         }
 
         // To Join a game
@@ -123,7 +126,7 @@ namespace Unity.Netcode.Samples
             RequestNumberOfPlayerServerRpc();
         }
 
-         [ServerRpc(RequireOwnership = false)]
+        [ServerRpc(RequireOwnership = false)]
         private void RequestNumberOfPlayerServerRpc(ServerRpcParams rpcParams = default)
         {
             // Répondre au client avec le nombre de joueurs

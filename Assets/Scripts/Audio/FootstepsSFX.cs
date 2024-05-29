@@ -21,7 +21,7 @@ public class FootstepsSFX : MonoBehaviour
         _terrainDetector = new TerrainDetector();
     }
 
-    void Step()
+    public void Step()
     {
         AudioClip _clip = GetRandomClip();
         _audioSource.PlayOneShot(_clip);

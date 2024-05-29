@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RaycastShoot : MonoBehaviour
@@ -8,11 +6,11 @@ public class RaycastShoot : MonoBehaviour
     [SerializeField] bool _enabled = false;
 
     RaycastHit _hits;
+    private PlayerMain main;
 
-    void Update()
+    public void Shooting()
     {
         Ray ray = new Ray(transform.position, transform.TransformDirection (Vector3.forward));
-
 
         if(Physics.Raycast (ray, out _hits, 20f, _layerMask, QueryTriggerInteraction.Ignore))
         {
@@ -34,6 +32,14 @@ public class RaycastShoot : MonoBehaviour
         }
     }
 
+    public void SyncShoot()
+    {
+        main.playerNetwork.SyncShootServerRpc();
+    }
 
-
+    public void InitPlayerMain(PlayerMain _PM)
+    {
+        _PM.shoot = this;
+        main = _PM;
+    }
 }
