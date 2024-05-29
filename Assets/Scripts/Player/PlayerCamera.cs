@@ -5,7 +5,10 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour
 {
     public Camera cam;
-    
+
+    [SerializeField]
+    private GameObject cameraObject;
+        
     /*public float SensX;
     public float SensY;
 
@@ -48,17 +51,17 @@ public class PlayerCamera : MonoBehaviour
 
     public void ActiveCam()
     {
-        this.cam.gameObject.SetActive(true);
+        cameraObject.SetActive(true);
     }
 
     public void BecomeHunter()
     {
-        this.cam.cullingMask = _hunterMask;
+        cam.cullingMask = _hunterMask;
     }
 
     public void BecomePrey()
     {
-        this.cam.cullingMask = _preyMask;
+        cam.cullingMask = _preyMask;
     }
 
     public void InitPlayerMain(PlayerMain _PM)
