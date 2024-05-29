@@ -10,7 +10,6 @@ public class SpawnPlayer : MonoBehaviour
         {
             GameObject spawner = await SpawnManager.Instance.GiveSpawnToAPlayer();
             transform.position = spawner.transform.position;
-            Debug.LogError($"SpawnPlayer : {transform.position} / {spawner.transform.position} / {Time.frameCount}");
             transform.position = new Vector3(transform.position.x, 0.7f, transform.position.z);
         }
         else

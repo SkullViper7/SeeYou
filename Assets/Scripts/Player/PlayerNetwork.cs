@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,6 +7,7 @@ using UnityEngine;
 
 public class PlayerNetwork : NetworkBehaviour
 {
+    private GameObject itemsToSpawn;
     private NetworkManager _network;
 
     private PlayerMain _playerMain;
@@ -66,7 +66,9 @@ public class PlayerNetwork : NetworkBehaviour
     /// </summary>
     public override void OnNetworkSpawn()
     {
-        if (GameManager.Instance.players.Count <= NetworkManager.Singleton.GetComponent<NetworkLan>().NumberOfPlayer.Value)
+        itemsToSpawn = NetworkManager.Singleton.GetComponent<NetworkLan>().ItemsToSpawn;
+        //if (GameManager.Instance.players.Count <= NetworkManager.Singleton.GetComponent<NetworkLan>().NumberOfPlayer.Value)
+        if (GameManager.Instance.players.Count <= 2)
         {
             GameManager.Instance.players.Add(gameObject);
             gameObject.name += GameManager.Instance.players.Count;
@@ -77,7 +79,8 @@ public class PlayerNetwork : NetworkBehaviour
             }
 
             GetComponent<SpawnPlayer>().Spawn();
-            if (GameManager.Instance.players.Count == NetworkManager.Singleton.GetComponent<NetworkLan>().NumberOfPlayer.Value)
+            //if (GameManager.Instance.players.Count == NetworkManager.Singleton.GetComponent<NetworkLan>().NumberOfPlayer.Value)
+            if (GameManager.Instance.players.Count == 2)
             {
                 GameManager.Instance.preys.AddRange(GameManager.Instance.players);
                 RolesChangesServerRpc();
@@ -89,22 +92,44 @@ public class PlayerNetwork : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// Va appeler 
+    /// </summary>
     [ServerRpc]
     public void RolesChangesServerRpc()
     {
         StartCoroutine(DelayChangeHunter(GameManager.Instance.teamManager.FindAHunterServ()));
+        for (int i = 0; i < itemsToSpawn.GetComponent<SpawnZoneObjects>().Items.Length; i++)
+        {
+            SpawnItemsClientRPC(itemsToSpawn.GetComponent<SpawnZoneObjects>().SpawnItems(), i);
+        }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="newHunter"></param>
     [ClientRpc]
     private void ChangeHunterClientRpc(int newHunter)
     {
         GameManager.Instance.teamManager.SetHunterForAllClients(newHunter);
     }
 
+    [ClientRpc]
+    private void SpawnItemsClientRPC(Vector2 _position, int _indexItem)
+    {
+        itemsToSpawn.GetComponent<SpawnZoneObjects>().InstantiateEachItem(_position, _indexItem);    
+    }
+
+    /// <summary>
+    /// Va créer des délais avant de changer les roles
+    /// </summary>
+    /// <param name="newHunter"></param>
+    /// <returns></returns>
     private IEnumerator DelayChangeHunter(int newHunter)
     {
         GameObject actualHunter = GameManager.Instance.teamManager._hunter;
-        //yield return new WaitForSeconds(_playerMain.shoot.DelayBulletBeforeGetDestroy);
+        yield return new WaitForSeconds(_playerMain.shoot.DelayBulletBeforeGetDestroy);
         SearchAllPlayerClientRpc();
         yield return new WaitForSeconds(delayBeforeChangeRoles);
         ChangeHunterClientRpc(newHunter);
@@ -123,17 +148,25 @@ public class PlayerNetwork : NetworkBehaviour
             foreach (GameObject player in GameManager.Instance.players)
             {
                 player.layer = 6;
+                player.tag = "Prey";
                 if (player.GetComponent<PlayerMain>().IsHunter)
                 {
                     player.GetComponent<PlayerMain>().IsHunter = false;
                 }
                 else
                 {
+                    Debug.Log("Player not hunter");
                     player.SendMessage("BecomePrey");
                 }
             }
         }
     }
+
+    /*private async Task<GameObject> SpawnItems()
+    {
+        itemsToSpawn.GetComponent<SpawnZoneObjects>().SpawnItems();
+        await Task.CompletedTask;
+    }*/
 
     /// <summary>
     /// Lorsqu'un joueur reçoit le message BecomeHunter
@@ -164,7 +197,7 @@ public class PlayerNetwork : NetworkBehaviour
         if (_playerMain == null)
         {
             _playerMain = GetComponent<PlayerMain>();
-            _playerMain.playerInputs = GetComponent<PlayerInputs>();
+            _playerMain.playerInputs = GetComponent<StarterAssetsInputs>();
         }
     }
 
@@ -258,5 +291,32 @@ public class PlayerNetwork : NetworkBehaviour
     private void SoundEmitClientRpc()
     {
         SendMessage("Step");
+    }
+
+    /// <summary>
+    /// Quand un joueur est touché par un trap
+    /// </summary>
+    [ServerRpc(RequireOwnership = false)]
+    public void TrapEventServerRPC()
+    {
+        WaitPlayersTraps();
+    }
+
+    /// <summary>
+    /// On attend la sync avec tout les joueurs
+    /// </summary>
+    private async void WaitPlayersTraps()
+    {
+        await Task.CompletedTask;
+        TrapEventClientRPC();
+    }
+
+    /// <summary>
+    /// On va lancer l'event du trap
+    /// </summary>
+    [ClientRpc]
+    private void TrapEventClientRPC()
+    {
+        _playerMain.playerCollider.LastTrap.TriggerEvent();
     }
 }

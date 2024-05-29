@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerCollider : MonoBehaviour
 {
+    public Trap LastTrap;
     private PlayerMain _playerMain;
 
     public void InitPlayerMain(PlayerMain _PM)
@@ -13,6 +14,13 @@ public class PlayerCollider : MonoBehaviour
     public void Collision()
     {
         _playerMain.playerNetwork.GetTouchedServerRpc();
+    }
+
+    public void TriggerTrap(Trap _trap)
+    {
+        Debug.Log("trap");
+        LastTrap = _trap;
+        _playerMain.playerNetwork.TrapEventServerRPC();
     }
 
     private void OnCollisionEnter(Collision collision)

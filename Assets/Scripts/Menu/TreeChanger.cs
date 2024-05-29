@@ -11,7 +11,7 @@ public class TreeChanger : MonoBehaviour
 
     void Start()
     {
-        cache = Terrain.activeTerrain.terrainData.treePrototypes;//IMPORTANT, if this cache is not assigned to the original array, then your changes will be permanent.
+        cache = Terrain.activeTerrain.terrainData.treePrototypes;
         treeType = Terrain.activeTerrain.terrainData.treePrototypes;
 
         treeType[0].prefab = _Grass;

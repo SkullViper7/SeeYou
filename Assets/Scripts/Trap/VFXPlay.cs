@@ -8,10 +8,16 @@ public class VFXPlay : MonoBehaviour
     BoxCollider _collider;
     ParticleSystem _particleSystem;
 
+    AudioSource _audioSource;
+
+    [SerializeField] AudioClip _sfx;
+
     private void Awake()
     {
         _collider = GetComponentInChildren<BoxCollider>();
         _particleSystem = GetComponentInChildren<ParticleSystem>();
+
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -19,6 +25,7 @@ public class VFXPlay : MonoBehaviour
         if (collision.gameObject.tag == "Terrain")
         {
             _particleSystem.Play();
+            _audioSource.PlayOneShot(_sfx);
         }
     }
 }
