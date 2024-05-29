@@ -100,6 +100,7 @@ public class FirstPersonController : MonoBehaviour
 
 	private void Start()
 	{
+		Cursor.lockState = CursorLockMode.Locked;
 		_controller = GetComponent<CharacterController>();
 		_input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM
