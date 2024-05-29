@@ -99,10 +99,10 @@ public class PlayerNetwork : NetworkBehaviour
     public void RolesChangesServerRpc()
     {
         StartCoroutine(DelayChangeHunter(GameManager.Instance.teamManager.FindAHunterServ()));
-        for (int i = 0; i < itemsToSpawn.GetComponent<SpawnZoneObjects>().Items.Length; i++)
+        /*for (int i = 0; i < itemsToSpawn.GetComponent<SpawnZoneObjects>().Items.Length; i++)
         {
             SpawnItemsClientRPC(itemsToSpawn.GetComponent<SpawnZoneObjects>().SpawnItems(), i);
-        }
+        }*/
     }
 
     /// <summary>
@@ -129,7 +129,7 @@ public class PlayerNetwork : NetworkBehaviour
     private IEnumerator DelayChangeHunter(int newHunter)
     {
         GameObject actualHunter = GameManager.Instance.teamManager._hunter;
-        yield return new WaitForSeconds(_playerMain.shoot.DelayBulletBeforeGetDestroy);
+        yield return new WaitForSeconds(2f);
         SearchAllPlayerClientRpc();
         yield return new WaitForSeconds(delayBeforeChangeRoles);
         ChangeHunterClientRpc(newHunter);
@@ -216,12 +216,13 @@ public class PlayerNetwork : NetworkBehaviour
     [ClientRpc]
     public void SyncShootClientRpc()
     {
-        GameManager.Instance.teamManager._hunter.GetComponent<Shoot>().Shooting();
+        GameManager.Instance.teamManager._hunter.GetComponent<RaycastShoot>().Shooting();
     }
 
     private IEnumerator WaitPlayers()
     {
         yield return new WaitForSeconds(0.1f);
+        //tester avec yield return null
         SyncShootClientRpc();
     }
 
