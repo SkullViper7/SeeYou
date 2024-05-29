@@ -1,0 +1,18 @@
+Grenades
+    Throw§
+    IceBreak§
+    PaintSplash§
+    Puff
+
+Rifle
+    Shoot§
+
+Menu
+    Hover§
+    Click§
+    Back§
+
+Game
+    Start
+    End
+    Round Switch
