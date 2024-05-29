@@ -233,6 +233,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3674561466678535144}
   - component: {fileID: 2340420322738511534}
+  - component: {fileID: 2938189862918484541}
   m_Layer: 0
   m_Name: Cow
   m_TagString: Untagged
@@ -352,6 +353,22 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0007722415, y: 0.0038735326, z: -0.00032047136}
     m_Extent: {x: 0.010567034, y: 0.011399895, z: 0.010549771}
   m_DirtyAABB: 0
+--- !u!114 &2938189862918484541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592441272131849188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f5df1e49b0638840af98d9d76055090, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 8856071913874691777}
+  minTime: 1
+  maxTime: 20
+  timer: 0
 --- !u!1 &1676094107756616284
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,7 +641,7 @@ Animator:
   m_GameObject: {fileID: 2831895568276329985}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 8e854ea45593bd348a9aa982d4999359, type: 3}
-  m_Controller: {fileID: 9100000, guid: 5e2f2a6ee2afc054489cb5758f0c4574, type: 2}
+  m_Controller: {fileID: 9100000, guid: c206b1bc1a3e7fc4c8cf9922d0d4ef17, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
