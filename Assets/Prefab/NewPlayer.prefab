@@ -632,6 +632,7 @@ GameObject:
   - component: {fileID: 6642140546583390852}
   - component: {fileID: 2276638972662423746}
   - component: {fileID: 3271188521234522373}
+  - component: {fileID: 8609327799195037535}
   m_Layer: 6
   m_Name: NewPlayer
   m_TagString: Prey
@@ -1098,6 +1099,22 @@ MonoBehaviour:
   TopClamp: 90
   BottomClamp: -90
   direction: {x: 0, y: 0, z: 0}
+--- !u!114 &8609327799195037535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7729877805908281407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ca27c24b46cce54888ac97228c81a64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _enabled: 1
 --- !u!1 &8519478071205200678
 GameObject:
   m_ObjectHideFlags: 0

@@ -33,4 +33,15 @@ public class RaycastShoot : MonoBehaviour
             Destroy(_hits.transform.gameObject);
         }
     }
+
+    public void SyncShoot()
+    {
+        main.playerNetwork.SyncShootServerRpc();
+    }
+
+    public void InitPlayerMain(PlayerMain _PM)
+    {
+        _PM.shoot = this;
+        main = _PM;
+    }
 }
