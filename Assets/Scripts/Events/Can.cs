@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class Can : MonoBehaviour
+public class Can : Trap
 {
     [SerializeField] AudioClip[] _clips;
     AudioSource _audioSource;
@@ -19,15 +16,11 @@ public class Can : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
     }
 
-    void OnTriggerEnter(Collider other)
+    public override void TriggerEvent()
     {
         Vector3 randomDir = new Vector3(Random.Range(-_force, _force), 0, Random.Range(-_force, _force));
-
-        if (other.gameObject.tag == "Prey")
-        {
-            _audioSource.PlayOneShot(_clips[Random.Range(0, _clips.Length)]);
+        _audioSource.PlayOneShot(_clips[Random.Range(0, _clips.Length)]);
 
             _rb.AddForce(randomDir, ForceMode.Impulse);
-        }
     }
 }

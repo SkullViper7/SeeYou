@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 8930209369374158320}
   m_Layer: 6
   m_Name: prey 2
-  m_TagString: Player
+  m_TagString: Prey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -503,7 +503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayBeforeChangeRoles: 2
-  maxNumberOfPlayer: 2
+  maxNumberOfPlayer: 5
 --- !u!114 &3669724927191624104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -599,6 +599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87477748587bb7045b0d53dd475e7447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LastTrap: {fileID: 0}
 --- !u!114 &9019419777409483469
 MonoBehaviour:
   m_ObjectHideFlags: 0

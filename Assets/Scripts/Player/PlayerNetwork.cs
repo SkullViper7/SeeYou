@@ -129,7 +129,7 @@ public class PlayerNetwork : NetworkBehaviour
     private IEnumerator DelayChangeHunter(int newHunter)
     {
         GameObject actualHunter = GameManager.Instance.teamManager._hunter;
-        // yield return new WaitForSeconds(_playerMain.shoot.DelayBulletBeforeGetDestroy);
+        //yield return new WaitForSeconds(_playerMain.shoot.DelayBulletBeforeGetDestroy);
         SearchAllPlayerClientRpc();
         yield return new WaitForSeconds(delayBeforeChangeRoles);
         ChangeHunterClientRpc(newHunter);
@@ -148,12 +148,14 @@ public class PlayerNetwork : NetworkBehaviour
             foreach (GameObject player in GameManager.Instance.players)
             {
                 player.layer = 6;
+                player.tag = "Prey";
                 if (player.GetComponent<PlayerMain>().IsHunter)
                 {
                     player.GetComponent<PlayerMain>().IsHunter = false;
                 }
                 else
                 {
+                    Debug.Log("Player not hunter");
                     player.SendMessage("BecomePrey");
                 }
             }
@@ -289,5 +291,32 @@ public class PlayerNetwork : NetworkBehaviour
     private void SoundEmitClientRpc()
     {
         SendMessage("Step");
+    }
+
+    /// <summary>
+    /// Quand un joueur est touché par un trap
+    /// </summary>
+    [ServerRpc(RequireOwnership = false)]
+    public void TrapEventServerRPC()
+    {
+        WaitPlayersTraps();
+    }
+
+    /// <summary>
+    /// On attend la sync avec tout les joueurs
+    /// </summary>
+    private async void WaitPlayersTraps()
+    {
+        await Task.CompletedTask;
+        TrapEventClientRPC();
+    }
+
+    /// <summary>
+    /// On va lancer l'event du trap
+    /// </summary>
+    [ClientRpc]
+    private void TrapEventClientRPC()
+    {
+        _playerMain.playerCollider.LastTrap.TriggerEvent();
     }
 }

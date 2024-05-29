@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class MinePoint : MonoBehaviour
+public class MinePoint : Trap
 {
     [SerializeField]
     private GameObject zone;
@@ -16,6 +16,8 @@ public class MinePoint : MonoBehaviour
 
     [SerializeField] AudioClip _sfx;
     AudioSource _audioSource;
+
+    private GameObject _playerWhoTriggered;
 
     private void Awake()
     {
@@ -39,16 +41,24 @@ public class MinePoint : MonoBehaviour
         StartCoroutine(Blink());
     }
 
-    void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Prey")
         {
-            Destroy(other.gameObject);
+            _playerWhoTriggered = other.gameObject;
+        }
+        
+        base.OnTriggerEnter(other);
+    }
+
+    public override void TriggerEvent()
+    {
+        Destroy(_playerWhoTriggered);
             _particleSystem.Play();
             zone.SetActive(true);
             ImpulseManager.Instance.Shake(2, 3, new Vector3(0.25f, 0.25f, 0.25f), 0.5f);
             _mesh.SetActive(false);
             _audioSource.PlayOneShot(_sfx);
-        }
     }
+
 }
