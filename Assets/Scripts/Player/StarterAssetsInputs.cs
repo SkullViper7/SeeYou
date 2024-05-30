@@ -109,8 +109,7 @@ public class StarterAssetsInputs : MonoBehaviour
 
     public void SwitchToHunter()
     {
-        FindMain();
-        Debug.Log("switchs");
+		FindMain();
         _canShoot = true;
         playerInput.SwitchCurrentActionMap("Hunter");
     }

@@ -8,8 +8,8 @@ public class SpawnManager : MonoBehaviour
     private static SpawnManager _instance = null;
     public static SpawnManager Instance => _instance;
 
-    [SerializeField]
-    private List<GameObject> spawnList = new List<GameObject>();
+    
+    public List<GameObject> spawnList = new List<GameObject>();
 
     private void Awake()
     {
