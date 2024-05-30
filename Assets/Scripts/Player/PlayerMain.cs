@@ -16,6 +16,8 @@ public class PlayerMain : MonoBehaviour
 
     public RaycastShoot shoot;
 
+    public ProjectileThrow preyThrow;
+
     private bool isHunter;
 
     public bool IsHunter

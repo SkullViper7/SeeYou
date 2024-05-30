@@ -116,6 +116,7 @@ public class FirstPersonController : MonoBehaviour
 
 	protected virtual void FixedUpdate()
     {
+		Shader.SetGlobalVector("_Player", transform.position);
         if (_playerMain != null)
         {
             if (_playerMain.playerNetwork.IsOwner)

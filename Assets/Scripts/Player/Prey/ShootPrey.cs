@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ShootPrey : MonoBehaviour
 {
@@ -18,31 +19,39 @@ public class ShootPrey : MonoBehaviour
     public GameObject projectil;
     public float force;
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            isPressed = true;
-            pressStartTime = Time.time;
-            if(force > maxForce)
-            {
-                maxForce = force;
-            }
-        }
+    private PlayerMain main;
 
-        if (Input.GetKeyUp(KeyCode.Q) && isPressed)
-        {
-            pressDuration = Time.time - pressStartTime;
-            ApplyForce();
-            isPressed = false;
-        }
-    }
+    // public void OnThrow(InputAction.CallbackContext value)
+    // {
+    //     if (value.performed)
+    //     {
+    //         isPressed = true;
+    //         pressStartTime = Time.time;
+    //         if(force > maxForce)
+    //         {
+    //             maxForce = force;
+    //         }
+    //     }
+    //     if (value.canceled)
+    //     {
+    //         pressDuration = Time.time - pressStartTime;
+    //         ApplyForce();
+    //         _animationUpdater.UpdateAnimation(2);
+    //         isPressed = false;
+    //     }
+    // }
 
-    void ApplyForce()
+    public void ApplyForce()
     {
         force = Mathf.Clamp(pressDuration * forceMultiplier, 0f, maxForce);
-        GetComponent<Rigidbody>().AddForce(Vector3.up * force, ForceMode.Impulse);
+        //GetComponent<Rigidbody>().AddForce(Vector3.up * force, ForceMode.Impulse);
         var _projectile = Instantiate(projectil, lauchPoint.position, lauchPoint.rotation);
         _projectile.GetComponent<Rigidbody>().velocity = force * lauchPoint.up;
     }    
+
+    public void InitPlayerMain(PlayerMain _PM)
+    {
+        // _PM.preyThrow = this;
+        main = _PM;
+    }
 }
