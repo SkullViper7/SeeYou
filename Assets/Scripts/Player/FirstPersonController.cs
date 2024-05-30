@@ -141,11 +141,12 @@ public class FirstPersonController : MonoBehaviour
 			_cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
 			_rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
 
-			// clamp our pitch rotation
-			_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+			Debug.Log(BottomClamp + " " + TopClamp);
+            // clamp our pitch rotation
+            _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
-			// Update Cinemachine camera target pitch
-			CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
+            // Update Cinemachine camera target pitch
+            CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
 
 			// rotate the player left and right
 			transform.Rotate(Vector3.up * _rotationVelocity);
