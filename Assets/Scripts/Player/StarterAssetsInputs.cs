@@ -26,10 +26,13 @@ public class StarterAssetsInputs : MonoBehaviour
 
 	public PlayerInput playerInput;
 
+	AnimationUpdater _animationUpdater;
+
 	private void Awake()
 	{
 		playerInput = GetComponent<PlayerInput>();
 		_animator = GetComponent<Animator>();
+		_animationUpdater = GetComponent<AnimationUpdater>();
 	}
 
 #if ENABLE_INPUT_SYSTEM
@@ -39,11 +42,11 @@ public class StarterAssetsInputs : MonoBehaviour
 
 		if (_move.Get<Vector2>() != Vector2.zero)
        	{
-           	_animator.Play("Run");
+           	_animationUpdater.UpdateAnimation(1);
        	}
        	else
        	{
-           	_animator.Play("Idle");
+           	_animationUpdater.UpdateAnimation(0);
        	}
 	}
 
@@ -75,6 +78,30 @@ public class StarterAssetsInputs : MonoBehaviour
            	_eventShoot?.Invoke();
        	}
    	}
+
+	/// <summary>
+	/// Event handler for the Throw action. Starts the prediction, then throws the object and updates the animation.
+	/// </summary>
+	/// <param name="value">The input action callback context</param>
+	public void OnThrow(InputValue value)
+	{
+		// Check if the throw action has started
+		if (value.isPressed)
+		{
+			// Start the prediction for the throw
+			_playerMain.preyThrow.Predict();
+		}
+
+		// Check if the throw action has been performed
+		if (!value.isPressed)
+		{
+			// Throw the object
+			_playerMain.preyThrow.ThrowObject();
+
+			// Update the animation to the throw animation
+			_animationUpdater.SetTrigger("Throw");
+		}
+	}
 
 	public void MoveInput(Vector2 newMoveDirection)
 	{

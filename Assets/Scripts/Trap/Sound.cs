@@ -11,7 +11,7 @@ public class Sound : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Environement")
+        if (collision.gameObject.tag == "Terrain")
         {
             sound.PlayOneShot(clip);
             if(!sound.isPlaying)
