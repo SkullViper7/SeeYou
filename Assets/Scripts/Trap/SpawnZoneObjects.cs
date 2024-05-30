@@ -28,6 +28,7 @@ public class SpawnZoneObjects : MonoBehaviour
     public void InstantiateEachItem(Vector2 _position, int _indexItem)
     {
         Vector3 randomSpawnPosition = new Vector3(_position.x, GroundLevel, _position.y);
-        Instantiate(Items[_indexItem], randomSpawnPosition, Quaternion.identity);
+        GameObject newItem = Instantiate(Items[_indexItem], randomSpawnPosition, Quaternion.identity);
+        GameManager.Instance.Items.Add(newItem);
     }
 }

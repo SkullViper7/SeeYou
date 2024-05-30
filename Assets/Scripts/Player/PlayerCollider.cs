@@ -18,9 +18,16 @@ public class PlayerCollider : MonoBehaviour
 
     public void TriggerTrap(Trap _trap)
     {
-        Debug.Log("trap");
-        LastTrap = _trap;
-        _playerMain.playerNetwork.TrapEventServerRPC();
+        int _trapIndex = 0;
+        for (int i = 0; i < GameManager.Instance.Items.Count; i++)
+        {
+            if (GameManager.Instance.Items[i] == _trap)
+            {
+                _trapIndex = i;
+            }
+        }
+
+        _playerMain.playerNetwork.TrapEventServerRPC(_trapIndex);
     }
 
     private void OnCollisionEnter(Collision collision)
