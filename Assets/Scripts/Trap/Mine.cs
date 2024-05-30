@@ -53,12 +53,12 @@ public class MinePoint : Trap
 
     public override void TriggerEvent()
     {
-        Destroy(_playerWhoTriggered);
-            _particleSystem.Play();
-            zone.SetActive(true);
-            ImpulseManager.Instance.Shake(2, 3, new Vector3(0.25f, 0.25f, 0.25f), 0.5f);
-            _mesh.SetActive(false);
-            _audioSource.PlayOneShot(_sfx);
+        _playerWhoTriggered.SendMessage("DeadState");
+        _particleSystem.Play();
+        zone.SetActive(true);
+        ImpulseManager.Instance.Shake(2, 3, new Vector3(0.25f, 0.25f, 0.25f), 0.5f);
+        _mesh.SetActive(false);
+        _audioSource.PlayOneShot(_sfx);
     }
 
 }

@@ -924,14 +924,14 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 9adf602d-bf73-4d86-8f18-53c751052c08
+  cloudProjectId: 9cc7090d-1fdb-4ffc-b890-479e2790bc18
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames:
   - Low
   - Medium
   - HIgh
-  projectName: SeeYou (2)
-  organizationId: viper750
+  projectName: SeeYou
+  organizationId: bononoi
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

@@ -68,12 +68,14 @@ public class PlayerNetwork : NetworkBehaviour
     /// </summary>
     public override void OnNetworkSpawn()
     {
+
         if (IsHost)
         {
             spawnList.Value = SpawnManager.Instance.spawnList;
         }
 
         itemsToSpawn = NetworkManager.Singleton.GetComponent<NetworkLan>().ItemsToSpawn;
+
         //if (GameManager.Instance.players.Count <= NetworkManager.Singleton.GetComponent<NetworkLan>().NumberOfPlayer.Value)
         if (GameManager.Instance.players.Count <= 2)
         {
@@ -98,21 +100,7 @@ public class PlayerNetwork : NetworkBehaviour
         {
             //En faire un spectateur
         }
-
-        // Test pour la vue du chasseur à enlever à la fin
-        StartCoroutine(TestHunterView());
     }
-
-    /// <summary>
-    /// Un test pour la vue du chasseur, à enlever à la fin
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator TestHunterView()
-    {
-        yield return new WaitForSeconds(1f);
-        _playerMain.IsHunter = true;
-    }
-
 
     [ServerRpc(RequireOwnership = false)]
     public void SpawnerNetworkServerRPC()
