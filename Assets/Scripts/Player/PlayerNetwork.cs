@@ -7,11 +7,14 @@ using UnityEngine;
 
 public class PlayerNetwork : NetworkBehaviour
 {
-    public NetworkVariable<List<GameObject>> spawnList = new NetworkVariable<List<GameObject>>();
-    private GameObject spawnToRemove;
+    //public NetworkVariable<List<SpawnList>> spawnList = new NetworkVariable<List<SpawnList>>();
+    public NetworkList<Vector3> spawnList = new NetworkList<Vector3>();
+
+    private Vector3 spawnToRemove;
     private GameObject itemsToSpawn;
     private NetworkManager _network;
 
+    private GameObject actualHunter;
     private PlayerMain _playerMain;
 
     private List<GameObject> playerList = new List<GameObject>();
@@ -68,10 +71,12 @@ public class PlayerNetwork : NetworkBehaviour
     /// </summary>
     public override void OnNetworkSpawn()
     {
-
         if (IsHost)
         {
-            spawnList.Value = SpawnManager.Instance.spawnList;
+            for (int i = 0; i < SpawnManager.Instance.spawnList.Count; i++)
+            {
+                spawnList.Add(SpawnManager.Instance.spawnList[i].transform.position);
+            }
         }
 
         itemsToSpawn = NetworkManager.Singleton.GetComponent<NetworkLan>().ItemsToSpawn;
@@ -81,14 +86,14 @@ public class PlayerNetwork : NetworkBehaviour
         {
             GameManager.Instance.players.Add(gameObject);
             gameObject.name += GameManager.Instance.players.Count;
+            spawnToRemove = spawnList[Random.Range(0, spawnList.Count)];
             if (IsOwner)
             {
                 GetComponent<PlayerMain>().InitPlayer();
                 GetComponent<PlayerMain>().playerCamera.ActiveCam();
+                GetComponent<SpawnPlayer>().Spawn(spawnToRemove);
             }
 
-            spawnToRemove = spawnList.Value[Random.Range(0, spawnList.Value.Count)];
-            GetComponent<SpawnPlayer>().Spawn(spawnToRemove);
             SpawnerNetworkServerRPC();
             if (GameManager.Instance.players.Count == 2)
             {
@@ -105,14 +110,14 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SpawnerNetworkServerRPC()
     {
-        spawnList.Value.Remove(spawnToRemove);
+        spawnList.Remove(spawnToRemove);
     }
 
 
     /// <summary>
     /// Se lance que lorsque tout les joueurs sont connectés
     /// </summary>
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void StartTheGameServerRpc()
     {
         for (int i = 0; i < itemsToSpawn.GetComponent<SpawnZoneObjects>().Items.Length; i++)
@@ -124,9 +129,9 @@ public class PlayerNetwork : NetworkBehaviour
     }
 
     /// <summary>
-    /// Va appeler 
+    /// Va chercher le future chasseur, puis va attendre que tout les clients soient prêt à recevoir l'information
     /// </summary>
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void RolesChangesServerRpc()
     {
         StartCoroutine(DelayChangeHunter(GameManager.Instance.teamManager.FindAHunterServ()));
@@ -156,12 +161,17 @@ public class PlayerNetwork : NetworkBehaviour
     /// <returns></returns>
     private IEnumerator DelayChangeHunter(int newHunter)
     {
-        GameObject actualHunter = GameManager.Instance.teamManager._hunter;
         yield return new WaitForSeconds(2f);
         SearchAllPlayerClientRpc();
         yield return new WaitForSeconds(delayBeforeChangeRoles);
         ChangeHunterClientRpc(newHunter);
-        if (GameManager.Instance.teamManager._hunter != actualHunter)
+        //SetActualHunterPreyClientRpc();
+    }
+
+    [ClientRpc]
+    private void SetActualHunterPreyClientRpc()
+    {
+        if (GameManager.Instance.teamManager._hunter != actualHunter && GameManager.Instance.teamManager._hunter != null)
         {
             GameManager.Instance.teamManager.SetPreys(actualHunter);
         }
@@ -170,6 +180,7 @@ public class PlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void SearchAllPlayerClientRpc()
     {
+        actualHunter = GameManager.Instance.teamManager._hunter;
         if (GameManager.Instance.preys.Count == 0)
         {
             GameManager.Instance.preys.AddRange(GameManager.Instance.players);
