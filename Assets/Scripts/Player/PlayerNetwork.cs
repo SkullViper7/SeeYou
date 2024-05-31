@@ -82,7 +82,7 @@ public class PlayerNetwork : NetworkBehaviour
         itemsToSpawn = NetworkManager.Singleton.GetComponent<NetworkLan>().ItemsToSpawn;
 
         //if (GameManager.Instance.players.Count <= NetworkManager.Singleton.GetComponent<NetworkLan>().NumberOfPlayer.Value)
-        if (GameManager.Instance.players.Count <= 2)
+        if (GameManager.Instance.players.Count <= 3)
         {
             GameManager.Instance.players.Add(gameObject);
             gameObject.name += GameManager.Instance.players.Count;
@@ -95,7 +95,7 @@ public class PlayerNetwork : NetworkBehaviour
             }
 
             SpawnerNetworkServerRPC();
-            if (GameManager.Instance.players.Count == 2)
+            if (GameManager.Instance.players.Count == 3)
             {
                 GameManager.Instance.preys.AddRange(GameManager.Instance.players);
                 StartTheGameServerRpc();
