@@ -38,16 +38,19 @@ public class StarterAssetsInputs : MonoBehaviour
 #if ENABLE_INPUT_SYSTEM
 	public void OnMove(InputValue _move)
 	{
-		MoveInput(_move.Get<Vector2>());
+		if (_playerMain.playerNetwork.IsOwner) 
+		{
+            MoveInput(_move.Get<Vector2>());
 
-		if (_move.Get<Vector2>() != Vector2.zero)
-       	{
-           	_animationUpdater.UpdateAnimation(1);
-       	}
-       	else
-       	{
-           	_animationUpdater.UpdateAnimation(0);
-       	}
+            if (_move.Get<Vector2>() != Vector2.zero)
+            {
+                _animationUpdater.UpdateAnimation(1);
+            }
+            else
+            {
+                _animationUpdater.UpdateAnimation(0);
+            }
+        }
 	}
 
 	public void OnLook(InputValue value)
