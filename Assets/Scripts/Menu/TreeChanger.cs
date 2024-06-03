@@ -9,10 +9,12 @@ public class TreeChanger : MonoBehaviour
     [SerializeField] GameObject _Grass;
     [SerializeField] GameObject _Corn;
 
+    [SerializeField] Terrain _terrain;
+
     void Start()
     {
-        cache = Terrain.activeTerrain.terrainData.treePrototypes;
-        treeType = Terrain.activeTerrain.terrainData.treePrototypes;
+        cache = _terrain.terrainData.treePrototypes;
+        treeType = _terrain.terrainData.treePrototypes;
 
         treeType[0].prefab = _Grass;
         treeType[1].prefab = _Corn;

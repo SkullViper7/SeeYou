@@ -59,7 +59,7 @@ Material:
     - _Scale: 0.02
     - _Smoothness: 0
     - _Speed: 2
-    - _Strenght: 0.75
+    - _Strenght: 0.25
     - _TerrainOffset: 0
     - _TerrainSize: 100
     m_Colors:
