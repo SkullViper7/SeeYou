@@ -147,48 +147,8 @@ public class PlayerNetwork : NetworkBehaviour
     {
         Debug.Log("Wait");
         await Task.Delay(1000);
-        //SwapRoleServerRpc();
         StartTheGameServerRpc();
     }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void SwapRoleServerRpc()
-    {
-        for (int i = 0; i < itemsToSpawn.GetComponent<SpawnZoneObjects>().Items.Length; i++)
-        {
-            SpawnItemsClientRPC(itemsToSpawn.GetComponent<SpawnZoneObjects>().SpawnItems(), i);
-        }
-
-        hunterIndex.Value = GameManager.Instance.teamManager.FindAHunterServ();
-        WaitPlayersSwapRole();
-
-    }
-
-    private async void WaitPlayersSwapRole()
-    {
-        await Task.CompletedTask;
-
-        if (IsHost && hostCanChangeHunter)
-        {
-            hostCanChangeHunter = false;
-
-            SwapRoleClientRpc();
-        }
-        await Task.Delay(1000);
-        if (IsHost)
-        {
-            hostCanChangeHunter = true;
-        }
-    }
-
-    [ClientRpc]
-    public void SwapRoleClientRpc()
-    {
-        Debug.Log($"ClientRpc called, hunterIndex.Value: {hunterIndex.Value}");
-        GameManager.Instance.teamManager.SetHunterForAllClients(hunterIndex.Value);
-    }
-
-
 
     /// <summary>
     /// Va chercher le future chasseur, puis va attendre que tout les clients soient prêt à recevoir l'information
@@ -231,7 +191,7 @@ public class PlayerNetwork : NetworkBehaviour
         SearchAllPlayerClientRpc();
         yield return new WaitForSeconds(delayBeforeChangeRoles);
         ChangeHunterClientRpc(newHunter);
-        //SetActualHunterPreyClientRpc();
+        SetActualHunterPreyClientRpc();
     }
 
     [ClientRpc]
