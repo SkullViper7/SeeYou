@@ -51,7 +51,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -71,6 +71,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Feuille: {fileID: 2436029023752267210}
   Vfx: {fileID: 613972044652539930}
+  mesh: {fileID: 8524141185191998789}
 --- !u!1 &8328697469372674439
 GameObject:
   m_ObjectHideFlags: 0
@@ -5088,6 +5089,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd7b585e920a91e40a127473d0a542df, type: 3}
+--- !u!1 &8524141185191998789 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6921010264946693283, guid: bd7b585e920a91e40a127473d0a542df,
+    type: 3}
+  m_PrefabInstance: {fileID: 1605404710303408614}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9112350461848684283 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7508091442796177181, guid: bd7b585e920a91e40a127473d0a542df,
