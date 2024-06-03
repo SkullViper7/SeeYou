@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class AnimAnimaux : MonoBehaviour
 {
-    public Animator animator;
+    Animator _animator;
     public int minTime; 
     public int maxTime; 
     public float timer;
 
     void Start()
     {
+        _animator = GetComponent<Animator>();
         SetRandomTimer();
     }
 
@@ -19,7 +20,7 @@ public class AnimAnimaux : MonoBehaviour
         timer -= Time.deltaTime;
         if (timer <= 0)
         {
-            animator.SetFloat("RandomTrigger", Random.Range(0f, 1f));
+            _animator.SetFloat("RandomTrigger", Random.Range(0f, 1f));
             SetRandomTimer();
         }
     }

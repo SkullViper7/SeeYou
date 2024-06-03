@@ -48,4 +48,9 @@ public class PlayerMain : MonoBehaviour
     {
         SendMessage("InitPlayerMain", this);
     }
+
+    public void DeadState()
+    {
+        Debug.Log(gameObject.name + " is dead");
+    }
 }

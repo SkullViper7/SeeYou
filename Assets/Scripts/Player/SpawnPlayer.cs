@@ -18,10 +18,10 @@ public class SpawnPlayer : MonoBehaviour
         }
     }
 
-    public void Spawn(GameObject _spawner)
+    public void Spawn(Vector3 _spawner)
     {
-        transform.position = new Vector3(_spawner.transform.position.x, 0.7f, _spawner.transform.position.z);
-        Debug.Log("Player position = " + transform.position + ", spawner position = " + _spawner.transform.position);
+        transform.position = new Vector3(_spawner.x, 0.7f, _spawner.z);
+        Debug.Log("Player position = " + transform.position + ", spawner position = " + _spawner);
     }
 
     public void InitPlayerMain(PlayerMain _PM)
