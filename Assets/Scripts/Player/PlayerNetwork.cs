@@ -314,7 +314,7 @@ public class PlayerNetwork : NetworkBehaviour
     [ClientRpc]
     public void SyncShootClientRpc()
     {
-        GameManager.Instance.teamManager._hunter.GetComponent<RaycastShoot>().Shooting();
+        GameManager.Instance.teamManager._hunter.GetComponent<Shoot>().Shooting();
     }
 
     private IEnumerator WaitPlayers()
