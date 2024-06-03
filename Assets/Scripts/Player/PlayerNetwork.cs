@@ -133,11 +133,12 @@ public class PlayerNetwork : NetworkBehaviour
             SpawnItemsClientRPC(itemsToSpawn.GetComponent<SpawnZoneObjects>().SpawnItems(), i);
         }
 
-        Wait();
+        RolesChangesServerRpc();
     }
 
-    private async void Wait()
+    public async void Wait()
     {
+        Debug.Log("Wait");
         await Task.Delay(1000);
         SwapRoleServerRpc();
     }
@@ -145,6 +146,10 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SwapRoleServerRpc()
     {
+        for (int i = 0; i < itemsToSpawn.GetComponent<SpawnZoneObjects>().Items.Length; i++)
+        {
+            SpawnItemsClientRPC(itemsToSpawn.GetComponent<SpawnZoneObjects>().SpawnItems(), i);
+        }
         hunterIndex.Value = GameManager.Instance.teamManager.FindAHunterServ();
         WaitPlayersSwapRole();
 
@@ -407,5 +412,17 @@ public class PlayerNetwork : NetworkBehaviour
     {
         GameManager.Instance.Items[_trapIndex].GetComponent<Trap>().TriggerEvent();
         GameManager.Instance.Items.RemoveAt(_trapIndex);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void MoveAnimationNetworkServerRpc(Vector2 _playerMove)
+    {
+        MoveAnimationNetworkClientRpc(_playerMove);
+    }
+
+    [ClientRpc]
+    public void MoveAnimationNetworkClientRpc(Vector2 _playerMove)
+    {
+        _playerMain.playerInputs.AnimMovement(_playerMove);
     }
 }

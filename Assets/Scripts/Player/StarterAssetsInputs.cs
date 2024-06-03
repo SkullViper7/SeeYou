@@ -41,15 +41,16 @@ public class StarterAssetsInputs : MonoBehaviour
 		if (_playerMain.playerNetwork.IsOwner) 
 		{
             MoveInput(_move.Get<Vector2>());
+			_playerMain.playerNetwork.MoveAnimationNetworkServerRpc(_move.Get<Vector2>());
 
-            if (_move.Get<Vector2>() != Vector2.zero)
+            /*if (_move.Get<Vector2>() != Vector2.zero)
             {
                 _animationUpdater.UpdateAnimation(1);
             }
             else
             {
                 _animationUpdater.UpdateAnimation(0);
-            }
+            }*/
         }
 	}
 
@@ -105,6 +106,18 @@ public class StarterAssetsInputs : MonoBehaviour
 			_animationUpdater.SetTrigger("Throw");
 		}
 	}
+
+	public void AnimMovement(Vector2 _playerMove) 
+	{
+        if (_playerMove != Vector2.zero)
+        {
+            _animationUpdater.UpdateAnimation(1);
+        }
+        else
+        {
+            _animationUpdater.UpdateAnimation(0);
+        }
+    }
 
 	public void MoveInput(Vector2 newMoveDirection)
 	{
