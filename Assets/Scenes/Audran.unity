@@ -5222,6 +5222,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LandmineVariant
       objectReference: {fileID: 0}
+    - target: {fileID: 4183131531051821657, guid: 789568166b54644438702061fe660adc,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 253722976
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -80125,6 +80130,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Unity.Netcode.Samples.NetworkLan, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 7573161244703946991, guid: e4d21016ffe6031488c4b0a19c22980f,
+        type: 3}
+      propertyPath: LobbyCam
+      value: 
+      objectReference: {fileID: 446185614}
     - target: {fileID: 7769938863460744410, guid: e4d21016ffe6031488c4b0a19c22980f,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
