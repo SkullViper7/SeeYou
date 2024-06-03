@@ -2271,7 +2271,6 @@ GameObject:
   - component: {fileID: 6642140546583390852}
   - component: {fileID: 2276638972662423746}
   - component: {fileID: 3271188521234522373}
-  - component: {fileID: 8609327799195037535}
   - component: {fileID: 3142116487530846789}
   - component: {fileID: 6384015702459278719}
   - component: {fileID: -642262551820767875}
@@ -2551,7 +2550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2977863664
+  GlobalObjectIdHash: 666339117
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -2693,10 +2692,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9e0875b5b2989f49b9ada990c05a10a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 0}
-  DelayBulletBeforeGetDestroy: 0
-  shoot: {fileID: 0}
-  power: 0
+  bullet: {fileID: 5863363392411627885, guid: 660917bfa629ba7409d7460dce7cb685, type: 3}
+  DelayBulletBeforeGetDestroy: 2
+  shoot: {fileID: 5297018136769648407}
+  power: 100
   Vfx: {fileID: 0}
   Sounds:
   - {fileID: 8300000, guid: 65fda331e705c544a84924fbbd1e3b9f, type: 3}
@@ -2754,23 +2753,8 @@ MonoBehaviour:
   CinemachineCameraTarget: {fileID: 4975975201340236857}
   TopClamp: 90
   BottomClamp: -90
+  _playerMain: {fileID: 0}
   direction: {x: 0, y: 0, z: 0}
---- !u!114 &8609327799195037535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7729877805908281407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ca27c24b46cce54888ac97228c81a64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _layerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  _enabled: 1
 --- !u!114 &3142116487530846789
 MonoBehaviour:
   m_ObjectHideFlags: 0
