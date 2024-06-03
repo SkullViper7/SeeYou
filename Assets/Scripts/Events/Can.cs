@@ -21,6 +21,6 @@ public class Can : Trap
         Vector3 randomDir = new Vector3(Random.Range(-_force, _force), 0, Random.Range(-_force, _force));
         _audioSource.PlayOneShot(_clips[Random.Range(0, _clips.Length)]);
 
-            _rb.AddForce(randomDir, ForceMode.Impulse);
+        _rb.AddForce(randomDir, ForceMode.Impulse);
     }
 }

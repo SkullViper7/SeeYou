@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class MinePoint : Trap
+public class Mine : Trap
 {
     [SerializeField]
     private GameObject zone;
@@ -53,12 +53,12 @@ public class MinePoint : Trap
 
     public override void TriggerEvent()
     {
-        _playerWhoTriggered.SendMessage("DeadState");
         _particleSystem.Play();
+        _mesh.SetActive(false);
         zone.SetActive(true);
         ImpulseManager.Instance.Shake(2, 3, new Vector3(0.25f, 0.25f, 0.25f), 0.5f);
-        _mesh.SetActive(false);
         _audioSource.PlayOneShot(_sfx);
+        GameManager.Instance.Items.Remove(gameObject);
     }
 
 }
