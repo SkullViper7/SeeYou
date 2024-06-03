@@ -90,7 +90,7 @@ public class PlayerNetwork : NetworkBehaviour
         itemsToSpawn = NetworkManager.Singleton.GetComponent<NetworkLan>().ItemsToSpawn;
 
         //if (GameManager.Instance.players.Count <= NetworkManager.Singleton.GetComponent<NetworkLan>().NumberOfPlayer.Value)
-        if (GameManager.Instance.players.Count <= 2)
+        if (GameManager.Instance.players.Count <= 3)
         {
             GameManager.Instance.players.Add(gameObject);
             gameObject.name += GameManager.Instance.players.Count;
@@ -104,10 +104,9 @@ public class PlayerNetwork : NetworkBehaviour
             }
 
             SpawnerNetworkServerRPC();
-            if (GameManager.Instance.players.Count == 2)
+            if (GameManager.Instance.players.Count == 3)
             {
                 GameManager.Instance.preys.AddRange(GameManager.Instance.players);
-                Debug.Log("startTheGameBoy");
                 Wait();
             }
         }
@@ -138,55 +137,18 @@ public class PlayerNetwork : NetworkBehaviour
             }
         }
 
-        RolesChangesServerRpc();
+        if (GameManager.Instance.teamManager._hunter == null) 
+        {
+            RolesChangesServerRpc();
+        }
     }
 
     public async void Wait()
     {
         Debug.Log("Wait");
         await Task.Delay(1000);
-        //SwapRoleServerRpc();
         StartTheGameServerRpc();
     }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void SwapRoleServerRpc()
-    {
-        for (int i = 0; i < itemsToSpawn.GetComponent<SpawnZoneObjects>().Items.Length; i++)
-        {
-            SpawnItemsClientRPC(itemsToSpawn.GetComponent<SpawnZoneObjects>().SpawnItems(), i);
-        }
-
-        hunterIndex.Value = GameManager.Instance.teamManager.FindAHunterServ();
-        WaitPlayersSwapRole();
-
-    }
-
-    private async void WaitPlayersSwapRole()
-    {
-        await Task.CompletedTask;
-
-        if (IsHost && hostCanChangeHunter)
-        {
-            hostCanChangeHunter = false;
-
-            SwapRoleClientRpc();
-        }
-        await Task.Delay(1000);
-        if (IsHost)
-        {
-            hostCanChangeHunter = true;
-        }
-    }
-
-    [ClientRpc]
-    public void SwapRoleClientRpc()
-    {
-        Debug.Log($"ClientRpc called, hunterIndex.Value: {hunterIndex.Value}");
-        GameManager.Instance.teamManager.SetHunterForAllClients(hunterIndex.Value);
-    }
-
-
 
     /// <summary>
     /// Va chercher le future chasseur, puis va attendre que tout les clients soient prêt à recevoir l'information
@@ -194,8 +156,11 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void RolesChangesServerRpc()
     {
-        StartCoroutine(DelayChangeHunter(GameManager.Instance.teamManager.FindAHunterServ()));
-
+        if (hostCanChangeHunter) 
+        {
+            hostCanChangeHunter = false;
+            StartCoroutine(DelayChangeHunter(GameManager.Instance.teamManager.FindAHunterServ()));
+        }
     }
 
     /// <summary>
@@ -222,10 +187,11 @@ public class PlayerNetwork : NetworkBehaviour
     private IEnumerator DelayChangeHunter(int newHunter)
     {
         yield return new WaitForSeconds(2f);
+        hostCanChangeHunter = true;
         SearchAllPlayerClientRpc();
         yield return new WaitForSeconds(delayBeforeChangeRoles);
         ChangeHunterClientRpc(newHunter);
-        //SetActualHunterPreyClientRpc();
+        SetActualHunterPreyClientRpc();
     }
 
     [ClientRpc]
