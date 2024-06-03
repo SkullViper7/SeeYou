@@ -14,7 +14,7 @@ public class PlayerMain : MonoBehaviour
 
     public PlayerCollider playerCollider;
 
-    public RaycastShoot shoot;
+    public Shoot shoot;
 
     public ProjectileThrow preyThrow;
 

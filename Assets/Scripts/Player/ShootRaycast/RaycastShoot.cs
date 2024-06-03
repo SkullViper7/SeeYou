@@ -39,7 +39,7 @@ public class RaycastShoot : MonoBehaviour
 
     public void InitPlayerMain(PlayerMain _PM)
     {
-        _PM.shoot = this;
+        //_PM.shoot = this;
         main = _PM;
     }
 }
