@@ -90,7 +90,7 @@ public class PlayerNetwork : NetworkBehaviour
         itemsToSpawn = NetworkManager.Singleton.GetComponent<NetworkLan>().ItemsToSpawn;
 
         //if (GameManager.Instance.players.Count <= NetworkManager.Singleton.GetComponent<NetworkLan>().NumberOfPlayer.Value)
-        if (GameManager.Instance.players.Count <= 2)
+        if (GameManager.Instance.players.Count <= 3)
         {
             GameManager.Instance.players.Add(gameObject);
             gameObject.name += GameManager.Instance.players.Count;
@@ -104,10 +104,9 @@ public class PlayerNetwork : NetworkBehaviour
             }
 
             SpawnerNetworkServerRPC();
-            if (GameManager.Instance.players.Count == 2)
+            if (GameManager.Instance.players.Count == 3)
             {
                 GameManager.Instance.preys.AddRange(GameManager.Instance.players);
-                Debug.Log("startTheGameBoy");
                 Wait();
             }
         }
@@ -138,7 +137,10 @@ public class PlayerNetwork : NetworkBehaviour
             }
         }
 
-        RolesChangesServerRpc();
+        if (GameManager.Instance.teamManager._hunter == null) 
+        {
+            RolesChangesServerRpc();
+        }
     }
 
     public async void Wait()
@@ -194,8 +196,11 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void RolesChangesServerRpc()
     {
-        StartCoroutine(DelayChangeHunter(GameManager.Instance.teamManager.FindAHunterServ()));
-
+        if (hostCanChangeHunter) 
+        {
+            hostCanChangeHunter = false;
+            StartCoroutine(DelayChangeHunter(GameManager.Instance.teamManager.FindAHunterServ()));
+        }
     }
 
     /// <summary>
@@ -222,6 +227,7 @@ public class PlayerNetwork : NetworkBehaviour
     private IEnumerator DelayChangeHunter(int newHunter)
     {
         yield return new WaitForSeconds(2f);
+        hostCanChangeHunter = true;
         SearchAllPlayerClientRpc();
         yield return new WaitForSeconds(delayBeforeChangeRoles);
         ChangeHunterClientRpc(newHunter);
