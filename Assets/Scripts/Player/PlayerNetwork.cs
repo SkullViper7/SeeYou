@@ -100,6 +100,7 @@ public class PlayerNetwork : NetworkBehaviour
                 GetComponent<PlayerMain>().InitPlayer();
                 GetComponent<PlayerMain>().playerCamera.ActiveCam();
                 GetComponent<SpawnPlayer>().Spawn(spawnToRemove);
+                GameManager.Instance.LobbyCam.SetActive(false);
             }
 
             SpawnerNetworkServerRPC();

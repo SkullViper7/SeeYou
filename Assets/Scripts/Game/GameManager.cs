@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public TeamManager teamManager;
     public NetworkMessageManager network;
     public PlayerNetwork lastHunter;
+    public GameObject LobbyCam;
 
     //[HideInInspector]
     public List<GameObject> players = new();
