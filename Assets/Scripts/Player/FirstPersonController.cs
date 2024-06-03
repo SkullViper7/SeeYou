@@ -71,7 +71,7 @@ public class FirstPersonController : MonoBehaviour
 	private GameObject _mainCamera;
 	private CapsuleCollider _collider;
 
-	PlayerMain _playerMain;
+	public PlayerMain _playerMain;
 	public Vector3 direction;
 
 	private const float _threshold = 0.01f;
@@ -116,6 +116,8 @@ public class FirstPersonController : MonoBehaviour
 
 	protected virtual void FixedUpdate()
     {
+		Debug.Log(_playerMain);
+		Debug.Log(_playerMain.playerNetwork);
 		if (_playerMain.playerNetwork.OwnerClientId == 0)
 		{
             Shader.SetGlobalVector("_Player1", transform.position);

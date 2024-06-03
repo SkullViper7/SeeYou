@@ -400,7 +400,7 @@ public class PlayerNetwork : NetworkBehaviour
     /// </summary>
     private async void WaitPlayersTraps(int _trapIndex)
     {
-        await Task.CompletedTask;
+        await Task.Delay(100);
         TrapEventClientRPC(_trapIndex);
     }
 

@@ -53,6 +53,7 @@ public class MinePoint : Trap
 
     public override void TriggerEvent()
     {
+        Debug.Log("Trigger");
         _playerWhoTriggered.SendMessage("DeadState");
         _particleSystem.Play();
         zone.SetActive(true);
