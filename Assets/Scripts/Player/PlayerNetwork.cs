@@ -106,7 +106,8 @@ public class PlayerNetwork : NetworkBehaviour
             if (GameManager.Instance.players.Count == 2)
             {
                 GameManager.Instance.preys.AddRange(GameManager.Instance.players);
-                StartTheGameServerRpc();
+                Debug.Log("startTheGameBoy");
+                Wait();
             }
         }
         else
@@ -128,9 +129,12 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void StartTheGameServerRpc()
     {
-        for (int i = 0; i < itemsToSpawn.GetComponent<SpawnZoneObjects>().Items.Length; i++)
+        if (GameManager.Instance.Items.Count == 0)
         {
-            SpawnItemsClientRPC(itemsToSpawn.GetComponent<SpawnZoneObjects>().SpawnItems(), i);
+            for (int i = 0; i < itemsToSpawn.GetComponent<SpawnZoneObjects>().Items.Length; i++)
+            {
+                SpawnItemsClientRPC(itemsToSpawn.GetComponent<SpawnZoneObjects>().SpawnItems(), i);
+            }
         }
 
         RolesChangesServerRpc();
@@ -140,7 +144,8 @@ public class PlayerNetwork : NetworkBehaviour
     {
         Debug.Log("Wait");
         await Task.Delay(1000);
-        SwapRoleServerRpc();
+        //SwapRoleServerRpc();
+        StartTheGameServerRpc();
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -150,6 +155,7 @@ public class PlayerNetwork : NetworkBehaviour
         {
             SpawnItemsClientRPC(itemsToSpawn.GetComponent<SpawnZoneObjects>().SpawnItems(), i);
         }
+
         hunterIndex.Value = GameManager.Instance.teamManager.FindAHunterServ();
         WaitPlayersSwapRole();
 
@@ -411,7 +417,6 @@ public class PlayerNetwork : NetworkBehaviour
     private void TrapEventClientRPC(int _trapIndex)
     {
         GameManager.Instance.Items[_trapIndex].GetComponent<Trap>().TriggerEvent();
-        GameManager.Instance.Items.RemoveAt(_trapIndex);
     }
 
     [ServerRpc(RequireOwnership = false)]

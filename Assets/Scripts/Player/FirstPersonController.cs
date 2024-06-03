@@ -116,7 +116,7 @@ public class FirstPersonController : MonoBehaviour
 
 	protected virtual void FixedUpdate()
     {
-		Debug.Log(_playerMain);
+		/*Debug.Log(_playerMain);
 		Debug.Log(_playerMain.playerNetwork);
 		if (_playerMain.playerNetwork.OwnerClientId == 0)
 		{
@@ -125,19 +125,19 @@ public class FirstPersonController : MonoBehaviour
 		else
 		{
             Shader.SetGlobalVector("_Player2", transform.position);
-        }
+        }*/
 
         if (_playerMain != null)
         {
             if (_playerMain.playerNetwork.IsOwner)
             {
-                this.CameraRotation();
-                this.Move();
+                CameraRotation();
+                Move();
             }
         }
         else
         {
-            this.GetComponent<PlayerMain>().InitPlayer();
+            GetComponent<PlayerMain>().InitPlayer();
         }
     }
 
@@ -152,7 +152,6 @@ public class FirstPersonController : MonoBehaviour
 			_cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
 			_rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
 
-			Debug.Log(BottomClamp + " " + TopClamp);
             // clamp our pitch rotation
             _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
