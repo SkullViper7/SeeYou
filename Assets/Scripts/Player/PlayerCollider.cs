@@ -19,15 +19,22 @@ public class PlayerCollider : MonoBehaviour
     public void TriggerTrap(Trap _trap)
     {
         int _trapIndex = 0;
+        bool _hasTrap = false;
         for (int i = 0; i < GameManager.Instance.Items.Count; i++)
         {
-            if (GameManager.Instance.Items[i] == _trap)
+            if (GameManager.Instance.Items[i].GetComponent<Trap>() == _trap)
             {
+                Debug.Log(_trap.name);
+                Debug.Log(GameManager.Instance.Items[i].name);
                 _trapIndex = i;
+                _hasTrap = true;
             }
         }
 
-        _playerMain.playerNetwork.TrapEventServerRPC(_trapIndex);
+        if (_hasTrap)
+        {
+            _playerMain.playerNetwork.TrapEventServerRPC(_trapIndex);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
