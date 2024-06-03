@@ -12,7 +12,7 @@ public class PlayerInputs : MonoBehaviour
 
     public bool _canShoot;
 
-    Animator _animator;
+    private Animator _animator;
 
     private void Awake()
     {
@@ -63,7 +63,6 @@ public class PlayerInputs : MonoBehaviour
     public void SwitchToHunter()
     {
         FindMain();
-        Debug.Log("switchs");
         _canShoot = true;
         playerInput.SwitchCurrentActionMap("Hunter");
     }

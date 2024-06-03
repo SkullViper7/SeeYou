@@ -16,17 +16,17 @@ PrefabInstance:
     - target: {fileID: 828823349544805992, guid: f7287b033f29eab439bf291bfaeea6e6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.9257596
+      value: 41.1
       objectReference: {fileID: 0}
     - target: {fileID: 828823349544805992, guid: f7287b033f29eab439bf291bfaeea6e6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.981
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 828823349544805992, guid: f7287b033f29eab439bf291bfaeea6e6,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.918
+      value: 45.75
       objectReference: {fileID: 0}
     - target: {fileID: 828823349544805992, guid: f7287b033f29eab439bf291bfaeea6e6,
         type: 3}
@@ -70,10 +70,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 57212938999217362, guid: f7287b033f29eab439bf291bfaeea6e6,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4624059824432117944}
-    - targetCorrespondingSourceObject: {fileID: 57212938999217362, guid: f7287b033f29eab439bf291bfaeea6e6,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 4553196053627262928}
     - targetCorrespondingSourceObject: {fileID: 57212938999217362, guid: f7287b033f29eab439bf291bfaeea6e6,
         type: 3}
@@ -94,20 +90,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8791089022782132114}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4624059824432117944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8848300303873307456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ff2e91a311b5674992b64ca3d966bff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sound: {fileID: 4345420417139134422}
-  clip: {fileID: 8300000, guid: aebc156bd688933458dc45266d2a8371, type: 3}
 --- !u!65 &4553196053627262928
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -123,7 +105,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -151,11 +133,11 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!82 &4345420417139134422
 AudioSource:
   m_ObjectHideFlags: 0
@@ -264,4 +246,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b75bdc3760b2a0469dab2d7076a8b1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileThrow: {fileID: 0}

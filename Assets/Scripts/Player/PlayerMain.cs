@@ -16,6 +16,8 @@ public class PlayerMain : MonoBehaviour
 
     public RaycastShoot shoot;
 
+    public ProjectileThrow preyThrow;
+
     private bool isHunter;
 
     public bool IsHunter
@@ -45,5 +47,10 @@ public class PlayerMain : MonoBehaviour
     public void InitPlayer()
     {
         SendMessage("InitPlayerMain", this);
+    }
+
+    public void DeadState()
+    {
+        Debug.Log(gameObject.name + " is dead");
     }
 }

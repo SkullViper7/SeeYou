@@ -77,7 +77,7 @@ namespace Unity.Netcode.Samples
             {
                 if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    ipAddressText.text = ip.ToString();
+                    ipAddressText.text = "IP : " + ip.ToString();
                     ipAddress = ip.ToString();
                     return ip.ToString();
                 }

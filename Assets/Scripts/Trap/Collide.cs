@@ -9,13 +9,11 @@ public class Collide : MonoBehaviour
 
     Rigidbody rb;
 
-    private void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        
-        if (collision.collider.CompareTag("Player"))
+        if (other.gameObject.tag == "Prey")
         {
-            Debug.Log(collision.collider.tag);
-            collision.gameObject.BroadcastMessage("GetAnotherItem", GetComponent<Rigidbody>());
+            other.gameObject.GetComponent<ProjectileThrow>().GetAnotherItem(gameObject);
         }
     }
 }

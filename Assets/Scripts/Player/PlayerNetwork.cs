@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Samples;
@@ -7,17 +8,24 @@ using UnityEngine;
 
 public class PlayerNetwork : NetworkBehaviour
 {
+    //public NetworkVariable<List<SpawnList>> spawnList = new NetworkVariable<List<SpawnList>>();
+    public NetworkList<Vector3> spawnList = new NetworkList<Vector3>();
+    private NetworkVariable<int> hunterIndex = new NetworkVariable<int>();
+    private Vector3 spawnToRemove;
     private GameObject itemsToSpawn;
     private NetworkManager _network;
 
+    private GameObject actualHunter;
     private PlayerMain _playerMain;
+
+    private bool hostCanChangeHunter;
 
     private List<GameObject> playerList = new List<GameObject>();
 
-    [SerializeField] 
+    [SerializeField]
     private float delayBeforeChangeRoles;
 
-    [SerializeField] 
+    [SerializeField]
     private float maxNumberOfPlayer;
 
     private void Start()
@@ -25,6 +33,11 @@ public class PlayerNetwork : NetworkBehaviour
         if (_network == null)
         {
             _network = NetworkManager.Singleton;
+        }
+
+        if (IsHost)
+        {
+            hostCanChangeHunter = true;
         }
     }
 
@@ -66,24 +79,34 @@ public class PlayerNetwork : NetworkBehaviour
     /// </summary>
     public override void OnNetworkSpawn()
     {
+        if (IsHost)
+        {
+            for (int i = 0; i < SpawnManager.Instance.spawnList.Count; i++)
+            {
+                spawnList.Add(SpawnManager.Instance.spawnList[i].transform.position);
+            }
+        }
+
         itemsToSpawn = NetworkManager.Singleton.GetComponent<NetworkLan>().ItemsToSpawn;
+
         //if (GameManager.Instance.players.Count <= NetworkManager.Singleton.GetComponent<NetworkLan>().NumberOfPlayer.Value)
         if (GameManager.Instance.players.Count <= 2)
         {
             GameManager.Instance.players.Add(gameObject);
             gameObject.name += GameManager.Instance.players.Count;
+            spawnToRemove = spawnList[Random.Range(0, spawnList.Count)];
             if (IsOwner)
             {
                 GetComponent<PlayerMain>().InitPlayer();
                 GetComponent<PlayerMain>().playerCamera.ActiveCam();
+                GetComponent<SpawnPlayer>().Spawn(spawnToRemove);
             }
 
-            GetComponent<SpawnPlayer>().Spawn();
-            //if (GameManager.Instance.players.Count == NetworkManager.Singleton.GetComponent<NetworkLan>().NumberOfPlayer.Value)
+            SpawnerNetworkServerRPC();
             if (GameManager.Instance.players.Count == 2)
             {
                 GameManager.Instance.preys.AddRange(GameManager.Instance.players);
-                RolesChangesServerRpc();
+                StartTheGameServerRpc();
             }
         }
         else
@@ -92,17 +115,80 @@ public class PlayerNetwork : NetworkBehaviour
         }
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    public void SpawnerNetworkServerRPC()
+    {
+        spawnList.Remove(spawnToRemove);
+    }
+
+
     /// <summary>
-    /// Va appeler 
+    /// Se lance que lorsque tout les joueurs sont connectés
     /// </summary>
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
+    private void StartTheGameServerRpc()
+    {
+        for (int i = 0; i < itemsToSpawn.GetComponent<SpawnZoneObjects>().Items.Length; i++)
+        {
+            SpawnItemsClientRPC(itemsToSpawn.GetComponent<SpawnZoneObjects>().SpawnItems(), i);
+        }
+
+        RolesChangesServerRpc();
+    }
+
+    public async void Wait()
+    {
+        Debug.Log("Wait");
+        await Task.Delay(1000);
+        SwapRoleServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SwapRoleServerRpc()
+    {
+        for (int i = 0; i < itemsToSpawn.GetComponent<SpawnZoneObjects>().Items.Length; i++)
+        {
+            SpawnItemsClientRPC(itemsToSpawn.GetComponent<SpawnZoneObjects>().SpawnItems(), i);
+        }
+        hunterIndex.Value = GameManager.Instance.teamManager.FindAHunterServ();
+        WaitPlayersSwapRole();
+
+    }
+
+    private async void WaitPlayersSwapRole()
+    {
+        await Task.CompletedTask;
+
+        if (IsHost && hostCanChangeHunter)
+        {
+            hostCanChangeHunter = false;
+
+            SwapRoleClientRpc();
+        }
+        await Task.Delay(1000);
+        if (IsHost)
+        {
+            hostCanChangeHunter = true;
+        }
+    }
+
+    [ClientRpc]
+    public void SwapRoleClientRpc()
+    {
+        Debug.Log($"ClientRpc called, hunterIndex.Value: {hunterIndex.Value}");
+        GameManager.Instance.teamManager.SetHunterForAllClients(hunterIndex.Value);
+    }
+
+
+
+    /// <summary>
+    /// Va chercher le future chasseur, puis va attendre que tout les clients soient prêt à recevoir l'information
+    /// </summary>
+    [ServerRpc(RequireOwnership = false)]
     public void RolesChangesServerRpc()
     {
         StartCoroutine(DelayChangeHunter(GameManager.Instance.teamManager.FindAHunterServ()));
-        /*for (int i = 0; i < itemsToSpawn.GetComponent<SpawnZoneObjects>().Items.Length; i++)
-        {
-            SpawnItemsClientRPC(itemsToSpawn.GetComponent<SpawnZoneObjects>().SpawnItems(), i);
-        }*/
+
     }
 
     /// <summary>
@@ -118,7 +204,7 @@ public class PlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void SpawnItemsClientRPC(Vector2 _position, int _indexItem)
     {
-        itemsToSpawn.GetComponent<SpawnZoneObjects>().InstantiateEachItem(_position, _indexItem);    
+        itemsToSpawn.GetComponent<SpawnZoneObjects>().InstantiateEachItem(_position, _indexItem);
     }
 
     /// <summary>
@@ -128,12 +214,17 @@ public class PlayerNetwork : NetworkBehaviour
     /// <returns></returns>
     private IEnumerator DelayChangeHunter(int newHunter)
     {
-        GameObject actualHunter = GameManager.Instance.teamManager._hunter;
         yield return new WaitForSeconds(2f);
         SearchAllPlayerClientRpc();
         yield return new WaitForSeconds(delayBeforeChangeRoles);
         ChangeHunterClientRpc(newHunter);
-        if (GameManager.Instance.teamManager._hunter != actualHunter)
+        //SetActualHunterPreyClientRpc();
+    }
+
+    [ClientRpc]
+    private void SetActualHunterPreyClientRpc()
+    {
+        if (GameManager.Instance.teamManager._hunter != actualHunter && GameManager.Instance.teamManager._hunter != null)
         {
             GameManager.Instance.teamManager.SetPreys(actualHunter);
         }
@@ -142,6 +233,7 @@ public class PlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void SearchAllPlayerClientRpc()
     {
+        actualHunter = GameManager.Instance.teamManager._hunter;
         if (GameManager.Instance.preys.Count == 0)
         {
             GameManager.Instance.preys.AddRange(GameManager.Instance.players);
@@ -232,7 +324,7 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void GetTouchedServerRpc()
     {
-       GetTouchedClientRpc();
+        GetTouchedClientRpc();
     }
 
     /// <summary>
@@ -242,28 +334,28 @@ public class PlayerNetwork : NetworkBehaviour
     public void GetTouchedClientRpc()
     {
         for (int i = 0; i < GameManager.Instance.preys.Count; i++)
+        {
+            if (GameManager.Instance.preys[i] != null)
             {
-                if (GameManager.Instance.preys[i] != null)
+                if (GameManager.Instance.preys[i] == gameObject)
                 {
-                    if (GameManager.Instance.preys[i] == gameObject)
-                    {
-                        GameManager.Instance.preys.Remove(GameManager.Instance.preys[i]);
-                    }
+                    GameManager.Instance.preys.Remove(GameManager.Instance.preys[i]);
                 }
             }
+        }
 
-            for (int i = 0; i < GameManager.Instance.players.Count; i++)
+        for (int i = 0; i < GameManager.Instance.players.Count; i++)
+        {
+            if (GameManager.Instance.players[i] != null)
             {
-                if (GameManager.Instance.players[i] != null)
+                if (GameManager.Instance.players[i] == gameObject)
                 {
-                    if (GameManager.Instance.players[i] == gameObject)
-                    {
-                        GameManager.Instance.players.Remove(GameManager.Instance.players[i]);
-                    }
+                    GameManager.Instance.players.Remove(GameManager.Instance.players[i]);
                 }
             }
-            
-            gameObject.SetActive(false);
+        }
+
+        gameObject.SetActive(false);
         if (GameManager.Instance.players.Count == 1)
         {
             GameManager.Instance.teamManager.Victory(GameManager.Instance.players[0].name);
@@ -276,11 +368,11 @@ public class PlayerNetwork : NetworkBehaviour
         WaitPlayersSounds();
     }
 
-   /*private IEnumerator WaitPlayersSounds()
-    {
-        yield return new WaitForSeconds(0.01f);
-        SoundEmitClientRpc();
-    }*/
+    /*private IEnumerator WaitPlayersSounds()
+     {
+         yield return new WaitForSeconds(0.01f);
+         SoundEmitClientRpc();
+     }*/
 
     private async void WaitPlayersSounds()
     {
@@ -298,26 +390,39 @@ public class PlayerNetwork : NetworkBehaviour
     /// Quand un joueur est touché par un trap
     /// </summary>
     [ServerRpc(RequireOwnership = false)]
-    public void TrapEventServerRPC()
+    public void TrapEventServerRPC(int _trapIndex)
     {
-        WaitPlayersTraps();
+        WaitPlayersTraps(_trapIndex);
     }
 
     /// <summary>
     /// On attend la sync avec tout les joueurs
     /// </summary>
-    private async void WaitPlayersTraps()
+    private async void WaitPlayersTraps(int _trapIndex)
     {
         await Task.CompletedTask;
-        TrapEventClientRPC();
+        TrapEventClientRPC(_trapIndex);
     }
 
     /// <summary>
     /// On va lancer l'event du trap
     /// </summary>
     [ClientRpc]
-    private void TrapEventClientRPC()
+    private void TrapEventClientRPC(int _trapIndex)
     {
-        _playerMain.playerCollider.LastTrap.TriggerEvent();
+        GameManager.Instance.Items[_trapIndex].GetComponent<Trap>().TriggerEvent();
+        GameManager.Instance.Items.RemoveAt(_trapIndex);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void MoveAnimationNetworkServerRpc(Vector2 _playerMove)
+    {
+        MoveAnimationNetworkClientRpc(_playerMove);
+    }
+
+    [ClientRpc]
+    public void MoveAnimationNetworkClientRpc(Vector2 _playerMove)
+    {
+        _playerMain.playerInputs.AnimMovement(_playerMove);
     }
 }

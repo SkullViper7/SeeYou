@@ -6,7 +6,7 @@ public class ProjectileThrow : MonoBehaviour
 {
     TrajectoryPredictor trajectoryPredictor;
 
-    public Rigidbody objectToThrow;
+    public GameObject objectToThrow;
 
     [SerializeField, Range(0.0f, 50.0f)]
     public float force;
@@ -16,27 +16,18 @@ public class ProjectileThrow : MonoBehaviour
 
     public InputAction fire;
 
-    public void GetAnotherItem(Rigidbody _objectToThrow) 
+    private PlayerMain main;
+
+    void Start()
+    {
+        trajectoryPredictor = GetComponent<TrajectoryPredictor>();
+    }
+
+    public void GetAnotherItem(GameObject _objectToThrow) 
     {
         objectToThrow = _objectToThrow;
     }
-    void OnEnable()
-    {
-        trajectoryPredictor = GetComponent<TrajectoryPredictor>();
-
-        if (StartPosition == null)
-            StartPosition = transform;
-
-        fire.Enable();
-        fire.performed += ThrowObject;
-    }
-
-    void Update()
-    {
-        Predict();
-    }
-
-    void Predict()
+     public void Predict()
     {
         trajectoryPredictor.PredictTrajectory(ProjectileData());
     }
@@ -55,9 +46,16 @@ public class ProjectileThrow : MonoBehaviour
         return properties;
     }
 
-    void ThrowObject(InputAction.CallbackContext ctx)
+    public void ThrowObject()
     {
-        Rigidbody thrownObject = Instantiate(objectToThrow, StartPosition.position, Quaternion.identity);
-        thrownObject.AddForce(StartPosition.forward * force, ForceMode.Impulse);
+        GameObject thrownObject = Instantiate(objectToThrow, StartPosition.position, Quaternion.identity);
+        thrownObject.GetComponent<Rigidbody>().AddForce(StartPosition.forward * force, ForceMode.Impulse);
     }
+
+    public void InitPlayerMain(PlayerMain _PM)
+    {
+        _PM.preyThrow = this;
+        main = _PM;
+    }
+
 }
