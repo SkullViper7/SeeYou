@@ -18,6 +18,8 @@ public class PlayerMain : MonoBehaviour
 
     public ProjectileThrow preyThrow;
 
+    public Ragdoll ragdoll;
+
     private bool isHunter;
 
     public bool IsHunter
