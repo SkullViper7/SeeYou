@@ -116,6 +116,9 @@ public class PlayerNetwork : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// Va enlever un spawner
+    /// </summary>
     [ServerRpc(RequireOwnership = false)]
     public void SpawnerNetworkServerRPC()
     {
@@ -143,6 +146,9 @@ public class PlayerNetwork : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// Permet de créer un délai avant de lancer le jeu, ce délai est neccessaire au bon fonctionnement du serveur
+    /// </summary>
     public async void Wait()
     {
         Debug.Log("Wait");
@@ -164,7 +170,7 @@ public class PlayerNetwork : NetworkBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Va set le nouveau chasseur
     /// </summary>
     /// <param name="newHunter"></param>
     [ClientRpc]
@@ -173,6 +179,11 @@ public class PlayerNetwork : NetworkBehaviour
         GameManager.Instance.teamManager.SetHunterForAllClients(newHunter);
     }
 
+    /// <summary>
+    /// Va instantier les items
+    /// </summary>
+    /// <param name="_position"></param>
+    /// <param name="_indexItem"></param>
     [ClientRpc]
     private void SpawnItemsClientRPC(Vector2 _position, int _indexItem)
     {
@@ -189,11 +200,15 @@ public class PlayerNetwork : NetworkBehaviour
         yield return new WaitForSeconds(2f);
         hostCanChangeHunter = true;
         SearchAllPlayerClientRpc();
+
         yield return new WaitForSeconds(delayBeforeChangeRoles);
         ChangeHunterClientRpc(newHunter);
         SetActualHunterPreyClientRpc();
     }
 
+    /// <summary>
+    /// Permet d'enlever un bug lié au rollement qui n'enlevait pas le chasseur d'avant
+    /// </summary>
     [ClientRpc]
     private void SetActualHunterPreyClientRpc()
     {
@@ -203,35 +218,35 @@ public class PlayerNetwork : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// Permet d'enlever certains bugs lié au rollement du chasseur
+    /// </summary>
     [ClientRpc]
     private void SearchAllPlayerClientRpc()
     {
-        actualHunter = GameManager.Instance.teamManager._hunter;
-        if (GameManager.Instance.preys.Count == 0)
+        if (GameManager.Instance.teamManager._hunter != null) 
         {
-            GameManager.Instance.preys.AddRange(GameManager.Instance.players);
-            foreach (GameObject player in GameManager.Instance.players)
+            actualHunter = GameManager.Instance.teamManager._hunter;
+            if (GameManager.Instance.preys.Count == 0)
             {
-                player.layer = 6;
-                player.tag = "Prey";
-                if (player.GetComponent<PlayerMain>().IsHunter)
+                GameManager.Instance.preys.AddRange(GameManager.Instance.players);
+                foreach (GameObject player in GameManager.Instance.players)
                 {
-                    player.GetComponent<PlayerMain>().IsHunter = false;
-                }
-                else
-                {
-                    Debug.Log("Player not hunter");
-                    player.SendMessage("BecomePrey");
+                    player.layer = 6;
+                    player.tag = "Prey";
+                    if (player.GetComponent<PlayerMain>().IsHunter)
+                    {
+                        player.GetComponent<PlayerMain>().IsHunter = false;
+                    }
+                    else
+                    {
+                        Debug.Log("Player not hunter");
+                        player.SendMessage("BecomePrey");
+                    }
                 }
             }
         }
     }
-
-    /*private async Task<GameObject> SpawnItems()
-    {
-        itemsToSpawn.GetComponent<SpawnZoneObjects>().SpawnItems();
-        await Task.CompletedTask;
-    }*/
 
     /// <summary>
     /// Lorsqu'un joueur reçoit le message BecomeHunter
@@ -297,6 +312,12 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void GetTouchedServerRpc()
     {
+        GetTouchedDelay();
+    }
+
+    private async void GetTouchedDelay() 
+    {
+        await Task.CompletedTask;
         GetTouchedClientRpc();
     }
 
@@ -306,33 +327,7 @@ public class PlayerNetwork : NetworkBehaviour
     [ClientRpc]
     public void GetTouchedClientRpc()
     {
-        for (int i = 0; i < GameManager.Instance.preys.Count; i++)
-        {
-            if (GameManager.Instance.preys[i] != null)
-            {
-                if (GameManager.Instance.preys[i] == gameObject)
-                {
-                    GameManager.Instance.preys.Remove(GameManager.Instance.preys[i]);
-                }
-            }
-        }
-
-        for (int i = 0; i < GameManager.Instance.players.Count; i++)
-        {
-            if (GameManager.Instance.players[i] != null)
-            {
-                if (GameManager.Instance.players[i] == gameObject)
-                {
-                    GameManager.Instance.players.Remove(GameManager.Instance.players[i]);
-                }
-            }
-        }
-
-        gameObject.SetActive(false);
-        if (GameManager.Instance.players.Count == 1)
-        {
-            GameManager.Instance.teamManager.Victory(GameManager.Instance.players[0].name);
-        }
+        SendMessage("DeadState");
     }
 
     [ServerRpc(RequireOwnership = false)]
