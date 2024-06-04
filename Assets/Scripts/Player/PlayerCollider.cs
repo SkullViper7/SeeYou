@@ -19,48 +19,27 @@ public class PlayerCollider : MonoBehaviour
     public void TriggerTrap(Trap _trap)
     {
         int _trapIndex = 0;
+        bool _hasTrap = false;
         for (int i = 0; i < GameManager.Instance.Items.Count; i++)
         {
-            if (GameManager.Instance.Items[i] == _trap)
+            Trap _trapToCompar = GameManager.Instance.Items[i].GetComponent<Trap>();
+            if (_trapToCompar == null) 
             {
+                _trapToCompar = GameManager.Instance.Items[i].transform.GetChild(0).GetComponent<Trap>();
+            }
+
+            if (_trapToCompar == _trap)
+            {
+                Debug.Log(_trap.name);
+                Debug.Log(GameManager.Instance.Items[i].name);
                 _trapIndex = i;
+                _hasTrap = true;
             }
         }
 
-        _playerMain.playerNetwork.TrapEventServerRPC(_trapIndex);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {/*
-        Debug.Log(gameObject.name);
-        if (collision.gameObject.tag == "Bullet" && !_playerMain.IsHunter)
+        if (_hasTrap)
         {
-            Debug.Log("destroy prey");
-            _playerMain.playerNetwork.GetTouchedServerRpc();
-           /* Destroy(collision.gameObject);
-            for (int i = 0; i < GameManager.Instance.preys.Count; i++)
-            {
-                if (GameManager.Instance.preys[i] != null)
-                {
-                    if (GameManager.Instance.preys[i] == gameObject)
-                    {
-                        GameManager.Instance.preys.Remove(GameManager.Instance.preys[i]);
-                    }
-                }
-            }
-
-            for (int i = 0; i < GameManager.Instance.players.Count; i++)
-            {
-                if (GameManager.Instance.players[i] != null)
-                {
-                    if (GameManager.Instance.players[i] == gameObject)
-                    {
-                        GameManager.Instance.players.Remove(GameManager.Instance.players[i]);
-                    }
-                }
-            }
-            
-            gameObject.SetActive(false);
-        }*/
+            _playerMain.playerNetwork.TrapEventServerRPC(_trapIndex);
+        }
     }
 }

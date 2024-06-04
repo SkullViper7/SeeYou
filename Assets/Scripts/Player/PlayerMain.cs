@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerMain : MonoBehaviour
 {
+    public bool IsDead;
+
     public FirstPersonController playerMovement;
 
     public StarterAssetsInputs playerInputs;
@@ -14,9 +16,11 @@ public class PlayerMain : MonoBehaviour
 
     public PlayerCollider playerCollider;
 
-    public RaycastShoot shoot;
+    public Shoot shoot;
 
     public ProjectileThrow preyThrow;
+
+    public Ragdoll ragdoll;
 
     private bool isHunter;
 
@@ -26,18 +30,44 @@ public class PlayerMain : MonoBehaviour
 
         set
         {
+            Debug.Log("hunter");
             isHunter = value;
             if (isHunter)
             {
                 SendMessage("BecomeHunter");
+                if (playerNetwork.IsOwner) 
+                {
+                    hunterGun.SetActive(true);
+                }
+                else
+                {
+                    preyGunView.SetActive(true);
+                }
+                
             }
             else
             {
-                Debug.Log(gameObject.name);
                 SendMessage("BecomePrey");
+                if (playerNetwork.IsOwner)
+                {
+                    hunterGun.SetActive(false);
+                }
+                else
+                {
+                    preyGunView.SetActive(false);
+                }
             }
         }
     }
+
+    [SerializeField]
+    private GameObject playerPartToDesactivate;
+
+    [SerializeField]
+    private GameObject hunterGun;
+
+    [SerializeField]
+    private GameObject preyGunView;
 
     private void Start()
     {
@@ -52,5 +82,37 @@ public class PlayerMain : MonoBehaviour
     public void DeadState()
     {
         Debug.Log(gameObject.name + " is dead");
+        for (int i = 0; i < GameManager.Instance.preys.Count; i++)
+        {
+            if (GameManager.Instance.preys[i] != null)
+            {
+                if (GameManager.Instance.preys[i] == gameObject)
+                {
+                    GameManager.Instance.preys.Remove(GameManager.Instance.preys[i]);
+                }
+            }
+        }
+
+        for (int i = 0; i < GameManager.Instance.players.Count; i++)
+        {
+            if (GameManager.Instance.players[i] != null)
+            {
+                if (GameManager.Instance.players[i] == gameObject)
+                {
+                    GameManager.Instance.players.Remove(GameManager.Instance.players[i]);
+                }
+            }
+        }
+
+        GameManager.Instance.LobbyCam.SetActive(true);
+        playerPartToDesactivate.SetActive(false);
+        IsDead = true;
+        playerInputs.playerInput.SwitchCurrentActionMap("Dead");
+        GetComponent<CapsuleCollider>().enabled = false;
+        if (GameManager.Instance.players.Count == 1)
+        {
+            GameManager.Instance.teamManager.Victory(GameManager.Instance.players[0].name);
+        }
+
     }
 }

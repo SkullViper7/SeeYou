@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.VFX;
 
 public class Shoot : MonoBehaviour
@@ -9,8 +6,12 @@ public class Shoot : MonoBehaviour
     public GameObject bullet;
     public float DelayBulletBeforeGetDestroy;
 
-    [SerializeField]private Transform shoot;
-    [SerializeField] private float power;
+    [SerializeField]
+    private Transform shoot;
+
+    [SerializeField] 
+    private float power;
+
     private GameObject fire;
     private PlayerMain main;
 
@@ -26,9 +27,13 @@ public class Shoot : MonoBehaviour
 
     public void Shooting()
     {
-        AudioClip clip = Sounds[UnityEngine.Random.Range(0, Sounds.Length)];
+        AudioClip clip = Sounds[Random.Range(0, Sounds.Length)];
         MyAudioSource.PlayOneShot(clip);
-        Vfx.Play();
+        if (Vfx != null)
+        {
+            Vfx.Play();
+        }
+
         GameObject boule = Instantiate(bullet, shoot.position, Quaternion.identity);
         boule.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * power);
         boule.SendMessage("InitBullet", gameObject);
@@ -43,7 +48,7 @@ public class Shoot : MonoBehaviour
 
     public void InitPlayerMain(PlayerMain _PM)
     {
-        // _PM.shoot = this;
+         _PM.shoot = this;
         main = _PM;
     }
 
