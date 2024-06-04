@@ -47,7 +47,7 @@ public class Mine : Trap
         {
             _playerWhoTriggered = other.gameObject;
 
-            //other.GetComponent<Ragdoll>().EnableRagdoll();
+            other.GetComponent<Ragdoll>().EnableRagdoll();
         }
         
         base.OnTriggerEnter(other);

@@ -6,8 +6,6 @@ public class Ragdoll : MonoBehaviour
 {
     Rigidbody[] _rigidbodies;
 
-    PlayerMain _playerMain;
-
     void Start()
     {
         _rigidbodies = GetComponentsInChildren<Rigidbody>();
@@ -19,13 +17,5 @@ public class Ragdoll : MonoBehaviour
         {
             _rigidbodies[i].isKinematic = false;
         }
-
-        _playerMain.playerMovement.enabled = false;
     }
-
-    public void InitPlayerMain(PlayerMain _PM)
-   	{
-       	_playerMain = _PM;
-       	_PM.ragdoll = this;
-   	}
 }
