@@ -438,7 +438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9078325237587309509
 Transform:
   m_ObjectHideFlags: 0
@@ -899,7 +899,7 @@ Transform:
   m_GameObject: {fileID: 2049361954503150957}
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000073452334, y: 0.000000089406974, z: 0.75709313, w: 0.653307}
-  m_LocalPosition: {x: 0.0002, y: 0.0283, z: -0.0005}
+  m_LocalPosition: {x: 0.00027, y: 0.01861, z: 0.00153}
   m_LocalScale: {x: 0.0065517044, y: 0.0065517044, z: 0.0065517044}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2724,6 +2724,7 @@ GameObject:
   - component: {fileID: 3271188521234522373}
   - component: {fileID: 3142116487530846789}
   - component: {fileID: 1660193687229178865}
+  - component: {fileID: 4344439720611061600}
   m_Layer: 6
   m_Name: NewPlayer
   m_TagString: Prey
@@ -2995,7 +2996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2492212108
+  GlobalObjectIdHash: 666339117
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -3239,6 +3240,19 @@ CapsuleCollider:
   m_Height: 2.06
   m_Direction: 1
   m_Center: {x: 0, y: 0.96, z: 0}
+--- !u!114 &4344439720611061600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7729877805908281407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7288752deade93c41b7581d64432fa63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  P: {fileID: 0}
 --- !u!1 &7765217349340320322
 GameObject:
   m_ObjectHideFlags: 0

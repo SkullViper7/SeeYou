@@ -2,16 +2,34 @@ using UnityEngine;
 
 public class Trap : MonoBehaviour
 {
+    [SerializeField]
+    private float delay;
+
+    private bool activate;
+
+    private void Start()
+    {
+        Invoke("Activate", delay);    
+    }
+
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Prey"))
+        if (activate) 
         {
-            other.SendMessage("TriggerTrap", this);
-        }       
+            if (other.CompareTag("Prey"))
+            {
+                other.SendMessage("TriggerTrap", this);
+            }
+        }
     }
 
     public virtual void TriggerEvent()
     {
 
+    }
+
+    private void ActivateTheTrap() 
+    {
+        activate = false;
     }
 }
