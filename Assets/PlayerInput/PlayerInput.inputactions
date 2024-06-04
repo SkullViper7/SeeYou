@@ -532,6 +532,12 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Dead",
+            "id": "3c016160-9350-47a2-a30b-448d2dadee76",
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": [
