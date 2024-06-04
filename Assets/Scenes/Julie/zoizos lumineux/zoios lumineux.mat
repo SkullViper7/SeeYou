@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1909430626810356674
+--- !u!114 &-313776152571225383
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,20 +20,18 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: tiger
-  m_Shader: {fileID: -6465566751694194690, guid: 6d29a374ba2280243a18fec837594931,
+  m_Name: zoios lumineux
+  m_Shader: {fileID: -6465566751694194690, guid: 45bc48fcf354b434abee3cad2a214b01,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _ALPHATEST_ON
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2450
-  stringTagMap:
-    RenderType: TransparentCutout
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -53,22 +51,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaClip: 1
-    - _AlphaToMask: 1
-    - _Blend: 0
-    - _CastShadows: 1
-    - _Cull: 2
-    - _DstBlend: 0
-    - _Erode: 0
+    - _FlapAmount: 0.8
+    - _FlapSpeed: 10
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _SrcBlend: 1
-    - _Surface: 0
-    - _ZTest: 4
-    - _ZWrite: 1
-    - _ZWriteControl: 0
-    - _erode: 0
-    - _fresnelPower: 1
-    m_Colors:
-    - _Color: {r: 0.64611584, g: 2.79544, b: 2.4636266, a: 1}
+    m_Colors: []
   m_BuildTextureStacks: []
