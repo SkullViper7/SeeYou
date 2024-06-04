@@ -7,6 +7,8 @@ public class Settings : MonoBehaviour
 {
     public Slider Slider;
     public GameObject Cross;
+    public GameObject Cross2;
+
 
     public void OnValueChanged()
     {
@@ -14,5 +16,9 @@ public class Settings : MonoBehaviour
         cross.SetFloat("New Float", Slider.value);
     }
 
-
+    public void OnValueChanged2()
+    {
+        Animator crossLarge = Cross2.GetComponent<Animator>();
+        crossLarge.SetFloat("New Float", Slider.value);
+    }
 }
