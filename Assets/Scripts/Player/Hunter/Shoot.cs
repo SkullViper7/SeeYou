@@ -23,6 +23,7 @@ public class Shoot : MonoBehaviour
     private void Start()
     {
         MyAudioSource = GetComponent<AudioSource>();
+        Vfx = GetComponent<VisualEffect>();
     }
 
     public void Shooting()
