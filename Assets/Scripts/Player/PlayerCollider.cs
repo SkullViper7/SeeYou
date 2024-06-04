@@ -22,7 +22,13 @@ public class PlayerCollider : MonoBehaviour
         bool _hasTrap = false;
         for (int i = 0; i < GameManager.Instance.Items.Count; i++)
         {
-            if (GameManager.Instance.Items[i].GetComponent<Trap>() == _trap)
+            Trap _trapToCompar = GameManager.Instance.Items[i].GetComponent<Trap>();
+            if (_trapToCompar == null) 
+            {
+                _trapToCompar = GameManager.Instance.Items[i].transform.GetChild(0).GetComponent<Trap>();
+            }
+
+            if (_trapToCompar == _trap)
             {
                 Debug.Log(_trap.name);
                 Debug.Log(GameManager.Instance.Items[i].name);

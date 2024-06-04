@@ -378,7 +378,14 @@ public class PlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void TrapEventClientRPC(int _trapIndex)
     {
-        GameManager.Instance.Items[_trapIndex].GetComponent<Trap>().TriggerEvent();
+        if (GameManager.Instance.Items[_trapIndex].GetComponent<Trap>() == null)
+        {
+            GameManager.Instance.Items[_trapIndex].transform.GetChild(0).GetComponent<Trap>().TriggerEvent();
+        }
+        else
+        {
+            GameManager.Instance.Items[_trapIndex].GetComponent<Trap>().TriggerEvent();
+        }
     }
 
     [ServerRpc(RequireOwnership = false)]

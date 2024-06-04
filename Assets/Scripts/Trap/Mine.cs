@@ -58,7 +58,7 @@ public class Mine : Trap
         _particleSystem.Play();
         _mesh.SetActive(false);
         zone.SetActive(true);
-        ImpulseManager.Instance.Shake(2, 3, new Vector3(0.25f, 0.25f, 0.25f), 0.5f);
+        ImpulseManager.Instance.Shake(0, 3, new Vector3(0.25f, 0.25f, 0.25f), 0.5f);
         _audioSource.PlayOneShot(_sfx);
         GameManager.Instance.Items.Remove(gameObject);
     }
