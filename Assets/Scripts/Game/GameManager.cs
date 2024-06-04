@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public NetworkMessageManager network;
     public PlayerNetwork lastHunter;
     public GameObject LobbyCam;
+    public GameObject PauseManager;
 
     //[HideInInspector]
     public List<GameObject> players = new();
