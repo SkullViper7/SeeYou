@@ -99,7 +99,7 @@ public class PlayerNetwork : NetworkBehaviour
             {
                 GetComponent<PlayerMain>().InitPlayer();
                 GetComponent<PlayerMain>().playerCamera.ActiveCam();
-                GetComponent<SpawnPlayer>().Spawn(spawnToRemove);
+                //GetComponent<SpawnPlayer>().Spawn(spawnToRemove);
                 GameManager.Instance.LobbyCam.SetActive(false);
             }
 
@@ -114,6 +114,12 @@ public class PlayerNetwork : NetworkBehaviour
         {
             //En faire un spectateur
         }
+    }
+
+    private async void WaitForSpawn() 
+    {
+        await Task.Delay(1000);
+        GetComponent<SpawnPlayer>().Spawn(spawnToRemove);
     }
 
     /// <summary>
@@ -378,7 +384,14 @@ public class PlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void TrapEventClientRPC(int _trapIndex)
     {
-        GameManager.Instance.Items[_trapIndex].GetComponent<Trap>().TriggerEvent();
+        if (GameManager.Instance.Items[_trapIndex].GetComponent<Trap>() == null)
+        {
+            GameManager.Instance.Items[_trapIndex].transform.GetChild(0).GetComponent<Trap>().TriggerEvent();
+        }
+        else
+        {
+            GameManager.Instance.Items[_trapIndex].GetComponent<Trap>().TriggerEvent();
+        }
     }
 
     [ServerRpc(RequireOwnership = false)]
