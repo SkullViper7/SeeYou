@@ -30,21 +30,44 @@ public class PlayerMain : MonoBehaviour
 
         set
         {
+            Debug.Log("hunter");
             isHunter = value;
             if (isHunter)
             {
                 SendMessage("BecomeHunter");
+                if (playerNetwork.IsOwner) 
+                {
+                    hunterGun.SetActive(true);
+                }
+                else
+                {
+                    preyGunView.SetActive(true);
+                }
+                
             }
             else
             {
-                Debug.Log(gameObject.name);
                 SendMessage("BecomePrey");
+                if (playerNetwork.IsOwner)
+                {
+                    hunterGun.SetActive(false);
+                }
+                else
+                {
+                    preyGunView.SetActive(false);
+                }
             }
         }
     }
 
     [SerializeField]
     private GameObject playerPartToDesactivate;
+
+    [SerializeField]
+    private GameObject hunterGun;
+
+    [SerializeField]
+    private GameObject preyGunView;
 
     private void Start()
     {
