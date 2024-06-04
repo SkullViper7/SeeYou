@@ -8,7 +8,8 @@ public class Zone : MonoBehaviour
     {
         if (other.gameObject.tag == "Prey")
         {
-            Destroy(other.gameObject);
+            //Destroy(other.gameObject);
+            other.gameObject.SendMessage("DeadState");
         }
     }
 }
