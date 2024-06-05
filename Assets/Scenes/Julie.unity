@@ -16418,18 +16418,33 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 95010dbb95572894ea67f09acbe1db13,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 77.903
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95010dbb95572894ea67f09acbe1db13,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 77.903
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95010dbb95572894ea67f09acbe1db13,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 77.903
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95010dbb95572894ea67f09acbe1db13,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.3989999
+      value: 1.356
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 95010dbb95572894ea67f09acbe1db13,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.2389681
+      value: -2.272
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 95010dbb95572894ea67f09acbe1db13,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.6710005
+      value: 8.814
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 95010dbb95572894ea67f09acbe1db13,
         type: 3}
@@ -22447,18 +22462,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7655751053820894619, guid: af55df0c7c7db14478a05aa1ca5df74f,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2652
+      objectReference: {fileID: 0}
+    - target: {fileID: 7655751053820894619, guid: af55df0c7c7db14478a05aa1ca5df74f,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2652
+      objectReference: {fileID: 0}
+    - target: {fileID: 7655751053820894619, guid: af55df0c7c7db14478a05aa1ca5df74f,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2652
+      objectReference: {fileID: 0}
+    - target: {fileID: 7655751053820894619, guid: af55df0c7c7db14478a05aa1ca5df74f,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.3640194
+      value: 1.5534
       objectReference: {fileID: 0}
     - target: {fileID: 7655751053820894619, guid: af55df0c7c7db14478a05aa1ca5df74f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.11295697
+      value: -2.22
       objectReference: {fileID: 0}
     - target: {fileID: 7655751053820894619, guid: af55df0c7c7db14478a05aa1ca5df74f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.9863434
+      value: 9.826
       objectReference: {fileID: 0}
     - target: {fileID: 7655751053820894619, guid: af55df0c7c7db14478a05aa1ca5df74f,
         type: 3}
