@@ -93,6 +93,7 @@ public class PlayerNetwork : NetworkBehaviour
         if (GameManager.Instance.players.Count <= 2)
         {
             GameManager.Instance.players.Add(gameObject);
+            NetworkManager.GetComponent<NetworkLan>().PlayerNeeded.text = GameManager.Instance.players.Count + " / 2";
             gameObject.name += GameManager.Instance.players.Count;
             spawnToRemove = spawnList[Random.Range(0, spawnList.Count)];
             if (IsOwner)
@@ -106,6 +107,7 @@ public class PlayerNetwork : NetworkBehaviour
             SpawnerNetworkServerRPC();
             if (GameManager.Instance.players.Count == 2)
             {
+                NetworkManager.GetComponent<NetworkLan>().PlayerNeeded.gameObject.SetActive(false);
                 GameManager.Instance.preys.AddRange(GameManager.Instance.players);
                 Wait();
             }
