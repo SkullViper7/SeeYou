@@ -18,6 +18,8 @@ public class PlayerMain : MonoBehaviour
 
     public Shoot shoot;
 
+    public PlayerUI PlayerUI;
+
     public ProjectileThrow preyThrow;
 
     private bool isHunter;
@@ -28,12 +30,16 @@ public class PlayerMain : MonoBehaviour
 
         set
         {
-            Debug.Log("hunter");
+            if (playerNetwork.IsOwner)
+            {
+                Debug.Log("setIsHunter");
+            }
+
             isHunter = value;
             if (isHunter)
             {
                 SendMessage("BecomeHunter");
-                if (playerNetwork.IsOwner) 
+                if (playerNetwork.IsOwner)
                 {
                     hunterGun.SetActive(true);
                 }
@@ -41,7 +47,7 @@ public class PlayerMain : MonoBehaviour
                 {
                     preyGunView.SetActive(true);
                 }
-                
+
             }
             else
             {

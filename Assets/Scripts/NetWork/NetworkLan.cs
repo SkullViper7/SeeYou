@@ -14,6 +14,8 @@ namespace Unity.Netcode.Samples
 
         private bool pcAssigned;
 
+        public TextMeshProUGUI PlayerNeeded;
+
         [SerializeField] TextMeshProUGUI ipAddressText;
         [SerializeField] TMP_InputField ip;
 

@@ -51,10 +51,11 @@ public class TeamManager : MonoBehaviour
     {
         newPrey.layer = 6;
         newPrey.tag = "Prey";
-        if (newPrey.GetComponent<PlayerMain>().IsHunter)
+        newPrey.GetComponent<PlayerMain>().IsHunter = false;
+        /*if (newPrey.GetComponent<PlayerMain>().IsHunter)
         {
             newPrey.GetComponent<PlayerMain>().IsHunter = false;
-        }
+        }*/
 
         newPrey.transform.SetParent(_preyParent);
     }

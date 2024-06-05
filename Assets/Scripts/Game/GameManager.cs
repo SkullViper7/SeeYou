@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public PlayerNetwork lastHunter;
     public GameObject LobbyCam;
     public GameObject PauseManager;
+    public GameObject UiTransitionHunter;
+    public GameObject UiTransitionPrey;
 
     //[HideInInspector]
     public List<GameObject> players = new();
