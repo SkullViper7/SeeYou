@@ -9,6 +9,11 @@ public class Trap : MonoBehaviour
 
     private void Start()
     {
+        if (delay == 0) 
+        {
+            delay = 5;
+        }
+
         Invoke("Activate", delay);    
     }
 
@@ -30,6 +35,6 @@ public class Trap : MonoBehaviour
 
     private void ActivateTheTrap() 
     {
-        activate = false;
+        activate = true;
     }
 }
