@@ -26,9 +26,10 @@ public class Mine : Trap
         _audioSource = GetComponent<AudioSource>();
     }
 
-    void Start()
+    protected override void Start()
     {
         StartCoroutine(Blink());
+        base.Start();
     }
 
     IEnumerator Blink()
