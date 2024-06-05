@@ -90,9 +90,10 @@ public class PlayerNetwork : NetworkBehaviour
         itemsToSpawn = NetworkManager.Singleton.GetComponent<NetworkLan>().ItemsToSpawn;
 
         //if (GameManager.Instance.players.Count <= NetworkManager.Singleton.GetComponent<NetworkLan>().NumberOfPlayer.Value)
-        if (GameManager.Instance.players.Count <= 5)
+        if (GameManager.Instance.players.Count <= 2)
         {
             GameManager.Instance.players.Add(gameObject);
+            NetworkManager.GetComponent<NetworkLan>().PlayerNeeded.text = GameManager.Instance.players.Count + " / 2";
             gameObject.name += GameManager.Instance.players.Count;
             spawnToRemove = spawnList[Random.Range(0, spawnList.Count)];
             if (IsOwner)
@@ -104,8 +105,9 @@ public class PlayerNetwork : NetworkBehaviour
             }
 
             SpawnerNetworkServerRPC();
-            if (GameManager.Instance.players.Count == 5)
+            if (GameManager.Instance.players.Count == 2)
             {
+                NetworkManager.GetComponent<NetworkLan>().PlayerNeeded.gameObject.SetActive(false);
                 GameManager.Instance.preys.AddRange(GameManager.Instance.players);
                 Wait();
             }
@@ -183,6 +185,11 @@ public class PlayerNetwork : NetworkBehaviour
     private void ChangeHunterClientRpc(int newHunter)
     {
         GameManager.Instance.teamManager.SetHunterForAllClients(newHunter);
+        foreach (GameObject _player in GameManager.Instance.players) 
+        {
+                _player.GetComponent<PlayerUI>().TransitionUI();
+        }
+        
     }
 
     /// <summary>
@@ -203,13 +210,14 @@ public class PlayerNetwork : NetworkBehaviour
     /// <returns></returns>
     private IEnumerator DelayChangeHunter(int newHunter)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.3f);
         hostCanChangeHunter = true;
         SearchAllPlayerClientRpc();
 
         yield return new WaitForSeconds(delayBeforeChangeRoles);
         ChangeHunterClientRpc(newHunter);
         SetActualHunterPreyClientRpc();
+
     }
 
     /// <summary>
@@ -218,7 +226,7 @@ public class PlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void SetActualHunterPreyClientRpc()
     {
-        if (GameManager.Instance.teamManager._hunter != actualHunter && GameManager.Instance.teamManager._hunter != null)
+        if (GameManager.Instance.teamManager._hunter != actualHunter && GameManager.Instance.teamManager._hunter != null && actualHunter != null)
         {
             GameManager.Instance.teamManager.SetPreys(actualHunter);
         }

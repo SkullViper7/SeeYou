@@ -7,14 +7,14 @@ public class Trap : MonoBehaviour
 
     private bool activate;
 
-    private void Start()
+    protected virtual void Start()
     {
         if (delay == 0) 
         {
             delay = 5;
         }
 
-        Invoke("Activate", delay);    
+        Invoke("ActivateTheTrap", delay);    
     }
 
     protected virtual void OnTriggerEnter(Collider other)
