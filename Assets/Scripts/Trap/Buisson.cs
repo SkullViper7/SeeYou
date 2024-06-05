@@ -11,9 +11,10 @@ public class Buisson : Trap
     AudioSource _audioSource;
     [SerializeField] AudioClip[] _clips;
 
-    private void Start()
+    protected override void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+        base.Start();
     }
 
     public override void TriggerEvent()
