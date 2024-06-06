@@ -1825,12 +1825,12 @@ GameObject:
   - component: {fileID: 2837844430383622203}
   - component: {fileID: 4853116054455408966}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9081830194466622285
 Transform:
   m_ObjectHideFlags: 0
@@ -2996,7 +2996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2977863664
+  GlobalObjectIdHash: 1894508154
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -3148,6 +3148,7 @@ MonoBehaviour:
   shoot: {fileID: 5297018136769648407}
   power: 100
   Vfx: {fileID: 8359791498428215003}
+  _firePoint: {fileID: 4532112162634203072}
   Sounds:
   - {fileID: 8300000, guid: 65fda331e705c544a84924fbbd1e3b9f, type: 3}
   - {fileID: 8300000, guid: b1ddf099696525f4db90e41cca6831ea, type: 3}
