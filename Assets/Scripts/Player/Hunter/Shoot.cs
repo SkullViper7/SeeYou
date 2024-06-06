@@ -16,6 +16,7 @@ public class Shoot : MonoBehaviour
     private PlayerMain main;
 
     public VisualEffect Vfx;
+    [SerializeField] GameObject _firePoint;
 
     public AudioClip[] Sounds;
     public AudioSource MyAudioSource;
@@ -27,18 +28,24 @@ public class Shoot : MonoBehaviour
 
     public void Shooting()
     {
+        _firePoint.SetActive(true);
+
         AudioClip clip = Sounds[Random.Range(0, Sounds.Length)];
         MyAudioSource.PlayOneShot(clip);
-        if (Vfx != null)
-        {
-            Vfx.Play();
-        }
+
+        ImpulseManager.Instance.Shake(0, 1, new Vector3(-0.5f, -0.5f, -0.5f), 0.25f);
 
         GameObject boule = Instantiate(bullet, shoot.position, Quaternion.identity);
         boule.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * power);
         boule.SendMessage("InitBullet", gameObject);
 
         Destroy(boule, DelayBulletBeforeGetDestroy);
+        Invoke("DeactivateFirePoint", DelayBulletBeforeGetDestroy);
+    }
+
+    private void DeactivateFirePoint()
+    {
+        _firePoint.SetActive(false);
     }
 
     public void SyncShoot()

@@ -18,6 +18,6 @@ public class TreeChanger : MonoBehaviour
 
         treeType[0].prefab = _Grass;
         treeType[1].prefab = _Corn;
-        Terrain.activeTerrain.terrainData.treePrototypes = treeType;
+        _terrain.terrainData.treePrototypes = treeType;
     }
 }
