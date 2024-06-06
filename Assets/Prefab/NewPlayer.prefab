@@ -1945,7 +1945,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 2
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -2996,7 +2996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2206175600
+  GlobalObjectIdHash: 2977863664
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -3106,6 +3106,7 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   playerCollider: {fileID: 0}
   shoot: {fileID: 0}
+  PlayerUI: {fileID: 0}
   preyThrow: {fileID: 0}
   playerPartToDesactivate: {fileID: 5783446367714670723}
   hunterGun: {fileID: 6613432426750935568}
@@ -3174,6 +3175,7 @@ MonoBehaviour:
   cursorInputForLook: 1
   _canShoot: 0
   playerInput: {fileID: 0}
+  InTransition: 0
 --- !u!114 &3271188521234522373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3188,7 +3190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 4
   SprintSpeed: 6
-  RotationSpeed: 50
+  RotationSpeed: 100
   SpeedChangeRate: 10
   JumpHeight: 1.2
   Gravity: -15

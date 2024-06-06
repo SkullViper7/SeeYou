@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4aa8fdd15c2ad14180639b4232e4ac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delay: 0
   _clips:
   - {fileID: 8300000, guid: e94489e7d5540284eb23a7f4f9094659, type: 3}
   - {fileID: 8300000, guid: 1f55ca1b71ec10d4e92774c1860a4e85, type: 3}
@@ -202,7 +203,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 2
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -311,6 +312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4aa8fdd15c2ad14180639b4232e4ac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delay: 0
   _clips:
   - {fileID: 8300000, guid: e94489e7d5540284eb23a7f4f9094659, type: 3}
   - {fileID: 8300000, guid: 1f55ca1b71ec10d4e92774c1860a4e85, type: 3}

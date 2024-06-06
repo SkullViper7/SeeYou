@@ -36,6 +36,7 @@ public class PlayerUI : MonoBehaviour
             await Task.Delay(100);
             uiTransitionHunter.transform.parent.gameObject.SetActive(true);
             playerMain.playerInputs.InTransition = true;
+            playerMain.playerMovement.GetComponent<CharacterController>().enabled = false;
             if (playerMain.IsHunter)
             {
                 HunterUI();
@@ -47,6 +48,7 @@ public class PlayerUI : MonoBehaviour
 
             await Task.Delay(3500);
             uiTransitionHunter.transform.parent.gameObject.SetActive(false);
+            playerMain.playerMovement.GetComponent<CharacterController>().enabled = false;
             playerMain.playerInputs.InTransition = false;
         }
     }
