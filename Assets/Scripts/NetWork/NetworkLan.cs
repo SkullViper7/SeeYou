@@ -31,6 +31,12 @@ namespace Unity.Netcode.Samples
         [SerializeField]
         private GameObject clientLobby;
 
+        [SerializeField]
+        private GameObject hostLobby;
+
+        [SerializeField]
+        private GameObject lobby;
+
         [SerializeField] 
         private TMP_InputField pseudoField;
 
@@ -61,6 +67,9 @@ namespace Unity.Netcode.Samples
             UpdatePseudoOfPlayerClientRpc(PseudoChoosen);
             NetworkManager.Singleton.StartHost();
             GetLocalIPAddress();
+            hostLobby.SetActive(false);
+            pseudoField.gameObject.SetActive(false);
+            numberOfPlayerField.gameObject.SetActive(false);
         }
 
         // To Join a game
@@ -79,6 +88,7 @@ namespace Unity.Netcode.Samples
         {
             Debug.Log($"Successfully connected to server with client ID: {clientId}");
             clientLobby.SetActive(false);
+            pseudoField.gameObject.SetActive(false);
             Invoke("LauncheCLient", 1.0f);
             // Ajoute toute logique supplémentaire après la connexion réussie
         }
@@ -141,6 +151,20 @@ namespace Unity.Netcode.Samples
         private void ValidatePseudoInput(string input)
         {
             PseudoChoosen = input;
+        }
+
+        private bool ValidateHost()
+        {
+            bool isValidate = false;
+            if (NumberOfPlayer.Value != 0 && NumberOfPlayer.Value != 1) 
+            { 
+                if (ValidateClient()) 
+                {
+                    isValidate = true;
+                }
+            }
+
+            return isValidate;
         }
 
         private bool ValidateClient() 
