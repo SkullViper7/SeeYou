@@ -9,8 +9,10 @@ namespace Unity.Netcode.Samples
     public class NetworkLan : MonoBehaviour
     {
         public PreyInput preyInput;
-        public NetworkVariable<int> NumberOfPlayer = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-        public GameObject ItemsToSpawn;        
+        public NetworkVariable<int> NumberOfPlayer = new NetworkVariable<int>();
+        public GameObject ItemsToSpawn;
+
+        public string PseudoChoosen;
 
         private bool pcAssigned;
 
@@ -21,11 +23,14 @@ namespace Unity.Netcode.Samples
 
         [SerializeField] string ipAddress;
 
-        [SerializeField] TMP_InputField numberOfPlayerField;
-        [SerializeField] UnityTransport transport;
+        [SerializeField] 
+        private TMP_InputField numberOfPlayerField;
 
-        
-        
+        [SerializeField] 
+        private TMP_InputField pseudoField;
+
+        [SerializeField] 
+        private UnityTransport transport;
 
         void Start()
         {
@@ -33,7 +38,8 @@ namespace Unity.Netcode.Samples
             SetIpAddress(); // Set the Ip to the above address
             pcAssigned = false;
             InvokeRepeating("assignPlayerController", 0.1f, 0.1f);
-            numberOfPlayerField.onValueChanged.AddListener(ValidateInput);
+            numberOfPlayerField.onValueChanged.AddListener(ValidateNumberInput);
+            pseudoField.onValueChanged.AddListener(ValidatePseudoInput);
         }
 
         public void StartServer()
@@ -48,8 +54,7 @@ namespace Unity.Netcode.Samples
             NetworkManager.Singleton.StartHost();
             GetLocalIPAddress();
             UpdateNumberOfPlayerClientRpc(NumberOfPlayer.Value);
-
-//            Debug.Log(int.Parse(numberOfPlayerField.text));
+            UpdatePseudoOfPlayerClientRpc(PseudoChoosen);
         }
 
         // To Join a game
@@ -61,11 +66,6 @@ namespace Unity.Netcode.Samples
             NetworkManager.Singleton.StartClient();
             Debug.Log(NetworkManager.Singleton.StartClient());
             Invoke("LauncheCLient", 1.0f);
-            
-            /*if ()
-            {
-                NumberOfPlayer = int.Parse(numberOfPlayerField.text);
-            }*/
         }
 
         /* Gets the Ip Address of your connected network and
@@ -110,7 +110,7 @@ namespace Unity.Netcode.Samples
             }
         }
 
-        private void ValidateInput(string input)
+        private void ValidateNumberInput(string input)
         {
             int value;
             if (int.TryParse(input, out value))
@@ -122,7 +122,13 @@ namespace Unity.Netcode.Samples
                 numberOfPlayerField.text = "";
             }
         }
-        
+
+        private void ValidatePseudoInput(string input)
+        {
+            Debug.Log(input);
+            PseudoChoosen = input;
+        }
+
         private void LauncheCLient()
         {
             RequestNumberOfPlayerServerRpc();
@@ -149,10 +155,22 @@ namespace Unity.Netcode.Samples
         [ClientRpc]
         private void UpdateNumberOfPlayerClientRpc(int numberOfPlayer)
         {
+            if (numberOfPlayer == 0)
+            {
+                numberOfPlayer = 5;
+            }
+
             NumberOfPlayer.Value = numberOfPlayer;
-            Debug.Log("Updated NumberOfPlayer on client: " + numberOfPlayer);
         }
 
+        [ClientRpc]
+        private void UpdatePseudoOfPlayerClientRpc(string pseudoOfPlayer)
+        {
+            if (PlayerPrefs.GetString("Pseudo") == null || PlayerPrefs.GetString("Pseudo")!= pseudoOfPlayer) 
+            {
+                PlayerPrefs.SetString("Pseudo", pseudoOfPlayer);
+            }
+        }
     }
 }
 
