@@ -11,6 +11,9 @@ public class PlayerUI : MonoBehaviour
 
     private PlayerMain playerMain;
 
+    [SerializeField]
+    private GameObject playerPseudoVisuel;
+
     public void InitPlayerMain(PlayerMain _PM)
     {
         playerMain = _PM;
@@ -36,6 +39,8 @@ public class PlayerUI : MonoBehaviour
             await Task.Delay(100);
             uiTransitionHunter.transform.parent.gameObject.SetActive(true);
             playerMain.playerInputs.InTransition = true;
+            playerMain.playerMovement.direction = Vector3.zero;
+            playerMain.playerMovement.GetComponent<CharacterController>().enabled = false;
             if (playerMain.IsHunter)
             {
                 HunterUI();
@@ -45,8 +50,15 @@ public class PlayerUI : MonoBehaviour
                 PreyUI();
             }
 
-            await Task.Delay(3500);
+            await Task.Delay(2500);
+
+            if (playerMain.IsHunter)
+            {
+                await Task.Delay(1000);
+            }
+            
             uiTransitionHunter.transform.parent.gameObject.SetActive(false);
+            playerMain.playerMovement.GetComponent<CharacterController>().enabled = true;
             playerMain.playerInputs.InTransition = false;
         }
     }

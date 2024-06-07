@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -18,8 +19,8 @@ public class TerrainDetector
     public TerrainDetector()
     {
         // Get the terrain data from the active terrain component
-        terrainData = Terrain.activeTerrain.terrainData;
-        
+        terrainData = GameObject.FindGameObjectWithTag("Terrain").GetComponent<Terrain>().terrainData;
+
         // Get the width and height of the terrain's alphamap
         alphamapWidth = terrainData.alphamapWidth;
         alphamapHeight = terrainData.alphamapHeight;

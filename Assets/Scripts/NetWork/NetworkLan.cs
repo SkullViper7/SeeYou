@@ -3,14 +3,19 @@ using Unity.Netcode.Transports.UTP;
 using TMPro;
 using System.Net;
 using System.Net.Sockets;
+using static UnityEngine.RuleTile.TilingRuleOutput;
+using System;
+using UnityEngine.UI;
 namespace Unity.Netcode.Samples
 {
 
     public class NetworkLan : MonoBehaviour
     {
         public PreyInput preyInput;
-        public NetworkVariable<int> NumberOfPlayer = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-        public GameObject ItemsToSpawn;        
+        public NetworkVariable<int> NumberOfPlayer = new NetworkVariable<int>();
+        public GameObject ItemsToSpawn;
+
+        public string PseudoChoosen;
 
         private bool pcAssigned;
 
@@ -21,11 +26,29 @@ namespace Unity.Netcode.Samples
 
         [SerializeField] string ipAddress;
 
-        [SerializeField] TMP_InputField numberOfPlayerField;
-        [SerializeField] UnityTransport transport;
+        [SerializeField] 
+        private TMP_InputField numberOfPlayerField;
 
-        
-        
+        [SerializeField]
+        private GameObject clientLobby;
+
+        [SerializeField]
+        private GameObject hostLobby;
+
+        [SerializeField]
+        private GameObject lobby;
+
+        [SerializeField] 
+        private TMP_InputField pseudoField;
+
+        [SerializeField] 
+        private UnityTransport transport;
+
+        [SerializeField] Button _joinButton;
+        [SerializeField] Button _createButton;
+
+        bool _hasSetName = false;
+        bool _hasSetNumber = false;
 
         void Start()
         {
@@ -33,7 +56,9 @@ namespace Unity.Netcode.Samples
             SetIpAddress(); // Set the Ip to the above address
             pcAssigned = false;
             InvokeRepeating("assignPlayerController", 0.1f, 0.1f);
-            numberOfPlayerField.onValueChanged.AddListener(ValidateInput);
+            numberOfPlayerField.onValueChanged.AddListener(ValidateNumberInput);
+            pseudoField.onValueChanged.AddListener(ValidatePseudoInput);
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
         }
 
         public void StartServer()
@@ -45,27 +70,37 @@ namespace Unity.Netcode.Samples
         // To Host a game
         public void StartHost()
         {
-            NetworkManager.Singleton.StartHost();
-            GetLocalIPAddress();
             UpdateNumberOfPlayerClientRpc(NumberOfPlayer.Value);
-
-//            Debug.Log(int.Parse(numberOfPlayerField.text));
+            UpdatePseudoOfPlayerClientRpc(PseudoChoosen);
+            if (ValidateHost())
+            {
+                NetworkManager.Singleton.StartHost();
+                GetLocalIPAddress();
+                hostLobby.SetActive(false);
+                pseudoField.gameObject.SetActive(false);
+                numberOfPlayerField.gameObject.SetActive(false);
+            }
         }
 
         // To Join a game
         public void StartClient()
         {
-            ipAddress = ip.text;
-            Debug.Log(ip.text);
-            SetIpAddress();
-            NetworkManager.Singleton.StartClient();
-            Debug.Log(NetworkManager.Singleton.StartClient());
-            Invoke("LauncheCLient", 1.0f);
-            
-            /*if ()
+            UpdatePseudoOfPlayerClientRpc(PseudoChoosen);
+            if (ValidateClient()) 
             {
-                NumberOfPlayer = int.Parse(numberOfPlayerField.text);
-            }*/
+                ipAddress = ip.text;
+                SetIpAddress();
+                NetworkManager.Singleton.StartClient();
+            }
+        }
+
+        void OnClientConnected(ulong clientId)
+        {
+            Debug.Log($"Successfully connected to server with client ID: {clientId}");
+            clientLobby.SetActive(false);
+            pseudoField.gameObject.SetActive(false);
+            Invoke("LauncheCLient", 1.0f);
+            // Ajoute toute logique supplémentaire après la connexion réussie
         }
 
         /* Gets the Ip Address of your connected network and
@@ -110,19 +145,88 @@ namespace Unity.Netcode.Samples
             }
         }
 
-        private void ValidateInput(string input)
+        private void ValidateNumberInput(string input)
         {
             int value;
             if (int.TryParse(input, out value))
             {
                 NumberOfPlayer.Value = int.Parse(input);
+                _hasSetNumber = true;
             }
             else
             {
                 numberOfPlayerField.text = "";
+                _hasSetNumber = false;
+            }
+
+            CheckHostPrerequisites();
+        }
+
+        private void ValidatePseudoInput(string input)
+        {
+            PseudoChoosen = input;
+            _hasSetName = true;
+
+            if (PseudoChoosen == "")
+            {
+                _hasSetName = false;
+            }
+
+            CheckHostPrerequisites();
+            CheckClientPrerequisites();
+        }
+
+        void CheckHostPrerequisites()
+        {
+            if (_hasSetName && _hasSetNumber)
+            {
+                _createButton.interactable = true;
+            }
+
+            else
+            {   
+                _createButton.interactable = false;
             }
         }
-        
+
+        void CheckClientPrerequisites()
+        {
+            if (_hasSetName)
+            {
+                _joinButton.interactable = true;
+            }
+
+            else
+            {
+                _joinButton.interactable = false;
+            }
+        }
+
+        private bool ValidateHost()
+        {
+            bool isValidate = false;
+            if (NumberOfPlayer.Value != 0 && NumberOfPlayer.Value != 1) 
+            { 
+                if (ValidateClient()) 
+                {
+                    isValidate = true;
+                }
+            }
+
+            return isValidate;
+        }
+
+        private bool ValidateClient() 
+        {
+            bool isValidate = false;
+            if (PlayerPrefs.GetString("Pseudo") != null) 
+            {
+                isValidate = true;
+            }
+
+            return isValidate;
+        }
+
         private void LauncheCLient()
         {
             RequestNumberOfPlayerServerRpc();
@@ -149,10 +253,22 @@ namespace Unity.Netcode.Samples
         [ClientRpc]
         private void UpdateNumberOfPlayerClientRpc(int numberOfPlayer)
         {
+            if (numberOfPlayer == 0)
+            {
+                numberOfPlayer = 5;
+            }
+
             NumberOfPlayer.Value = numberOfPlayer;
-            Debug.Log("Updated NumberOfPlayer on client: " + numberOfPlayer);
         }
 
+        [ClientRpc]
+        private void UpdatePseudoOfPlayerClientRpc(string pseudoOfPlayer)
+        {
+            if (PlayerPrefs.GetString("Pseudo") != null || PlayerPrefs.GetString("Pseudo")!= pseudoOfPlayer) 
+            {
+                PlayerPrefs.SetString("Pseudo", pseudoOfPlayer);
+            }
+        }
     }
 }
 

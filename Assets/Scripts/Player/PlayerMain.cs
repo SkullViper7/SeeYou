@@ -24,17 +24,18 @@ public class PlayerMain : MonoBehaviour
 
     private bool isHunter;
 
+    [SerializeField] GameObject _hunterMesh;
+    [SerializeField] GameObject _preyMesh;
+
+    public GameObject MeshToHide;
+    public int LayerToChangeThePreyMesh;
+
     public bool IsHunter
     {
         get { return isHunter; }
 
         set
         {
-            if (playerNetwork.IsOwner)
-            {
-                Debug.Log("setIsHunter");
-            }
-
             isHunter = value;
             if (isHunter)
             {
@@ -108,6 +109,8 @@ public class PlayerMain : MonoBehaviour
             }
         }
 
+        GameManager.Instance.deadPanel.SetActive(true);
+
         GameManager.Instance.LobbyCam.SetActive(true);
         playerPartToDesactivate.SetActive(false);
         IsDead = true;
@@ -115,8 +118,28 @@ public class PlayerMain : MonoBehaviour
         GetComponent<CapsuleCollider>().enabled = false;
         if (GameManager.Instance.players.Count == 1)
         {
-            GameManager.Instance.teamManager.Victory(GameManager.Instance.players[0].name);
+            GameManager.Instance.winPanel.SetActive(true);
+            GameManager.Instance.teamManager.Victory(GameManager.Instance.players[0].GetComponent<PlayerNetwork>().Pseudo);
         }
+    }
 
+    void BecomeHunter()
+    {
+        _hunterMesh.SetActive(true);
+        _preyMesh.SetActive(false);
+        if (playerNetwork.IsOwner) 
+        {
+            playerCamera.ActiveHunterCam();
+        }
+    }
+
+    void BecomePrey()
+    {
+        _hunterMesh.SetActive(false);
+        _preyMesh.SetActive(true);
+        if (playerNetwork.IsOwner)
+        {
+            playerCamera.ActivePreyCam();
+        }
     }
 }
