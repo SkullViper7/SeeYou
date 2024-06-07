@@ -33,8 +33,6 @@ public class Shoot : MonoBehaviour
         AudioClip clip = Sounds[Random.Range(0, Sounds.Length)];
         MyAudioSource.PlayOneShot(clip);
 
-        ImpulseManager.Instance.Shake(0, 1, new Vector3(-0.5f, -0.5f, -0.5f), 0.25f);
-
         GameObject boule = Instantiate(bullet, shoot.position, Quaternion.identity);
         boule.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * power);
         boule.SendMessage("InitBullet", gameObject);
