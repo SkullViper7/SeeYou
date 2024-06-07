@@ -46,7 +46,13 @@ public class PlayerUI : MonoBehaviour
                 PreyUI();
             }
 
-            await Task.Delay(3500);
+            await Task.Delay(2500);
+
+            if (playerMain.IsHunter)
+            {
+                await Task.Delay(1000);
+            }
+            
             uiTransitionHunter.transform.parent.gameObject.SetActive(false);
             playerMain.playerMovement.GetComponent<CharacterController>().enabled = true;
             playerMain.playerInputs.InTransition = false;
