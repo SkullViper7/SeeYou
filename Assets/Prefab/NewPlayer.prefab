@@ -2996,7 +2996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1894508154
+  GlobalObjectIdHash: 2206175600
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -3047,7 +3047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayBeforeChangeRoles: 2
-  maxNumberOfPlayer: 5
+  maxNumberOfPlayer: 0
 --- !u!114 &2793651413928403668
 MonoBehaviour:
   m_ObjectHideFlags: 0
