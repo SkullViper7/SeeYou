@@ -130,6 +130,7 @@ public class PlayerMain : MonoBehaviour
         IsHunter = true;
         _hunterMesh.SetActive(true);
         _preyMesh.SetActive(false);
+        playerCamera.ActiveHunterCam();
     }
 
     void BecomePrey()
@@ -137,5 +138,6 @@ public class PlayerMain : MonoBehaviour
         IsHunter = false;
         _hunterMesh.SetActive(false);
         _preyMesh.SetActive(true);
+        playerCamera.ActivePreyCam();
     }
 }

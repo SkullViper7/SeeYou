@@ -112,7 +112,7 @@ public class PlayerNetwork : NetworkBehaviour
             if (IsOwner)
             {
                 GetComponent<PlayerMain>().InitPlayer();
-                GetComponent<PlayerMain>().playerCamera.ActiveCam();
+                GetComponent<PlayerMain>().playerCamera.ActivePreyCam();
                 //GetComponent<SpawnPlayer>().Spawn(spawnToRemove);
                 GameManager.Instance.LobbyCam.SetActive(false);
             }
