@@ -118,8 +118,7 @@ public class PlayerMain : MonoBehaviour
         if (GameManager.Instance.players.Count == 1)
         {
             GameManager.Instance.winPanel.SetActive(true);
-            GameManager.Instance.teamManager.Victory(GameManager.Instance.players[0].name);
+            GameManager.Instance.teamManager.Victory(GameManager.Instance.players[0].GetComponent<PlayerNetwork>().Pseudo);
         }
-
     }
 }

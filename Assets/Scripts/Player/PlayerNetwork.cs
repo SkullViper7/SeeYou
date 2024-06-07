@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Samples;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class PlayerNetwork : NetworkBehaviour
 {
@@ -104,7 +105,8 @@ public class PlayerNetwork : NetworkBehaviour
         if (GameManager.Instance.players.Count <= numberOfPlayer.Value)
         {
             GameManager.Instance.players.Add(gameObject);
-            NetworkManager.GetComponent<NetworkLan>().PlayerNeeded.text = GameManager.Instance.players.Count + " / " + numberOfPlayer.Value;
+            SyncPseudoServerRpc(Pseudo);
+            //NetworkManager.GetComponent<NetworkLan>().PlayerNeeded.text = GameManager.Instance.players.Count + " / " + numberOfPlayer.Value;
             gameObject.name += GameManager.Instance.players.Count;
             spawnToRemove = spawnList[Random.Range(0, spawnList.Count)];
             if (IsOwner)
@@ -132,13 +134,16 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SyncPseudoServerRpc(string _pseudo)
     {
-        SyncPseudoClientRpc(_pseudo);
+        for (int i = 0; i < GameManager.Instance.players.Count; i++)
+        {
+            SyncPseudoClientRpc(GameManager.Instance.players[i].GetComponent<PlayerNetwork>().Pseudo, i);
+        }
     }
 
     [ClientRpc]
-    public void SyncPseudoClientRpc(string _pseudo)
+    public void SyncPseudoClientRpc(string _pseudo, int _indexPlayer)
     {
-        Debug.Log(_pseudo);
+        GameManager.Instance.players[_indexPlayer].GetComponent<PlayerNetwork>().Pseudo = _pseudo;
     }
 
     private async void WaitForSpawn()

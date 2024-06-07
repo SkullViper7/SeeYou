@@ -11,6 +11,9 @@ public class PlayerUI : MonoBehaviour
 
     private PlayerMain playerMain;
 
+    [SerializeField]
+    private GameObject playerPseudoVisuel;
+
     public void InitPlayerMain(PlayerMain _PM)
     {
         playerMain = _PM;
