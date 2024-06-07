@@ -39,6 +39,7 @@ public class PlayerUI : MonoBehaviour
             await Task.Delay(100);
             uiTransitionHunter.transform.parent.gameObject.SetActive(true);
             playerMain.playerInputs.InTransition = true;
+            playerMain.playerMovement.direction = Vector3.zero;
             playerMain.playerMovement.GetComponent<CharacterController>().enabled = false;
             if (playerMain.IsHunter)
             {

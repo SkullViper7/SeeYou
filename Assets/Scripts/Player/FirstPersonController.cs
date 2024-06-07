@@ -130,7 +130,7 @@ public class FirstPersonController : MonoBehaviour
 
         if (_playerMain != null)
         {
-            if (!_playerMain.IsDead)
+            if (!_playerMain.IsDead && !_playerMain.playerInputs.InTransition)
             {
                 if (_playerMain.playerNetwork.IsOwner)
                 {
