@@ -21,8 +21,11 @@ public class Shoot : MonoBehaviour
     public AudioClip[] Sounds;
     public AudioSource MyAudioSource;
 
+    AnimationUpdater _animationUpdater;
+
     private void Start()
     {
+        _animationUpdater = GetComponent<AnimationUpdater>();
         MyAudioSource = GetComponent<AudioSource>();
     }
 
@@ -32,6 +35,8 @@ public class Shoot : MonoBehaviour
 
         AudioClip clip = Sounds[Random.Range(0, Sounds.Length)];
         MyAudioSource.PlayOneShot(clip);
+
+        _animationUpdater.SetTrigger("Shoot");
 
         GameObject boule = Instantiate(bullet, shoot.position, Quaternion.identity);
         boule.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * power);

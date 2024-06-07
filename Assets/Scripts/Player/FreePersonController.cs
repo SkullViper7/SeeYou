@@ -74,6 +74,8 @@ public class FreePersonController : MonoBehaviour
     public PlayerMain _playerMain;
     public Vector3 direction;
 
+    AnimationUpdater _animationUpdater;
+
     private const float _threshold = 0.01f;
 
     private bool IsCurrentDeviceMouse
@@ -91,6 +93,7 @@ public class FreePersonController : MonoBehaviour
     private void Awake()
     {
         _collider = GetComponentInChildren<CapsuleCollider>();
+        _animationUpdater = GetComponent<AnimationUpdater>();
         // get a reference to our main camera
         if (_mainCamera == null)
         {
@@ -138,10 +141,23 @@ public class FreePersonController : MonoBehaviour
             CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
 
             // rotate the player left and right
+            if (_rotationVelocity < 0)
+            {
+                _animationUpdater.UpdateHunterAnimation(1);
+            }
+            else if (_rotationVelocity > 0)
+            {
+                _animationUpdater.UpdateHunterAnimation(2);
+            }
+            else if (_rotationVelocity == 0)
+            {
+                _animationUpdater.UpdateHunterAnimation(0);
+            }
+
             transform.Rotate(Vector3.up * _rotationVelocity);
         }
     }
-
+    
     private void Move()
     {
         // set target speed based on move speed, sprint speed and if sprint is pressed

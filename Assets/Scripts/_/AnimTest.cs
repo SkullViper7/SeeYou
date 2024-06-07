@@ -18,11 +18,11 @@ public class AnimTest : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        _animUpdater.UpdateAnimation(1);
+        _animUpdater.UpdatePreyAnimation(1);
 
         yield return new WaitForSeconds(2f);
 
-        _animUpdater.UpdateAnimation(0);
+        _animUpdater.UpdatePreyAnimation(0);
 
         StartCoroutine(Anim());
     }
