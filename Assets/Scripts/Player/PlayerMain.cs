@@ -108,6 +108,8 @@ public class PlayerMain : MonoBehaviour
             }
         }
 
+        GameManager.Instance.deadPanel.SetActive(true);
+
         GameManager.Instance.LobbyCam.SetActive(true);
         playerPartToDesactivate.SetActive(false);
         IsDead = true;
@@ -115,6 +117,7 @@ public class PlayerMain : MonoBehaviour
         GetComponent<CapsuleCollider>().enabled = false;
         if (GameManager.Instance.players.Count == 1)
         {
+            GameManager.Instance.winPanel.SetActive(true);
             GameManager.Instance.teamManager.Victory(GameManager.Instance.players[0].name);
         }
 
