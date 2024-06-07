@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using System;
+using UnityEngine.UI;
 namespace Unity.Netcode.Samples
 {
 
@@ -43,6 +44,12 @@ namespace Unity.Netcode.Samples
         [SerializeField] 
         private UnityTransport transport;
 
+        [SerializeField] Button _joinButton;
+        [SerializeField] Button _createButton;
+
+        bool _hasSetName = false;
+        bool _hasSetNumber = false;
+
         void Start()
         {
             ipAddress = "0.0.0.0";
@@ -65,11 +72,14 @@ namespace Unity.Netcode.Samples
         {
             UpdateNumberOfPlayerClientRpc(NumberOfPlayer.Value);
             UpdatePseudoOfPlayerClientRpc(PseudoChoosen);
-            NetworkManager.Singleton.StartHost();
-            GetLocalIPAddress();
-            hostLobby.SetActive(false);
-            pseudoField.gameObject.SetActive(false);
-            numberOfPlayerField.gameObject.SetActive(false);
+            if (ValidateHost())
+            {
+                NetworkManager.Singleton.StartHost();
+                GetLocalIPAddress();
+                hostLobby.SetActive(false);
+                pseudoField.gameObject.SetActive(false);
+                numberOfPlayerField.gameObject.SetActive(false);
+            }
         }
 
         // To Join a game
@@ -141,16 +151,55 @@ namespace Unity.Netcode.Samples
             if (int.TryParse(input, out value))
             {
                 NumberOfPlayer.Value = int.Parse(input);
+                _hasSetNumber = true;
             }
             else
             {
                 numberOfPlayerField.text = "";
+                _hasSetNumber = false;
             }
+
+            CheckHostPrerequisites();
         }
 
         private void ValidatePseudoInput(string input)
         {
             PseudoChoosen = input;
+            _hasSetName = true;
+
+            if (PseudoChoosen == "")
+            {
+                _hasSetName = false;
+            }
+
+            CheckHostPrerequisites();
+            CheckClientPrerequisites();
+        }
+
+        void CheckHostPrerequisites()
+        {
+            if (_hasSetName && _hasSetNumber)
+            {
+                _createButton.interactable = true;
+            }
+
+            else
+            {   
+                _createButton.interactable = false;
+            }
+        }
+
+        void CheckClientPrerequisites()
+        {
+            if (_hasSetName)
+            {
+                _joinButton.interactable = true;
+            }
+
+            else
+            {
+                _joinButton.interactable = false;
+            }
         }
 
         private bool ValidateHost()
