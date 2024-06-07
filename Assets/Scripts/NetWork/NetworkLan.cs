@@ -3,6 +3,8 @@ using Unity.Netcode.Transports.UTP;
 using TMPro;
 using System.Net;
 using System.Net.Sockets;
+using static UnityEngine.RuleTile.TilingRuleOutput;
+using System;
 namespace Unity.Netcode.Samples
 {
 
@@ -26,6 +28,9 @@ namespace Unity.Netcode.Samples
         [SerializeField] 
         private TMP_InputField numberOfPlayerField;
 
+        [SerializeField]
+        private GameObject clientLobby;
+
         [SerializeField] 
         private TMP_InputField pseudoField;
 
@@ -40,6 +45,7 @@ namespace Unity.Netcode.Samples
             InvokeRepeating("assignPlayerController", 0.1f, 0.1f);
             numberOfPlayerField.onValueChanged.AddListener(ValidateNumberInput);
             pseudoField.onValueChanged.AddListener(ValidatePseudoInput);
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
         }
 
         public void StartServer()
@@ -61,10 +67,20 @@ namespace Unity.Netcode.Samples
         public void StartClient()
         {
             UpdatePseudoOfPlayerClientRpc(PseudoChoosen);
-            ipAddress = ip.text;
-            SetIpAddress();
-            NetworkManager.Singleton.StartClient();
+            if (ValidateClient()) 
+            {
+                ipAddress = ip.text;
+                SetIpAddress();
+                NetworkManager.Singleton.StartClient();
+            }
+        }
+
+        void OnClientConnected(ulong clientId)
+        {
+            Debug.Log($"Successfully connected to server with client ID: {clientId}");
+            clientLobby.SetActive(false);
             Invoke("LauncheCLient", 1.0f);
+            // Ajoute toute logique supplémentaire après la connexion réussie
         }
 
         /* Gets the Ip Address of your connected network and
@@ -127,6 +143,17 @@ namespace Unity.Netcode.Samples
             PseudoChoosen = input;
         }
 
+        private bool ValidateClient() 
+        {
+            bool isValidate = false;
+            if (PlayerPrefs.GetString("Pseudo") != null) 
+            {
+                isValidate = true;
+            }
+
+            return isValidate;
+        }
+
         private void LauncheCLient()
         {
             RequestNumberOfPlayerServerRpc();
@@ -164,7 +191,7 @@ namespace Unity.Netcode.Samples
         [ClientRpc]
         private void UpdatePseudoOfPlayerClientRpc(string pseudoOfPlayer)
         {
-            if (PlayerPrefs.GetString("Pseudo") == null || PlayerPrefs.GetString("Pseudo")!= pseudoOfPlayer) 
+            if (PlayerPrefs.GetString("Pseudo") != null || PlayerPrefs.GetString("Pseudo")!= pseudoOfPlayer) 
             {
                 PlayerPrefs.SetString("Pseudo", pseudoOfPlayer);
             }
