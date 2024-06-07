@@ -106,7 +106,7 @@ public class PlayerNetwork : NetworkBehaviour
         {
             GameManager.Instance.players.Add(gameObject);
             SyncPseudoServerRpc(Pseudo);
-            //NetworkManager.GetComponent<NetworkLan>().PlayerNeeded.text = GameManager.Instance.players.Count + " / " + numberOfPlayer.Value;
+            NetworkManager.GetComponent<NetworkLan>().PlayerNeeded.text = GameManager.Instance.players.Count + " / " + numberOfPlayer.Value;
             gameObject.name += GameManager.Instance.players.Count;
             spawnToRemove = spawnList[Random.Range(0, spawnList.Count)];
             if (IsOwner)
