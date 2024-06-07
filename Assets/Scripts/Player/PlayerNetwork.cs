@@ -115,6 +115,7 @@ public class PlayerNetwork : NetworkBehaviour
                 GetComponent<PlayerMain>().playerCamera.ActivePreyCam();
                 //GetComponent<SpawnPlayer>().Spawn(spawnToRemove);
                 GameManager.Instance.LobbyCam.SetActive(false);
+                _playerMain.MeshToHide.layer = _playerMain.LayerToChangeThePreyMesh;
             }
 
             SpawnerNetworkServerRPC();

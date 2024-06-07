@@ -27,17 +27,15 @@ public class PlayerMain : MonoBehaviour
     [SerializeField] GameObject _hunterMesh;
     [SerializeField] GameObject _preyMesh;
 
+    public GameObject MeshToHide;
+    public int LayerToChangeThePreyMesh;
+
     public bool IsHunter
     {
         get { return isHunter; }
 
         set
         {
-            if (playerNetwork.IsOwner)
-            {
-                Debug.Log("setIsHunter");
-            }
-
             isHunter = value;
             if (isHunter)
             {
@@ -127,17 +125,21 @@ public class PlayerMain : MonoBehaviour
 
     void BecomeHunter()
     {
-        IsHunter = true;
         _hunterMesh.SetActive(true);
         _preyMesh.SetActive(false);
-        playerCamera.ActiveHunterCam();
+        if (playerNetwork.IsOwner) 
+        {
+            playerCamera.ActiveHunterCam();
+        }
     }
 
     void BecomePrey()
     {
-        IsHunter = false;
         _hunterMesh.SetActive(false);
         _preyMesh.SetActive(true);
-        playerCamera.ActivePreyCam();
+        if (playerNetwork.IsOwner)
+        {
+            playerCamera.ActivePreyCam();
+        }
     }
 }
