@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     public GameObject UiTransitionHunter;
     public GameObject UiTransitionPrey;
 
+    public GameObject winPanel;
+    public GameObject deadPanel;
+
     //[HideInInspector]
     public List<GameObject> players = new();
     //[HideInInspector]
