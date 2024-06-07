@@ -24,6 +24,9 @@ public class PlayerMain : MonoBehaviour
 
     private bool isHunter;
 
+    [SerializeField] GameObject _hunterMesh;
+    [SerializeField] GameObject _preyMesh;
+
     public bool IsHunter
     {
         get { return isHunter; }
@@ -120,5 +123,19 @@ public class PlayerMain : MonoBehaviour
             GameManager.Instance.winPanel.SetActive(true);
             GameManager.Instance.teamManager.Victory(GameManager.Instance.players[0].GetComponent<PlayerNetwork>().Pseudo);
         }
+    }
+
+    void BecomeHunter()
+    {
+        IsHunter = true;
+        _hunterMesh.SetActive(true);
+        _preyMesh.SetActive(false);
+    }
+
+    void BecomePrey()
+    {
+        IsHunter = false;
+        _hunterMesh.SetActive(false);
+        _preyMesh.SetActive(true);
     }
 }

@@ -5,20 +5,26 @@ using UnityEngine;
 
 public class AnimationUpdater : MonoBehaviour
 {
-    Animator _animator;
+    Animator _preyAnimator;
+    [SerializeField] Animator _hunterAnimator;
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
+        _preyAnimator = GetComponent<Animator>();
     }
 
-    public void UpdateAnimation(int state)
+    public void UpdatePreyAnimation(int state)
     {
-        _animator.SetInteger("State", state);
+        _preyAnimator.SetInteger("State", state);
+    }
+
+    public void UpdateHunterAnimation(int state)
+    {
+        _hunterAnimator.SetInteger("State", state);
     }
 
     public void SetTrigger(string trigger)
     {
-        _animator.SetTrigger(trigger);
+        _preyAnimator.SetTrigger(trigger);
     }
 }
