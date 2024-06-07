@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Samples;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class PlayerNetwork : NetworkBehaviour
 {
