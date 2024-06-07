@@ -51,20 +51,19 @@ namespace Unity.Netcode.Samples
         // To Host a game
         public void StartHost()
         {
-            NetworkManager.Singleton.StartHost();
-            GetLocalIPAddress();
             UpdateNumberOfPlayerClientRpc(NumberOfPlayer.Value);
             UpdatePseudoOfPlayerClientRpc(PseudoChoosen);
+            NetworkManager.Singleton.StartHost();
+            GetLocalIPAddress();
         }
 
         // To Join a game
         public void StartClient()
         {
+            UpdatePseudoOfPlayerClientRpc(PseudoChoosen);
             ipAddress = ip.text;
-            Debug.Log(ip.text);
             SetIpAddress();
             NetworkManager.Singleton.StartClient();
-            Debug.Log(NetworkManager.Singleton.StartClient());
             Invoke("LauncheCLient", 1.0f);
         }
 
@@ -125,7 +124,6 @@ namespace Unity.Netcode.Samples
 
         private void ValidatePseudoInput(string input)
         {
-            Debug.Log(input);
             PseudoChoosen = input;
         }
 
