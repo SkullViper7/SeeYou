@@ -38,6 +38,7 @@ public class Shoot : MonoBehaviour
         MyAudioSource.PlayOneShot(clip);
 
         _animationUpdater.UpdateHunterAnimation(3);
+        _animationUpdater.UpdateShotgunAnimation();
 
         Invoke("Idle", _shootClip.length);
 
