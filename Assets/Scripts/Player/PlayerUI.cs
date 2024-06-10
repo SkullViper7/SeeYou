@@ -60,6 +60,10 @@ public class PlayerUI : MonoBehaviour
             uiTransitionHunter.transform.parent.gameObject.SetActive(false);
             playerMain.playerMovement.GetComponent<CharacterController>().enabled = true;
             playerMain.playerInputs.InTransition = false;
+            if (playerMain.playerNetwork.IsHost) 
+            {
+                playerMain.playerNetwork.Invoke("DelayBeforeChangeHunter", 5);
+            }
         }
     }
 
