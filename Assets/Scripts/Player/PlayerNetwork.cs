@@ -246,7 +246,6 @@ public class PlayerNetwork : NetworkBehaviour
         yield return new WaitForSeconds(delayBeforeChangeRoles);
         ChangeHunterClientRpc(newHunter);
         SetActualHunterPreyClientRpc();
-        //Invoke("DelayBeforeChangeHunter", 5);
         hostCanChangeHunter = true;
     }
 
