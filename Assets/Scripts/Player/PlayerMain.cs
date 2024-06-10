@@ -86,7 +86,6 @@ public class PlayerMain : MonoBehaviour
 
     public void DeadState()
     {
-        Debug.Log(gameObject.name + " is dead");
         for (int i = 0; i < GameManager.Instance.preys.Count; i++)
         {
             if (GameManager.Instance.preys[i] != null)
@@ -109,16 +108,24 @@ public class PlayerMain : MonoBehaviour
             }
         }
 
-        GameManager.Instance.deadPanel.SetActive(true);
+        if (playerNetwork.IsOwner) 
+        {
+            GameManager.Instance.deadPanel.SetActive(true);
+            GameManager.Instance.LobbyCam.SetActive(true);
+        }
 
-        GameManager.Instance.LobbyCam.SetActive(true);
         playerPartToDesactivate.SetActive(false);
         IsDead = true;
         playerInputs.playerInput.SwitchCurrentActionMap("Dead");
+        Debug.Log(playerNetwork.Pseudo);
         GetComponent<CapsuleCollider>().enabled = false;
         if (GameManager.Instance.players.Count == 1)
         {
-            GameManager.Instance.winPanel.SetActive(true);
+            if (GameManager.Instance.players[0].GetComponent<PlayerNetwork>().IsOwner) 
+            {
+                GameManager.Instance.winPanel.SetActive(true);
+            }
+            
             GameManager.Instance.teamManager.Victory(GameManager.Instance.players[0].GetComponent<PlayerNetwork>().Pseudo);
         }
     }

@@ -441,4 +441,16 @@ public class PlayerNetwork : NetworkBehaviour
     {
         _playerMain.playerInputs.AnimMovement(_playerMove);
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void DisplayDeathServerRpc()
+    {
+        DisplayDeathClientRpc(Pseudo);
+    }
+
+    [ClientRpc]
+    public void DisplayDeathClientRpc(string _pseudo)
+    {
+        Debug.Log(_pseudo);
+    }
 }
