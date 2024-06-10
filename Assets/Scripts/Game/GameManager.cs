@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject winPanel;
     public GameObject deadPanel;
+    public GameObject ChronoUI;
 
     //[HideInInspector]
     public List<GameObject> players = new();
