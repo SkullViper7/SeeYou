@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public GameObject winPanel;
     public GameObject deadPanel;
     public GameObject ChronoUI;
+    public TextMeshProUGUI KillUI;
 
     //[HideInInspector]
     public List<GameObject> players = new();
