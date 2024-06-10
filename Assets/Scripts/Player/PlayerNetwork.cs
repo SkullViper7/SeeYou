@@ -187,7 +187,6 @@ public class PlayerNetwork : NetworkBehaviour
     /// </summary>
     public async void Wait()
     {
-        Debug.Log("Wait");
         await Task.Delay(1000);
         StartTheGameServerRpc();
     }
@@ -198,8 +197,10 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void RolesChangesServerRpc()
     {
+        CancelInvoke();
         if (hostCanChangeHunter)
         {
+            Debug.Log("roles");
             hostCanChangeHunter = false;
             StartCoroutine(DelayChangeHunter(GameManager.Instance.teamManager.FindAHunterServ()));
         }
@@ -238,14 +239,31 @@ public class PlayerNetwork : NetworkBehaviour
     /// <returns></returns>
     private IEnumerator DelayChangeHunter(int newHunter)
     {
-        yield return new WaitForSeconds(0.3f);
-        hostCanChangeHunter = true;
+        yield return new WaitForSeconds(1f);
+        
         SearchAllPlayerClientRpc();
 
         yield return new WaitForSeconds(delayBeforeChangeRoles);
         ChangeHunterClientRpc(newHunter);
         SetActualHunterPreyClientRpc();
+        hostCanChangeHunter = true;
+    }
 
+    private void DelayBeforeChangeHunter()
+    {
+        Debug.Log("DelayBeforeChangeHunter");
+        if (IsHost) 
+        {
+            RemoveBulletOfHunterClientRpc();
+            RolesChangesServerRpc();
+        }
+        
+    }
+
+    [ClientRpc]
+    private void RemoveBulletOfHunterClientRpc() 
+    {
+        GameManager.Instance.teamManager._hunter.GetComponent<StarterAssetsInputs>()._canShoot = false;
     }
 
     /// <summary>
@@ -440,5 +458,17 @@ public class PlayerNetwork : NetworkBehaviour
     public void MoveAnimationNetworkClientRpc(Vector2 _playerMove)
     {
         _playerMain.playerInputs.AnimMovement(_playerMove);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void DisplayDeathServerRpc()
+    {
+        DisplayDeathClientRpc(Pseudo);
+    }
+
+    [ClientRpc]
+    public void DisplayDeathClientRpc(string _pseudo)
+    {
+        Debug.Log(_pseudo);
     }
 }

@@ -8,6 +8,8 @@ public class AnimationUpdater : MonoBehaviour
     Animator _preyAnimator;
     [SerializeField] Animator _hunterAnimator;
 
+    [SerializeField] Animator _shotgunAnim;
+
     private void Awake()
     {
         _preyAnimator = GetComponent<Animator>();
@@ -23,8 +25,8 @@ public class AnimationUpdater : MonoBehaviour
         _hunterAnimator.SetInteger("State", state);
     }
 
-    public void SetTrigger(string trigger)
+    public void UpdateShotgunAnimation()
     {
-        _preyAnimator.SetTrigger(trigger);
+        _shotgunAnim.SetTrigger("Shoot");
     }
 }
