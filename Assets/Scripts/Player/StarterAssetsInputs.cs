@@ -110,7 +110,6 @@ public class StarterAssetsInputs : MonoBehaviour
                 _playerMain.preyThrow.ThrowObject();
 
                 // Update the animation to the throw animation
-                _animationUpdater.SetTrigger("Throw");
             }
         }
     }
