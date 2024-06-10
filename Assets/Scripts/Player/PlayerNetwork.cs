@@ -187,7 +187,6 @@ public class PlayerNetwork : NetworkBehaviour
     /// </summary>
     public async void Wait()
     {
-        Debug.Log("Wait");
         await Task.Delay(1000);
         StartTheGameServerRpc();
     }
@@ -200,6 +199,7 @@ public class PlayerNetwork : NetworkBehaviour
     {
         if (hostCanChangeHunter)
         {
+            Debug.Log("roles");
             hostCanChangeHunter = false;
             StartCoroutine(DelayChangeHunter(GameManager.Instance.teamManager.FindAHunterServ()));
         }
@@ -238,7 +238,7 @@ public class PlayerNetwork : NetworkBehaviour
     /// <returns></returns>
     private IEnumerator DelayChangeHunter(int newHunter)
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(1f);
         hostCanChangeHunter = true;
         SearchAllPlayerClientRpc();
 
