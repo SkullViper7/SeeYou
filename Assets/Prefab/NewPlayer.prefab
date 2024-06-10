@@ -3711,7 +3711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 666339117
+  GlobalObjectIdHash: 2206175600
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -3878,6 +3878,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d4fa9098f7337df41b0bea7a5be0e72c, type: 3}
   - {fileID: 8300000, guid: f95f9d03b41d56d4d8910b9249017015, type: 3}
   MyAudioSource: {fileID: 0}
+  _shootClip: {fileID: 7400000, guid: c3e9d494df2f1b442aa19c2d0049a600, type: 2}
 --- !u!114 &2276638972662423746
 MonoBehaviour:
   m_ObjectHideFlags: 0
