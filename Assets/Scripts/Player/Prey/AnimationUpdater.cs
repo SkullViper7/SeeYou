@@ -22,9 +22,4 @@ public class AnimationUpdater : MonoBehaviour
     {
         _hunterAnimator.SetInteger("State", state);
     }
-
-    public void SetTrigger(string trigger)
-    {
-        _preyAnimator.SetTrigger(trigger);
-    }
 }
