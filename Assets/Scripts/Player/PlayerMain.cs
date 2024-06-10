@@ -114,6 +114,12 @@ public class PlayerMain : MonoBehaviour
             GameManager.Instance.LobbyCam.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
         }
+        else
+        {
+            GameManager.Instance.KillUI.gameObject.SetActive(true);
+            GameManager.Instance.KillUI.text = playerNetwork.Pseudo + " is dead";
+            Invoke("DesactivateKillUI", 2);
+        }
 
         playerPartToDesactivate.SetActive(false);
         IsDead = true;
@@ -150,5 +156,10 @@ public class PlayerMain : MonoBehaviour
         {
             playerCamera.ActivePreyCam();
         }
+    }
+
+    private void DesactivateKillUI() 
+    {
+        GameManager.Instance.KillUI.gameObject.SetActive(false);
     }
 }
