@@ -112,6 +112,7 @@ public class PlayerMain : MonoBehaviour
         {
             GameManager.Instance.deadPanel.SetActive(true);
             GameManager.Instance.LobbyCam.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
         }
 
         playerPartToDesactivate.SetActive(false);
@@ -124,6 +125,7 @@ public class PlayerMain : MonoBehaviour
             if (GameManager.Instance.players[0].GetComponent<PlayerNetwork>().IsOwner) 
             {
                 GameManager.Instance.winPanel.SetActive(true);
+                Cursor.lockState = CursorLockMode.None;
             }
             
             GameManager.Instance.teamManager.Victory(GameManager.Instance.players[0].GetComponent<PlayerNetwork>().Pseudo);
