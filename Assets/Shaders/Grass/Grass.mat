@@ -50,7 +50,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ColorMultiplier: 1.5
+    - _ColorMultiplier: 2
     - _HeightBlend: 0.29
     - _InteractionDistance: 0.7
     - _LODFactor: 1
@@ -65,8 +65,8 @@ Material:
     m_Colors:
     - _Albedo: {r: 0, g: 1, b: 0.4969225, a: 0}
     - _BottomColor: {r: 0.0022427468, g: 0.5943396, b: 0.22427908, a: 1}
-    - _FarColor: {r: 0.034122407, g: 0.6698113, b: 0.2757417, a: 1}
-    - _NearColor: {r: 0, g: 0.6792453, b: 0.25943395, a: 0}
+    - _FarColor: {r: 0, g: 0.754717, b: 0.28418362, a: 1}
+    - _NearColor: {r: 0, g: 1, b: 0.38150287, a: 0}
     - _NearFarRange: {r: 5, g: 10, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &4706964714457142670
