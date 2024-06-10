@@ -39,6 +39,15 @@ public class FreeInputs : MonoBehaviour
 	public void OnMove(InputValue _move)
 	{
 		MoveInput(_move.Get<Vector2>());
+
+		if (_move.Get<Vector2>() != Vector2.zero)
+		{
+			_animationUpdater.UpdatePreyAnimation(1);
+		}
+		else
+		{
+			_animationUpdater.UpdatePreyAnimation(0);
+		}
 	}
 
 	public void OnLook(InputValue value)
@@ -90,7 +99,6 @@ public class FreeInputs : MonoBehaviour
 			_playerMain.preyThrow.ThrowObject();
 
 			// Update the animation to the throw animation
-			_animationUpdater.SetTrigger("Throw");
 		}
 	}
 
@@ -98,11 +106,11 @@ public class FreeInputs : MonoBehaviour
 	{
         if (_playerMove != Vector2.zero)
         {
-            _animationUpdater.UpdateAnimation(1);
+            _animationUpdater.UpdatePreyAnimation(1);
         }
         else
         {
-            _animationUpdater.UpdateAnimation(0);
+            _animationUpdater.UpdatePreyAnimation(0);
         }
     }
 

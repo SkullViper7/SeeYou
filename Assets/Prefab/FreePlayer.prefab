@@ -281,7 +281,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 3
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -3271,6 +3271,7 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   playerCollider: {fileID: 0}
   shoot: {fileID: 0}
+  PlayerUI: {fileID: 0}
   preyThrow: {fileID: 0}
   playerPartToDesactivate: {fileID: 7290041015528745762}
   hunterGun: {fileID: 3508657499423026270}

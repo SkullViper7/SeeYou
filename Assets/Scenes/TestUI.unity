@@ -1213,7 +1213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b67ac055a22a44b81eb7483b1d2dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Slider: {fileID: 0}
+  slider: {fileID: 0}
+  Slider2: {fileID: 0}
   Cross: {fileID: 0}
   Cross2: {fileID: 0}
 --- !u!114 &264256221
@@ -4162,11 +4163,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85b1f4775cbeaa04fb522aa6537bea4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CrossAir: {fileID: 413941821}
-  color:
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 1, g: 1, b: 1, a: 0}
-  drop: {fileID: 1883440820}
 --- !u!1 &1299239392
 GameObject:
   m_ObjectHideFlags: 0
@@ -4520,7 +4516,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b67ac055a22a44b81eb7483b1d2dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Slider: {fileID: 1350013541}
+  slider: {fileID: 1350013541}
+  Slider2: {fileID: 1653298508}
   Cross: {fileID: 1170872814}
   Cross2: {fileID: 413941819}
 --- !u!114 &1350013541
@@ -5944,7 +5941,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b67ac055a22a44b81eb7483b1d2dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Slider: {fileID: 1653298508}
+  slider: {fileID: 1350013541}
+  Slider2: {fileID: 1653298508}
   Cross: {fileID: 1170872814}
   Cross2: {fileID: 413941819}
 --- !u!1 &1729793973

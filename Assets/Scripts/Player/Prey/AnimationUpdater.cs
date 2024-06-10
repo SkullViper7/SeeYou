@@ -5,20 +5,28 @@ using UnityEngine;
 
 public class AnimationUpdater : MonoBehaviour
 {
-    Animator _animator;
+    Animator _preyAnimator;
+    [SerializeField] Animator _hunterAnimator;
+
+    [SerializeField] Animator _shotgunAnim;
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
+        _preyAnimator = GetComponent<Animator>();
     }
 
-    public void UpdateAnimation(int state)
+    public void UpdatePreyAnimation(int state)
     {
-        _animator.SetInteger("State", state);
+        _preyAnimator.SetInteger("State", state);
     }
 
-    public void SetTrigger(string trigger)
+    public void UpdateHunterAnimation(int state)
     {
-        _animator.SetTrigger(trigger);
+        _hunterAnimator.SetInteger("State", state);
+    }
+
+    public void UpdateShotgunAnimation()
+    {
+        _shotgunAnim.SetTrigger("Shoot");
     }
 }

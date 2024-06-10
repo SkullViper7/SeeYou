@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    public Camera cam;
+    public Camera preyCam;
+
+    public Camera hunterCam;
 
     [SerializeField]
-    private GameObject cameraObject;
+    private GameObject preyCamObject;
+
+    [SerializeField]
+    private GameObject hunterCamObject;
 
     [SerializeField]
     private LayerMask _hunterMask;
@@ -15,19 +20,24 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField]
     private LayerMask _preyMask;
 
-    public void ActiveCam()
+    public void ActivePreyCam()
     {
-        cameraObject.SetActive(true);
+        preyCamObject.SetActive(true);
+    }
+
+    public void ActiveHunterCam()
+    {
+        hunterCamObject.SetActive(true);
     }
 
     public void BecomeHunter()
     {
-        cam.cullingMask = _hunterMask;
+        preyCam.cullingMask = _hunterMask;
     }
 
     public void BecomePrey()
     {
-        cam.cullingMask = _preyMask;
+        preyCam.cullingMask = _preyMask;
     }
 
     public void InitPlayerMain(PlayerMain _PM)

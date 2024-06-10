@@ -127,10 +127,14 @@ public class FirstPersonController : MonoBehaviour
         {
             Shader.SetGlobalVector("_Player2", transform.position);
         }*/
+        if (_playerMain.playerInputs.InTransition)
+        {
+           direction = Vector3.zero;
+        }
 
         if (_playerMain != null)
         {
-            if (!_playerMain.IsDead)
+            if (!_playerMain.IsDead && !_playerMain.playerInputs.InTransition)
             {
                 if (_playerMain.playerNetwork.IsOwner)
                 {

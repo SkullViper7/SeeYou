@@ -22,16 +22,14 @@ public class PlayerCollider : MonoBehaviour
         bool _hasTrap = false;
         for (int i = 0; i < GameManager.Instance.Items.Count; i++)
         {
-            Trap _trapToCompar = GameManager.Instance.Items[i].GetComponent<Trap>();
-            if (_trapToCompar == null) 
+            GameObject _trapToCompar = GameManager.Instance.Items[i];
+            if (_trapToCompar.GetComponent<Trap>() == null) 
             {
-                _trapToCompar = GameManager.Instance.Items[i].transform.GetChild(0).GetComponent<Trap>();
+                _trapToCompar = GameManager.Instance.Items[i].transform.GetChild(0).gameObject;
             }
 
-            if (_trapToCompar == _trap)
+            if (_trapToCompar == _trap.gameObject)
             {
-                Debug.Log(_trap.name);
-                Debug.Log(GameManager.Instance.Items[i].name);
                 _trapIndex = i;
                 _hasTrap = true;
             }

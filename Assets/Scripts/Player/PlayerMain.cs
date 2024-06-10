@@ -18,9 +18,17 @@ public class PlayerMain : MonoBehaviour
 
     public Shoot shoot;
 
+    public PlayerUI PlayerUI;
+
     public ProjectileThrow preyThrow;
 
     private bool isHunter;
+
+    [SerializeField] GameObject _hunterMesh;
+    [SerializeField] GameObject _preyMesh;
+
+    public GameObject MeshToHide;
+    public int LayerToChangeThePreyMesh;
 
     public bool IsHunter
     {
@@ -28,12 +36,11 @@ public class PlayerMain : MonoBehaviour
 
         set
         {
-            Debug.Log("hunter");
             isHunter = value;
             if (isHunter)
             {
                 SendMessage("BecomeHunter");
-                if (playerNetwork.IsOwner) 
+                if (playerNetwork.IsOwner)
                 {
                     hunterGun.SetActive(true);
                 }
@@ -41,7 +48,7 @@ public class PlayerMain : MonoBehaviour
                 {
                     preyGunView.SetActive(true);
                 }
-                
+
             }
             else
             {
@@ -79,7 +86,6 @@ public class PlayerMain : MonoBehaviour
 
     public void DeadState()
     {
-        Debug.Log(gameObject.name + " is dead");
         for (int i = 0; i < GameManager.Instance.preys.Count; i++)
         {
             if (GameManager.Instance.preys[i] != null)
@@ -102,15 +108,58 @@ public class PlayerMain : MonoBehaviour
             }
         }
 
-        GameManager.Instance.LobbyCam.SetActive(true);
+        if (playerNetwork.IsOwner) 
+        {
+            GameManager.Instance.deadPanel.SetActive(true);
+            GameManager.Instance.LobbyCam.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            GameManager.Instance.KillUI.gameObject.SetActive(true);
+            GameManager.Instance.KillUI.text = playerNetwork.Pseudo + " is dead";
+            Invoke("DesactivateKillUI", 2);
+        }
+
         playerPartToDesactivate.SetActive(false);
         IsDead = true;
         playerInputs.playerInput.SwitchCurrentActionMap("Dead");
+        Debug.Log(playerNetwork.Pseudo);
         GetComponent<CapsuleCollider>().enabled = false;
         if (GameManager.Instance.players.Count == 1)
         {
-            GameManager.Instance.teamManager.Victory(GameManager.Instance.players[0].name);
+            if (GameManager.Instance.players[0].GetComponent<PlayerNetwork>().IsOwner) 
+            {
+                GameManager.Instance.winPanel.SetActive(true);
+                Cursor.lockState = CursorLockMode.None;
+            }
+            
+            GameManager.Instance.teamManager.Victory(GameManager.Instance.players[0].GetComponent<PlayerNetwork>().Pseudo);
         }
+    }
 
+    void BecomeHunter()
+    {
+        _hunterMesh.SetActive(true);
+        _preyMesh.SetActive(false);
+        if (playerNetwork.IsOwner) 
+        {
+            playerCamera.ActiveHunterCam();
+        }
+    }
+
+    void BecomePrey()
+    {
+        _hunterMesh.SetActive(false);
+        _preyMesh.SetActive(true);
+        if (playerNetwork.IsOwner)
+        {
+            playerCamera.ActivePreyCam();
+        }
+    }
+
+    private void DesactivateKillUI() 
+    {
+        GameManager.Instance.KillUI.gameObject.SetActive(false);
     }
 }

@@ -26,9 +26,10 @@ public class Mine : Trap
         _audioSource = GetComponent<AudioSource>();
     }
 
-    void Start()
+    protected override void Start()
     {
         StartCoroutine(Blink());
+        base.Start();
     }
 
     IEnumerator Blink()
@@ -46,8 +47,11 @@ public class Mine : Trap
         if (other.gameObject.tag == "Prey")
         {
             _playerWhoTriggered = other.gameObject;
-
-            other.GetComponent<Ragdoll>().EnableRagdoll();
+            Ragdoll _playerRagdoll = other.GetComponent<Ragdoll>();
+            if (_playerRagdoll != null) 
+            {
+                other.GetComponent<Ragdoll>().EnableRagdoll();
+            }
         }
         
         base.OnTriggerEnter(other);

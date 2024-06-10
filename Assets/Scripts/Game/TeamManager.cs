@@ -44,17 +44,18 @@ public class TeamManager : MonoBehaviour
         _hunter.tag = "Player";
         GameManager.Instance.preys.Remove(this._hunter);
         _hunter.GetComponent<PlayerMain>().IsHunter = true;
-        text.text = this._hunter.name;
+        text.text = _hunter.GetComponent<PlayerNetwork>().Pseudo;
     }
 
     public void SetPreys(GameObject newPrey)
     {
         newPrey.layer = 6;
         newPrey.tag = "Prey";
-        if (newPrey.GetComponent<PlayerMain>().IsHunter)
+        newPrey.GetComponent<PlayerMain>().IsHunter = false;
+        /*if (newPrey.GetComponent<PlayerMain>().IsHunter)
         {
             newPrey.GetComponent<PlayerMain>().IsHunter = false;
-        }
+        }*/
 
         newPrey.transform.SetParent(_preyParent);
     }
@@ -107,7 +108,7 @@ public class TeamManager : MonoBehaviour
             _hunter.layer = 3;
             _hunter.tag = "Player";
             _hunter.GetComponent<PlayerMain>().IsHunter = true;
-            text.text = _hunter.name;
+            text.text = _hunter.GetComponent<PlayerNetwork>().Pseudo;
         }
     }
 

@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5430370475030240465}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 2557690419336332898}
-    PlayerPrefab: {fileID: 8973089314066461060, guid: cf3dce683e4faf94d9cad0e80f5f9b13,
+    PlayerPrefab: {fileID: 7729877805908281407, guid: 0e7612e8fdc35f840bd47ae6322cfe4a,
       type: 3}
     Prefabs:
       NetworkPrefabsLists:
@@ -112,7 +112,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preyInput: {fileID: 0}
+  NumberOfPlayer:
+    m_InternalValue: 0
+  ItemsToSpawn: {fileID: 0}
+  PseudoChoosen: 
+  PlayerNeeded: {fileID: 0}
   ipAddressText: {fileID: 0}
   ip: {fileID: 0}
   ipAddress: 
+  numberOfPlayerField: {fileID: 0}
+  clientLobby: {fileID: 0}
+  hostLobby: {fileID: 0}
+  lobby: {fileID: 0}
+  pseudoField: {fileID: 0}
   transport: {fileID: 2557690419336332898}
+  _joinButton: {fileID: 0}
+  _createButton: {fileID: 0}
