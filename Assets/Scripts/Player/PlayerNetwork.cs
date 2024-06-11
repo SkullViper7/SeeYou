@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Samples;
@@ -8,7 +7,6 @@ using UnityEngine;
 
 public class PlayerNetwork : NetworkBehaviour
 {
-    //public NetworkVariable<List<SpawnList>> spawnList = new NetworkVariable<List<SpawnList>>();
     public string Pseudo;
 
     public NetworkList<Vector3> spawnList = new NetworkList<Vector3>();
@@ -387,6 +385,7 @@ public class PlayerNetwork : NetworkBehaviour
     [ClientRpc]
     public void GetTouchedClientRpc()
     {
+        Debug.Log($"Player {Pseudo} has been touched at {Time.time}");
         SendMessage("DeadState");
     }
 
@@ -438,6 +437,8 @@ public class PlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void TrapEventClientRPC(int _trapIndex)
     {
+        Debug.Log($"TrapEventClientRPC called for trap index {_trapIndex}");
+
         if (GameManager.Instance.Items[_trapIndex].GetComponent<Trap>() == null)
         {
             GameManager.Instance.Items[_trapIndex].transform.GetChild(0).GetComponent<Trap>().TriggerEvent();
