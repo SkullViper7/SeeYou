@@ -134,21 +134,19 @@ public class PlayerNetwork : NetworkBehaviour
     {
         for (int i = 0; i < GameManager.Instance.players.Count; i++)
         {
-            WaitForPseudo(GameManager.Instance.players[i].GetComponent<PlayerNetwork>().Pseudo, i);
+            string playerPseudo = GameManager.Instance.players[i].GetComponent<PlayerNetwork>().Pseudo;
+            Debug.Log($"Syncing Pseudo: {playerPseudo} for player index: {i}");
+            SyncPseudoClientRpc(playerPseudo, i);
         }
-    }
-
-    private async void WaitForPseudo(string _pseudo, int _indexPlayer)
-    {
-        await Task.Delay(10);
-        SyncPseudoClientRpc(_pseudo, _indexPlayer);
     }
 
     [ClientRpc]
     public void SyncPseudoClientRpc(string _pseudo, int _indexPlayer)
     {
+        Debug.Log($"Client received Pseudo: {_pseudo} for player index: {_indexPlayer}");
         GameManager.Instance.players[_indexPlayer].GetComponent<PlayerNetwork>().Pseudo = _pseudo;
     }
+
 
     private async void WaitForSpawn()
     {
