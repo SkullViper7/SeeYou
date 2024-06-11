@@ -134,8 +134,14 @@ public class PlayerNetwork : NetworkBehaviour
     {
         for (int i = 0; i < GameManager.Instance.players.Count; i++)
         {
-            SyncPseudoClientRpc(GameManager.Instance.players[i].GetComponent<PlayerNetwork>().Pseudo, i);
+            WaitForPseudo(GameManager.Instance.players[i].GetComponent<PlayerNetwork>().Pseudo, i);
         }
+    }
+
+    private async void WaitForPseudo(string _pseudo, int _indexPlayer)
+    {
+        await Task.Delay(10);
+        SyncPseudoClientRpc(_pseudo, _indexPlayer);
     }
 
     [ClientRpc]
