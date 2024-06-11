@@ -69,6 +69,7 @@ public class PlayerUI : MonoBehaviour
 
             if (playerMain.playerNetwork.IsHost) 
             {
+                playerMain.playerNetwork.CancelInvoke();
                 playerMain.playerNetwork.Invoke("DelayBeforeChangeHunter", 15);
             }
         }

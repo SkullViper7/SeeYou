@@ -113,6 +113,7 @@ public class PlayerMain : MonoBehaviour
             GameManager.Instance.deadPanel.SetActive(true);
             GameManager.Instance.LobbyCam.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
+            GameManager.Instance.ChronoUI.SetActive(false);
         }
         else
         {
@@ -124,7 +125,6 @@ public class PlayerMain : MonoBehaviour
         playerPartToDesactivate.SetActive(false);
         IsDead = true;
         playerInputs.playerInput.SwitchCurrentActionMap("Dead");
-        Debug.Log(playerNetwork.Pseudo);
         GetComponent<CapsuleCollider>().enabled = false;
         if (GameManager.Instance.players.Count == 1)
         {
@@ -132,6 +132,8 @@ public class PlayerMain : MonoBehaviour
             {
                 GameManager.Instance.winPanel.SetActive(true);
                 Cursor.lockState = CursorLockMode.None;
+                GameManager.Instance.ChronoUI.SetActive(false);
+                GameManager.Instance.players[0].GetComponent<StarterAssetsInputs>().playerInput.SwitchCurrentActionMap("Dead");
             }
             
             GameManager.Instance.teamManager.Victory(GameManager.Instance.players[0].GetComponent<PlayerNetwork>().Pseudo);
