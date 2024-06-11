@@ -60,6 +60,17 @@ public class PlayerUI : MonoBehaviour
             uiTransitionHunter.transform.parent.gameObject.SetActive(false);
             playerMain.playerMovement.GetComponent<CharacterController>().enabled = true;
             playerMain.playerInputs.InTransition = false;
+            if (!GameManager.Instance.ChronoUI.activeSelf)
+            {
+                GameManager.Instance.ChronoUI.SetActive(true);
+            }
+
+            GameManager.Instance.ChronoUI.BroadcastMessage("SetChrono");
+
+            if (playerMain.playerNetwork.IsHost) 
+            {
+                playerMain.playerNetwork.Invoke("DelayBeforeChangeHunter", 15);
+            }
         }
     }
 

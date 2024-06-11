@@ -596,30 +596,8 @@
         {
             "name": "Dead",
             "id": "3c016160-9350-47a2-a30b-448d2dadee76",
-            "actions": [
-                {
-                    "name": "Pause",
-                    "type": "Button",
-                    "id": "e9234a82-1594-4a8d-9282-0d7c107170b3",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "32f77ab2-f95c-4a9b-be88-fb481f70fb27",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": [

@@ -1213,7 +1213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b67ac055a22a44b81eb7483b1d2dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Slider: {fileID: 0}
+  slider: {fileID: 0}
+  Slider2: {fileID: 0}
   Cross: {fileID: 0}
   Cross2: {fileID: 0}
 --- !u!114 &264256221
@@ -1670,7 +1671,7 @@ Animator:
   m_GameObject: {fileID: 413941819}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fe8d40994eee18043a61c77e83c68aaa, type: 2}
+  m_Controller: {fileID: 9100000, guid: d4e9ef83a93eabf49b948e8fe60cdcdb, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4162,9 +4163,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85b1f4775cbeaa04fb522aa6537bea4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CrossAir: {fileID: 0}
-  color: []
-  drop: {fileID: 0}
 --- !u!1 &1299239392
 GameObject:
   m_ObjectHideFlags: 0
@@ -4518,9 +4516,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b67ac055a22a44b81eb7483b1d2dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Slider: {fileID: 1350013541}
+  slider: {fileID: 1350013541}
+  Slider2: {fileID: 1653298508}
   Cross: {fileID: 1170872814}
-  Cross2: {fileID: 0}
+  Cross2: {fileID: 413941819}
 --- !u!114 &1350013541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5942,9 +5941,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b67ac055a22a44b81eb7483b1d2dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Slider: {fileID: 1653298508}
+  slider: {fileID: 1350013541}
+  Slider2: {fileID: 1653298508}
   Cross: {fileID: 1170872814}
-  Cross2: {fileID: 1170872814}
+  Cross2: {fileID: 413941819}
 --- !u!1 &1729793973
 GameObject:
   m_ObjectHideFlags: 0
@@ -6513,13 +6513,13 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1252222843}
+        m_TargetAssemblyTypeName: ChoseColor, Assembly-CSharp
+        m_MethodName: ChangeColor
+        m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: TMPro.TMP_Dropdown, Unity.TextMeshPro
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

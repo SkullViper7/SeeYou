@@ -22,6 +22,7 @@ public class Shoot : MonoBehaviour
     public AudioSource MyAudioSource;
 
     AnimationUpdater _animationUpdater;
+    [SerializeField] AnimationClip _shootClip;
 
     private void Start()
     {
@@ -36,7 +37,10 @@ public class Shoot : MonoBehaviour
         AudioClip clip = Sounds[Random.Range(0, Sounds.Length)];
         MyAudioSource.PlayOneShot(clip);
 
-        _animationUpdater.SetTrigger("Shoot");
+        _animationUpdater.UpdateHunterAnimation(3);
+        _animationUpdater.UpdateShotgunAnimation();
+
+        Invoke("Idle", _shootClip.length);
 
         GameObject boule = Instantiate(bullet, shoot.position, Quaternion.identity);
         boule.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * power);
@@ -44,6 +48,11 @@ public class Shoot : MonoBehaviour
 
         Destroy(boule, DelayBulletBeforeGetDestroy);
         Invoke("DeactivateFirePoint", DelayBulletBeforeGetDestroy);
+    }
+
+    void Idle()
+    {
+        _animationUpdater.UpdateHunterAnimation(0);
     }
 
     private void DeactivateFirePoint()

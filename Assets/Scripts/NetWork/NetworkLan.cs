@@ -59,6 +59,12 @@ namespace Unity.Netcode.Samples
             numberOfPlayerField.onValueChanged.AddListener(ValidateNumberInput);
             pseudoField.onValueChanged.AddListener(ValidatePseudoInput);
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+            if (PlayerPrefs.GetString("Pseudo") != null)
+            {
+                pseudoField.placeholder.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetString("Pseudo");
+                _joinButton.interactable = true;
+            }
+
         }
 
         public void StartServer()
@@ -167,7 +173,7 @@ namespace Unity.Netcode.Samples
             PseudoChoosen = input;
             _hasSetName = true;
 
-            if (PseudoChoosen == "")
+            if (PseudoChoosen == "" && PlayerPrefs.GetString("Pseudo") == null)
             {
                 _hasSetName = false;
             }
@@ -178,15 +184,16 @@ namespace Unity.Netcode.Samples
 
         void CheckHostPrerequisites()
         {
-            if (_hasSetName && _hasSetNumber)
+            if ((_hasSetName && _hasSetNumber) || (PlayerPrefs.GetString("Pseudo") != null && _hasSetNumber))
             {
                 _createButton.interactable = true;
             }
 
-            else
+            else 
             {   
                 _createButton.interactable = false;
             }
+
         }
 
         void CheckClientPrerequisites()
@@ -264,7 +271,7 @@ namespace Unity.Netcode.Samples
         [ClientRpc]
         private void UpdatePseudoOfPlayerClientRpc(string pseudoOfPlayer)
         {
-            if (PlayerPrefs.GetString("Pseudo") != null || PlayerPrefs.GetString("Pseudo")!= pseudoOfPlayer) 
+            if (pseudoOfPlayer != null || PlayerPrefs.GetString("Pseudo")!= pseudoOfPlayer) 
             {
                 PlayerPrefs.SetString("Pseudo", pseudoOfPlayer);
             }

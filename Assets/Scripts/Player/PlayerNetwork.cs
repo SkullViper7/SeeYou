@@ -197,6 +197,7 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void RolesChangesServerRpc()
     {
+        CancelInvoke();
         if (hostCanChangeHunter)
         {
             Debug.Log("roles");
@@ -239,13 +240,30 @@ public class PlayerNetwork : NetworkBehaviour
     private IEnumerator DelayChangeHunter(int newHunter)
     {
         yield return new WaitForSeconds(1f);
-        hostCanChangeHunter = true;
+        
         SearchAllPlayerClientRpc();
 
         yield return new WaitForSeconds(delayBeforeChangeRoles);
         ChangeHunterClientRpc(newHunter);
         SetActualHunterPreyClientRpc();
+        hostCanChangeHunter = true;
+    }
 
+    private void DelayBeforeChangeHunter()
+    {
+        Debug.Log("DelayBeforeChangeHunter");
+        if (IsHost) 
+        {
+            RemoveBulletOfHunterClientRpc();
+            RolesChangesServerRpc();
+        }
+        
+    }
+
+    [ClientRpc]
+    private void RemoveBulletOfHunterClientRpc() 
+    {
+        GameManager.Instance.teamManager._hunter.GetComponent<StarterAssetsInputs>()._canShoot = false;
     }
 
     /// <summary>
@@ -440,5 +458,17 @@ public class PlayerNetwork : NetworkBehaviour
     public void MoveAnimationNetworkClientRpc(Vector2 _playerMove)
     {
         _playerMain.playerInputs.AnimMovement(_playerMove);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void DisplayDeathServerRpc()
+    {
+        DisplayDeathClientRpc(Pseudo);
+    }
+
+    [ClientRpc]
+    public void DisplayDeathClientRpc(string _pseudo)
+    {
+        Debug.Log(_pseudo);
     }
 }
