@@ -116,7 +116,11 @@ public class StarterAssetsInputs : MonoBehaviour
 
     public void AnimMovement(Vector2 _playerMove)
     {
-        if (_playerMove != Vector2.zero)
+        if (_playerMove.y < 0)
+        {
+            _animationUpdater.UpdatePreyAnimation(2);
+        }
+        else if (_playerMove.y > 0)
         {
             _animationUpdater.UpdatePreyAnimation(1);
         }
