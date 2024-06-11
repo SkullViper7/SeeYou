@@ -127,10 +127,7 @@ public class FirstPersonController : MonoBehaviour
         {
             Shader.SetGlobalVector("_Player2", transform.position);
         }*/
-        if (_playerMain.playerInputs.InTransition)
-        {
-           direction = Vector3.zero;
-        }
+
 
         if (_playerMain != null)
         {
@@ -141,6 +138,10 @@ public class FirstPersonController : MonoBehaviour
                     CameraRotation();
                     Move();
                 }
+            }
+            else if (_playerMain.playerInputs.InTransition)
+            {
+                direction = Vector3.zero;
             }
         }
         else

@@ -3,8 +3,6 @@ using Unity.Netcode.Transports.UTP;
 using TMPro;
 using System.Net;
 using System.Net.Sockets;
-using static UnityEngine.RuleTile.TilingRuleOutput;
-using System;
 using UnityEngine.UI;
 namespace Unity.Netcode.Samples
 {
@@ -13,58 +11,69 @@ namespace Unity.Netcode.Samples
     {
         public PreyInput preyInput;
         public NetworkVariable<int> NumberOfPlayer = new NetworkVariable<int>();
-        public GameObject ItemsToSpawn;
+        //public GameObject ItemsToSpawn;
 
         public string PseudoChoosen;
 
         private bool pcAssigned;
 
-        public TextMeshProUGUI PlayerNeeded;
+        //public TextMeshProUGUI PlayerNeeded;
 
-        [SerializeField] TextMeshProUGUI ipAddressText;
-        [SerializeField] TMP_InputField ip;
+        //[SerializeField] TextMeshProUGUI ipAddressText;
+        //[SerializeField] TMP_InputField ip;
 
         [SerializeField] string ipAddress;
 
-        [SerializeField] 
-        private TMP_InputField numberOfPlayerField;
+        //private TMP_InputField numberOfPlayerField;
+
+        //private GameObject clientLobby;
+
+        //private GameObject hostLobby;
+
+        //private GameObject lobby;
+
+        //private TMP_InputField pseudoField;
 
         [SerializeField]
-        private GameObject clientLobby;
-
-        [SerializeField]
-        private GameObject hostLobby;
-
-        [SerializeField]
-        private GameObject lobby;
-
-        [SerializeField] 
-        private TMP_InputField pseudoField;
-
-        [SerializeField] 
         private UnityTransport transport;
 
-        [SerializeField] Button _joinButton;
-        [SerializeField] Button _createButton;
+        //[SerializeField] Button _joinButton;
+        //[SerializeField] Button _createButton;
 
         bool _hasSetName = false;
         bool _hasSetNumber = false;
 
-        void Start()
+        public NetworkUI networkUI;
+
+        private void Start()
+        {
+            networkUI = GameManager.Instance.GetComponent<NetworkUI>();
+            StartTheNetworkLan();
+        }
+
+        void StartTheNetworkLan()
         {
             ipAddress = "0.0.0.0";
             SetIpAddress(); // Set the Ip to the above address
             pcAssigned = false;
             InvokeRepeating("assignPlayerController", 0.1f, 0.1f);
-            numberOfPlayerField.onValueChanged.AddListener(ValidateNumberInput);
-            pseudoField.onValueChanged.AddListener(ValidatePseudoInput);
+            networkUI.numberOfPlayerField.onValueChanged.AddListener(ValidateNumberInput);
+            networkUI.pseudoField.onValueChanged.AddListener(ValidatePseudoInput);
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             if (PlayerPrefs.GetString("Pseudo") != null)
             {
-                pseudoField.placeholder.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetString("Pseudo");
-                _joinButton.interactable = true;
+                networkUI.pseudoField.placeholder.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetString("Pseudo");
+                networkUI._joinButton.interactable = true;
             }
 
+        }
+
+        private void InitUI(NetworkUI _networkUI)
+        {
+            networkUI = _networkUI;
+            StartTheNetworkLan();
+            networkUI._createButton.onClick.AddListener(StartHost);
+            networkUI._joinButton.onClick.AddListener(StartClient);
         }
 
         public void StartServer()
@@ -80,11 +89,11 @@ namespace Unity.Netcode.Samples
             UpdatePseudoOfPlayerClientRpc(PseudoChoosen);
             if (ValidateHost())
             {
-                NetworkManager.Singleton.StartHost();
                 GetLocalIPAddress();
-                hostLobby.SetActive(false);
-                pseudoField.gameObject.SetActive(false);
-                numberOfPlayerField.gameObject.SetActive(false);
+                networkUI.hostLobby.SetActive(false);
+                networkUI.pseudoField.gameObject.SetActive(false);
+                networkUI.numberOfPlayerField.gameObject.SetActive(false);
+                NetworkManager.Singleton.StartHost();
             }
         }
 
@@ -94,7 +103,7 @@ namespace Unity.Netcode.Samples
             UpdatePseudoOfPlayerClientRpc(PseudoChoosen);
             if (ValidateClient()) 
             {
-                ipAddress = ip.text;
+                ipAddress = networkUI.ip.text;
                 SetIpAddress();
                 NetworkManager.Singleton.StartClient();
             }
@@ -103,8 +112,8 @@ namespace Unity.Netcode.Samples
         void OnClientConnected(ulong clientId)
         {
             Debug.Log($"Successfully connected to server with client ID: {clientId}");
-            clientLobby.SetActive(false);
-            pseudoField.gameObject.SetActive(false);
+            networkUI.clientLobby.SetActive(false);
+            networkUI.pseudoField.gameObject.SetActive(false);
             Invoke("LauncheCLient", 1.0f);
             // Ajoute toute logique supplémentaire après la connexion réussie
         }
@@ -120,7 +129,7 @@ namespace Unity.Netcode.Samples
             {
                 if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    ipAddressText.text = "IP : " + ip.ToString();
+                    networkUI.ipAddressText.text = "IP : " + ip.ToString();
                     ipAddress = ip.ToString();
                     return ip.ToString();
                 }
@@ -134,6 +143,11 @@ namespace Unity.Netcode.Samples
         public void SetIpAddress()
         {
             transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+            if (transport != null)
+            {
+                transport = GetComponent<UnityTransport>();
+            }
+
             transport.ConnectionData.Address = ipAddress;
         }
 
@@ -161,7 +175,7 @@ namespace Unity.Netcode.Samples
             }
             else
             {
-                numberOfPlayerField.text = "";
+                networkUI.numberOfPlayerField.text = "";
                 _hasSetNumber = false;
             }
 
@@ -186,12 +200,12 @@ namespace Unity.Netcode.Samples
         {
             if ((_hasSetName && _hasSetNumber) || (PlayerPrefs.GetString("Pseudo") != null && _hasSetNumber))
             {
-                _createButton.interactable = true;
+                networkUI._createButton.interactable = true;
             }
 
             else 
             {   
-                _createButton.interactable = false;
+                networkUI._createButton.interactable = false;
             }
 
         }
@@ -200,12 +214,12 @@ namespace Unity.Netcode.Samples
         {
             if (_hasSetName)
             {
-                _joinButton.interactable = true;
+                networkUI._joinButton.interactable = true;
             }
 
             else
             {
-                _joinButton.interactable = false;
+                networkUI._joinButton.interactable = false;
             }
         }
 

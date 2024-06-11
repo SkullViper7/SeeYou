@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Samples;
@@ -8,7 +7,6 @@ using UnityEngine;
 
 public class PlayerNetwork : NetworkBehaviour
 {
-    //public NetworkVariable<List<SpawnList>> spawnList = new NetworkVariable<List<SpawnList>>();
     public string Pseudo;
 
     public NetworkList<Vector3> spawnList = new NetworkList<Vector3>();
@@ -98,14 +96,14 @@ public class PlayerNetwork : NetworkBehaviour
             }
         }
 
-        itemsToSpawn = NetworkManager.Singleton.GetComponent<NetworkLan>().ItemsToSpawn;
+        itemsToSpawn = NetworkManager.Singleton.GetComponent<NetworkLan>().networkUI.ItemsToSpawn;
 
         //if (GameManager.Instance.players.Count <= NetworkManager.Singleton.GetComponent<NetworkLan>().NumberOfPlayer.Value)
         if (GameManager.Instance.players.Count <= numberOfPlayer.Value)
         {
             GameManager.Instance.players.Add(gameObject);
             SyncPseudoServerRpc(Pseudo);
-            NetworkManager.GetComponent<NetworkLan>().PlayerNeeded.text = GameManager.Instance.players.Count + " / " + numberOfPlayer.Value;
+            NetworkManager.GetComponent<NetworkLan>().networkUI.PlayerNeeded.text = GameManager.Instance.players.Count + " / " + numberOfPlayer.Value;
             gameObject.name += GameManager.Instance.players.Count;
             spawnToRemove = spawnList[Random.Range(0, spawnList.Count)];
             if (IsOwner)
@@ -120,7 +118,7 @@ public class PlayerNetwork : NetworkBehaviour
             SpawnerNetworkServerRPC();
             if (GameManager.Instance.players.Count == numberOfPlayer.Value)
             {
-                NetworkManager.GetComponent<NetworkLan>().PlayerNeeded.gameObject.SetActive(false);
+                NetworkManager.GetComponent<NetworkLan>().networkUI.PlayerNeeded.gameObject.SetActive(false);
                 GameManager.Instance.preys.AddRange(GameManager.Instance.players);
                 Wait();
             }
@@ -136,15 +134,19 @@ public class PlayerNetwork : NetworkBehaviour
     {
         for (int i = 0; i < GameManager.Instance.players.Count; i++)
         {
-            SyncPseudoClientRpc(GameManager.Instance.players[i].GetComponent<PlayerNetwork>().Pseudo, i);
+            string playerPseudo = GameManager.Instance.players[i].GetComponent<PlayerNetwork>().Pseudo;
+            Debug.Log($"Syncing Pseudo: {playerPseudo} for player index: {i}");
+            SyncPseudoClientRpc(playerPseudo, i);
         }
     }
 
     [ClientRpc]
     public void SyncPseudoClientRpc(string _pseudo, int _indexPlayer)
     {
+        Debug.Log($"Client received Pseudo: {_pseudo} for player index: {_indexPlayer}");
         GameManager.Instance.players[_indexPlayer].GetComponent<PlayerNetwork>().Pseudo = _pseudo;
     }
+
 
     private async void WaitForSpawn()
     {
@@ -362,7 +364,6 @@ public class PlayerNetwork : NetworkBehaviour
     private IEnumerator WaitPlayers()
     {
         yield return new WaitForSeconds(0.1f);
-        //tester avec yield return null
         SyncShootClientRpc();
     }
 
@@ -387,6 +388,7 @@ public class PlayerNetwork : NetworkBehaviour
     [ClientRpc]
     public void GetTouchedClientRpc()
     {
+        Debug.Log($"Player {Pseudo} has been touched at {Time.time}");
         SendMessage("DeadState");
     }
 
@@ -438,6 +440,8 @@ public class PlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void TrapEventClientRPC(int _trapIndex)
     {
+        Debug.Log($"TrapEventClientRPC called for trap index {_trapIndex}");
+
         if (GameManager.Instance.Items[_trapIndex].GetComponent<Trap>() == null)
         {
             GameManager.Instance.Items[_trapIndex].transform.GetChild(0).GetComponent<Trap>().TriggerEvent();
