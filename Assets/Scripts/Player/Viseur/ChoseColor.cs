@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ChoseColor : MonoBehaviour
 {
-    public Image CrossAir;
-    public Color[] color;
-    public Dropdown drop;
+    /*public Image CrossAir;
+    public GameObject[] Cross;
+    public TMP_Dropdown drop;
 
-    public void ChangeColor(Dropdown myDD)
+    public void ChangeColor([SerializeField] TMP_Dropdown myDD)
     {
-        CrossAir.color = color[myDD.value];
-    }
+        CrossAir.gameObject = Cross[myDD.value];
+    }*/
 }
