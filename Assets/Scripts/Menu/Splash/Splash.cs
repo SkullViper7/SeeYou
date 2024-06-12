@@ -15,19 +15,6 @@ public class Splash : MonoBehaviour
     void LoadMenu()
     {
         _loadingScreen.SetActive(true);
-        StartCoroutine(WaitBeforeLoadMenu());
-    }
-
-    IEnumerator WaitBeforeLoadMenu()
-    {
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("MainMenu");
-
-        asyncOperation.allowSceneActivation = false;
-
-        yield return new WaitUntil(() => DynamicGI.isConverged);
-
-        asyncOperation.allowSceneActivation = true;
-
-        yield return null;
+        SceneManager.LoadSceneAsync("MainMenu");
     }
 }
