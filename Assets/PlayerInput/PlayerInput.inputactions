@@ -58,6 +58,17 @@
                 },
                 {
                     "name": "",
+                    "id": "76e9f832-2473-43c6-a726-e5b8ae3b967b",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shooting",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "5813e1e6-76a7-453e-ab32-941436963c3a",
                     "path": "<Pointer>/delta",
                     "interactions": "",
