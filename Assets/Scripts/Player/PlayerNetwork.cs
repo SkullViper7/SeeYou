@@ -22,6 +22,7 @@ public class PlayerNetwork : NetworkBehaviour
     private PlayerMain _playerMain;
 
     private bool hostCanChangeHunter;
+    private bool hostPseudoLimit;
 
     private List<GameObject> playerList = new List<GameObject>();
 
@@ -90,6 +91,7 @@ public class PlayerNetwork : NetworkBehaviour
 
         if (IsHost)
         {
+            hostPseudoLimit = false;
             for (int i = 0; i < SpawnManager.Instance.spawnList.Count; i++)
             {
                 spawnList.Add(SpawnManager.Instance.spawnList[i].transform.position);
@@ -139,17 +141,20 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SyncPseudoServerRpc(string _pseudo)
     {
-
-        for (int i = 0; i < GameManager.Instance.players.Count; i++)
+        if (!hostPseudoLimit)
         {
-            string playerPseudo = GameManager.Instance.players[i].GetComponent<PlayerNetwork>().Pseudo;
-            if (i == GameManager.Instance.players.Count - 1)
+            hostPseudoLimit = true;
+            for (int i = 0; i < GameManager.Instance.players.Count; i++)
             {
-                playerPseudo = _pseudo;
-            }
+                string playerPseudo = GameManager.Instance.players[i].GetComponent<PlayerNetwork>().Pseudo;
+                if (i == GameManager.Instance.players.Count - 1)
+                {
+                    playerPseudo = _pseudo;
+                }
 
-            Debug.Log($"Syncing Pseudo: {playerPseudo} for player index: {i}");
-            SyncPseudoClientRpc(playerPseudo, i);
+                Debug.Log($"Syncing Pseudo: {playerPseudo} for player index: {i}");
+                SyncPseudoClientRpc(playerPseudo, i);
+            }
         }
     }
 

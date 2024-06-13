@@ -105,6 +105,7 @@ namespace Unity.Netcode.Samples
             if (ValidateClient()) 
             {
                 ipAddress = networkUI.ip.text;
+                networkUI.ipAddressText.text = "IP : " + ipAddress;
                 SetIpAddress();
                 NetworkManager.Singleton.StartClient();
             }
