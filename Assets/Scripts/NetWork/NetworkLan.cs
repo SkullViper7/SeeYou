@@ -45,9 +45,12 @@ namespace Unity.Netcode.Samples
 
         public NetworkUI networkUI;
 
+        Animator _musicAnim;
+
         private void Start()
         {
             networkUI = GameManager.Instance.GetComponent<NetworkUI>();
+            _musicAnim = GameObject.FindGameObjectWithTag("Music").GetComponent<Animator>();
             StartTheNetworkLan();
         }
 
@@ -95,6 +98,8 @@ namespace Unity.Netcode.Samples
                 networkUI.numberOfPlayerField.gameObject.SetActive(false);
                 NetworkManager.Singleton.StartHost();
             }
+
+            _musicAnim.Play("FadeOut");
         }
 
         // To Join a game
@@ -109,6 +114,8 @@ namespace Unity.Netcode.Samples
                 SetIpAddress();
                 NetworkManager.Singleton.StartClient();
             }
+
+            _musicAnim.Play("FadeOut");
         }
 
         void OnClientConnected(ulong clientId)
