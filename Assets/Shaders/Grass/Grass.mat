@@ -50,7 +50,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ColorDivise: 0.5
+    - _ColorDivise: 0.25
     - _ColorMultiplier: 5
     - _HeightBlend: 0.29
     - _InteractionDistance: 0.7
