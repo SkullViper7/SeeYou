@@ -16,6 +16,6 @@ public class AsyncLoader : MonoBehaviour
         _mainScreen.SetActive(false);
         _loadingScreen.SetActive(true);
 
-        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(levelToLoad);
+        SceneManager.LoadSceneAsync(levelToLoad);
     }
 }

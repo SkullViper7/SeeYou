@@ -103,7 +103,7 @@ namespace Unity.Netcode.Samples
             UpdatePseudoOfPlayerClientRpc(PseudoChoosen);
             if (ValidateClient()) 
             {
-                ipAddress = networkUI.ip.text;
+                //ipAddress = networkUI.ip.text;
                 SetIpAddress();
                 NetworkManager.Singleton.StartClient();
             }

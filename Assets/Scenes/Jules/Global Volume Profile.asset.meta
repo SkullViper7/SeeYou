@@ -1,8 +1,15 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Meshes/Characters/Gamerig.controller.meta
+guid: ac5fefbc403bf9942b413ecf14481747
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+========
 guid: dd39eaf1612e7384cb6bc1cdf9fd46b3
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000
+>>>>>>>> bd6e3b10f916a46d6c8297c620089c42bde1fba0:Assets/Scenes/Jules/Global Volume Profile.asset.meta
   userData: 
   assetBundleName: 
   assetBundleVariant: 

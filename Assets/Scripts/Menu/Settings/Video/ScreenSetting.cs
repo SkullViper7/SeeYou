@@ -7,9 +7,6 @@ public class ScreenSetting : MonoBehaviour
     TMP_Dropdown _resolutionDropdown;
 
     [SerializeField]
-    TMP_Dropdown _screenModeDropdown;
-
-    [SerializeField]
     TMP_Dropdown _qualityDropdown;
 
     int _xResolution;
@@ -40,19 +37,6 @@ public class ScreenSetting : MonoBehaviour
         }
     }
 
-    public void GetScreenMode()
-    {
-        if (_screenModeDropdown.value == 0)
-        {
-            _isFullscreen = true;
-        }
-
-        if (_screenModeDropdown.value == 1)
-        {
-            _isFullscreen = false;
-        }
-    }
-
     public void GetQuality()
     {
         if (_qualityDropdown.value == 0)
@@ -73,7 +57,7 @@ public class ScreenSetting : MonoBehaviour
 
     public void ApplyScreenSettings()
     {
-        Screen.SetResolution(_xResolution, _yResolution, _isFullscreen);
+        Screen.SetResolution(_xResolution, _yResolution, FullScreenMode.ExclusiveFullScreen);
         QualitySettings.SetQualityLevel(_quality);
 
         PlayerPrefs.SetInt("xResolution", _xResolution);

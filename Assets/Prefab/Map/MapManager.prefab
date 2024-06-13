@@ -189,6 +189,8 @@ MonoBehaviour:
   UiTransitionPrey: {fileID: 1090248744509856649}
   winPanel: {fileID: 3089796426122827744}
   deadPanel: {fileID: 2702270991756078035}
+  ChronoUI: {fileID: 0}
+  KillUI: {fileID: 0}
   players: []
   preys: []
   Items: []
@@ -220,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1431632689
+  GlobalObjectIdHash: 1646063695
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
