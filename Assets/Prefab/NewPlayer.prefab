@@ -3711,7 +3711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2977863664
+  GlobalObjectIdHash: 2206175600
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -3866,7 +3866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9e0875b5b2989f49b9ada990c05a10a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 5863363392411627885, guid: 660917bfa629ba7409d7460dce7cb685, type: 3}
+  bullet: {fileID: 652355677866140221, guid: 204890fad13a1b34abcaa40a178b4db2, type: 3}
   DelayBulletBeforeGetDestroy: 2
   shoot: {fileID: 5297018136769648407}
   power: 100

@@ -8,16 +8,12 @@ public class SettingsNavigation : MonoBehaviour
     GameObject _audio;
     [SerializeField]
     GameObject _video;
-    [SerializeField]
-    GameObject _accessibility;
 
     [Header("Toggles")]
     [SerializeField]
     Toggle _audioToggle;
     [SerializeField]
     Toggle _videoToggle;
-    [SerializeField]
-    Toggle _accessibilityToggle;
 
     /// <summary>
     /// Shows the audio settings menu and hides others.
@@ -32,12 +28,10 @@ public class SettingsNavigation : MonoBehaviour
         // Set the active state of the audio, video, and accessibility menus.
         _audio.SetActive(true);
         _video.SetActive(false);
-        _accessibility.SetActive(false);
 
         // Set the interactability of the audio, video, and accessibility toggles.
         _audioToggle.interactable = false;
         _videoToggle.interactable = true;
-        _accessibilityToggle.interactable = true;
     }
 
     /// <summary>
@@ -53,12 +47,10 @@ public class SettingsNavigation : MonoBehaviour
         // Set the active state of the audio, video, and accessibility menus.
         _audio.SetActive(false);
         _video.SetActive(true);
-        _accessibility.SetActive(false);
 
         // Set the interactability of the audio, video, and accessibility toggles.
         _audioToggle.interactable = true;
         _videoToggle.interactable = false;
-        _accessibilityToggle.interactable = true;
     }
 
     /// <summary>
@@ -74,12 +66,10 @@ public class SettingsNavigation : MonoBehaviour
         // Set the active state of the audio, video, and accessibility menus.
         _audio.SetActive(false);
         _video.SetActive(false);
-        _accessibility.SetActive(false);
 
         // Set the interactability of the audio, video, and accessibility toggles.
         _audioToggle.interactable = true;
         _videoToggle.interactable = true;
-        _accessibilityToggle.interactable = true;
     }
 
     /// <summary>
@@ -95,11 +85,9 @@ public class SettingsNavigation : MonoBehaviour
         // Set the active state of the audio, video, and accessibility menus.
         _audio.SetActive(false);
         _video.SetActive(false);
-        _accessibility.SetActive(true);
 
         // Set the interactability of the audio, video, and accessibility toggles.
         _audioToggle.interactable = true;
         _videoToggle.interactable = true;
-        _accessibilityToggle.interactable = false;
     }
 }
