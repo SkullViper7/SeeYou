@@ -131,10 +131,14 @@ public class FirstPersonController : MonoBehaviour
 
         if (_playerMain != null)
         {
-            if (!_playerMain.IsDead && !_playerMain.playerInputs.InTransition)
+            if (!_playerMain.IsDead)
             {
-                _input.look = Vector2.zero;
-                _input.move = Vector2.zero;
+                if (_playerMain.playerInputs.InTransition)
+                {
+                    _input.look = Vector2.zero;
+                    _input.move = Vector2.zero;
+                }
+                
                 if (_playerMain.playerNetwork.IsOwner)
                 {
                     CameraRotation();
