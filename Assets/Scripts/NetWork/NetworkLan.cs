@@ -100,10 +100,11 @@ namespace Unity.Netcode.Samples
         // To Join a game
         public void StartClient()
         {
+            
             UpdatePseudoOfPlayerClientRpc(PseudoChoosen);
             if (ValidateClient()) 
             {
-                //ipAddress = networkUI.ip.text;
+                ipAddress = networkUI.ip.text;
                 SetIpAddress();
                 NetworkManager.Singleton.StartClient();
             }

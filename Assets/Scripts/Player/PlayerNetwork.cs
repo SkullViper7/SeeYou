@@ -83,6 +83,7 @@ public class PlayerNetwork : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         Pseudo = PlayerPrefs.GetString("Pseudo");
+        Debug.Log("Le pseudo est " + Pseudo);
         if (numberOfPlayer.Value == 0)
         {
             numberOfPlayer.Value = NetworkManager.GetComponent<NetworkLan>().NumberOfPlayer.Value;
@@ -199,10 +200,10 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void RolesChangesServerRpc()
     {
+        Debug.Log("Roles are swap");
         CancelInvoke();
         if (hostCanChangeHunter)
         {
-            Debug.Log("roles");
             hostCanChangeHunter = false;
             StartCoroutine(DelayChangeHunter(GameManager.Instance.teamManager.FindAHunterServ()));
         }
