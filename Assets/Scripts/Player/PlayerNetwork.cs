@@ -13,7 +13,6 @@ public class PlayerNetwork : NetworkBehaviour
     private NetworkVariable<int> hunterIndex = new NetworkVariable<int>();
 
     private NetworkVariable<int> numberOfPlayer = new NetworkVariable<int>();
-    private NetworkVariable<string> pseudoOnNetwork = new NetworkVariable<string>();
 
     private Vector3 spawnToRemove;
     private GameObject itemsToSpawn;
@@ -85,7 +84,6 @@ public class PlayerNetwork : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         Pseudo = PlayerPrefs.GetString("Pseudo");
-        pseudoOnNetwork.Value = PlayerPrefs.GetString("Pseudo");
         if (numberOfPlayer.Value == 0)
         {
             numberOfPlayer.Value = NetworkManager.GetComponent<NetworkLan>().NumberOfPlayer.Value;
@@ -106,7 +104,7 @@ public class PlayerNetwork : NetworkBehaviour
         if (GameManager.Instance.players.Count <= numberOfPlayer.Value)
         {
             GameManager.Instance.players.Add(gameObject);
-            WaitConnectePlayer();
+            WaitConnectePlayer(Pseudo);
             NetworkManager.GetComponent<NetworkLan>().networkUI.PlayerNeeded.text = GameManager.Instance.players.Count + " / " + numberOfPlayer.Value;
             gameObject.name += GameManager.Instance.players.Count;
             spawnToRemove = spawnList[Random.Range(0, spawnList.Count)];
@@ -134,19 +132,19 @@ public class PlayerNetwork : NetworkBehaviour
         }
     }
 
-    /*private async void WaitConnectePlayer(string _pseudo)
+    private async void WaitConnectePlayer(string _pseudo)
     {
         await Task.CompletedTask;
         SyncPseudoServerRpc(_pseudo);
-    }*/
+    }
 
-    private async void WaitConnectePlayer()
+    /*private async void WaitConnectePlayer()
     {
         await Task.Delay(10);
         SyncPseudoServerRpc();
-    }
+    }*/
 
-    /*[ServerRpc(RequireOwnership = false)]
+    [ServerRpc(RequireOwnership = false)]
     public void SyncPseudoServerRpc(string _pseudo)
     {
         if (!hostPseudoLimit)
@@ -164,9 +162,9 @@ public class PlayerNetwork : NetworkBehaviour
                 SyncPseudoClientRpc(playerPseudo, i);
             }
         }
-    }*/
+    }
 
-    [ServerRpc(RequireOwnership = false)]
+    /*[ServerRpc(RequireOwnership = false)]
     public void SyncPseudoServerRpc()
     {
         if (!hostPseudoLimit)
@@ -177,14 +175,14 @@ public class PlayerNetwork : NetworkBehaviour
                 string playerPseudo = GameManager.Instance.players[i].GetComponent<PlayerNetwork>().Pseudo;
                 if (i == GameManager.Instance.players.Count - 1)
                 {
-                    playerPseudo = pseudoOnNetwork.Value;
+                    playerPseudo = pseudoOnNetwork.Value.ToString();
                 }
 
                 Debug.Log($"Syncing Pseudo: {playerPseudo} for player index: {i}");
                 SyncPseudoClientRpc(playerPseudo, i);
             }
         }
-    }
+    }*/
 
     [ClientRpc]
     public void SyncPseudoClientRpc(string _pseudo, int _indexPlayer)

@@ -45,7 +45,7 @@ namespace Unity.Netcode.Samples
 
         public NetworkUI networkUI;
 
-        Animator _musicAnim;
+        public Animator _musicAnim;
 
         private void Start()
         {
