@@ -83,7 +83,6 @@ public class PlayerNetwork : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         Pseudo = PlayerPrefs.GetString("Pseudo");
-        Debug.Log("Il y a " + NetworkManager.Singleton.ConnectedClients.Count + " de joueurs");
         if (numberOfPlayer.Value == 0)
         {
             numberOfPlayer.Value = NetworkManager.GetComponent<NetworkLan>().NumberOfPlayer.Value;
