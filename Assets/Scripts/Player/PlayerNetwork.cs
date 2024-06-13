@@ -83,7 +83,7 @@ public class PlayerNetwork : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         Pseudo = PlayerPrefs.GetString("Pseudo");
-        Debug.Log("Le pseudo est " + Pseudo);
+        Debug.Log("Il y a " + NetworkManager.Singleton.ConnectedClients.Count + " de joueurs");
         if (numberOfPlayer.Value == 0)
         {
             numberOfPlayer.Value = NetworkManager.GetComponent<NetworkLan>().NumberOfPlayer.Value;
@@ -103,7 +103,7 @@ public class PlayerNetwork : NetworkBehaviour
         if (GameManager.Instance.players.Count <= numberOfPlayer.Value)
         {
             GameManager.Instance.players.Add(gameObject);
-            SyncPseudoServerRpc(Pseudo);
+            WaitConnectePlayer(Pseudo);
             NetworkManager.GetComponent<NetworkLan>().networkUI.PlayerNeeded.text = GameManager.Instance.players.Count + " / " + numberOfPlayer.Value;
             gameObject.name += GameManager.Instance.players.Count;
             spawnToRemove = spawnList[Random.Range(0, spawnList.Count)];
@@ -120,6 +120,7 @@ public class PlayerNetwork : NetworkBehaviour
             if (GameManager.Instance.players.Count == numberOfPlayer.Value)
             {
                 NetworkManager.GetComponent<NetworkLan>().networkUI.PlayerNeeded.gameObject.SetActive(false);
+                NetworkManager.GetComponent<NetworkLan>().networkUI.ipAddressText.gameObject.SetActive(false);
                 GameManager.Instance.preys.AddRange(GameManager.Instance.players);
                 Wait();
             }
@@ -130,9 +131,16 @@ public class PlayerNetwork : NetworkBehaviour
         }
     }
 
+    private async void WaitConnectePlayer(string _pseudo)
+    {
+        await Task.CompletedTask;
+        SyncPseudoServerRpc(_pseudo);
+    }
+
     [ServerRpc(RequireOwnership = false)]
     public void SyncPseudoServerRpc(string _pseudo)
     {
+        Debug.Log("Le pseudo sync est " + _pseudo);
         for (int i = 0; i < GameManager.Instance.players.Count; i++)
         {
             string playerPseudo = GameManager.Instance.players[i].GetComponent<PlayerNetwork>().Pseudo;

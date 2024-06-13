@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     public GameObject ChronoUI;
     public TextMeshProUGUI KillUI;
 
+    public bool GameIsStarted;
+
     //[HideInInspector]
     public List<GameObject> players = new();
     //[HideInInspector]
