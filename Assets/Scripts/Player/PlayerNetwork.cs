@@ -139,10 +139,15 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SyncPseudoServerRpc(string _pseudo)
     {
-        Debug.Log("Le pseudo sync est " + _pseudo);
+
         for (int i = 0; i < GameManager.Instance.players.Count; i++)
         {
             string playerPseudo = GameManager.Instance.players[i].GetComponent<PlayerNetwork>().Pseudo;
+            if (i == GameManager.Instance.players.Count - 1)
+            {
+                playerPseudo = _pseudo;
+            }
+
             Debug.Log($"Syncing Pseudo: {playerPseudo} for player index: {i}");
             SyncPseudoClientRpc(playerPseudo, i);
         }
