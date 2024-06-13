@@ -69,7 +69,6 @@ public class PlayerUI : MonoBehaviour
 
             if (playerMain.playerNetwork.IsHost) 
             {
-                Debug.Log("Le joueur à bien cancel l'invoke");
                 playerMain.playerNetwork.CancelInvoke();
                 playerMain.playerNetwork.Invoke("DelayBeforeChangeHunter", 15);
             }
