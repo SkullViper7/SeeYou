@@ -147,7 +147,18 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SyncPseudoServerRpc(string _pseudo)
     {
-        if (!hostPseudoLimit)
+        GameManager.Instance.players[GameManager.Instance.players.Count-1].GetComponent<PlayerNetwork>().Pseudo = _pseudo;
+        if (GameManager.Instance.players.Count == numberOfPlayer.Value)
+        {
+            for (int i = 0; i < GameManager.Instance.players.Count; i++)
+            {
+                string playerPseudo = GameManager.Instance.players[i].GetComponent<PlayerNetwork>().Pseudo;
+
+                Debug.Log($"Syncing Pseudo: {playerPseudo} for player index: {i}");
+                SyncPseudoClientRpc(playerPseudo, i);
+            }
+        }
+        /*    if (!hostPseudoLimit)
         {
             hostPseudoLimit = true;
             for (int i = 0; i < GameManager.Instance.players.Count; i++)
@@ -161,7 +172,7 @@ public class PlayerNetwork : NetworkBehaviour
                 Debug.Log($"Syncing Pseudo: {playerPseudo} for player index: {i}");
                 SyncPseudoClientRpc(playerPseudo, i);
             }
-        }
+        }*/
     }
 
     /*[ServerRpc(RequireOwnership = false)]

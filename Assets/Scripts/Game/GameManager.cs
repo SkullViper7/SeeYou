@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public GameObject winPanel;
     public GameObject deadPanel;
     public GameObject ChronoUI;
+    public GameObject HunterUIPicture;
     public TextMeshProUGUI KillUI;
 
     public bool GameIsStarted;
