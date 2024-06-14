@@ -117,9 +117,9 @@ public class PlayerMain : MonoBehaviour
         }
         else
         {
-            /*GameManager.Instance.KillUI.gameObject.SetActive(true);
+            GameManager.Instance.KillUI.gameObject.SetActive(true);
             GameManager.Instance.KillUI.text = playerNetwork.Pseudo + " is dead";
-            Invoke("DesactivateKillUI", 2);*/
+            Invoke("DesactivateKillUI", 2);
         }
 
         playerPartToDesactivate.SetActive(false);
