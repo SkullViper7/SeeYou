@@ -47,8 +47,9 @@ public class TeamManager : MonoBehaviour
         if (!GameManager.Instance.HunterUIPicture.activeSelf)
         {
             GameManager.Instance.HunterUIPicture.SetActive(true);
-            text.text = _hunter.GetComponent<PlayerNetwork>().Pseudo;
         }
+
+        text.text = _hunter.GetComponent<PlayerNetwork>().Pseudo;
     }
 
     public void SetPreys(GameObject newPrey)
@@ -115,9 +116,9 @@ public class TeamManager : MonoBehaviour
             if (!GameManager.Instance.HunterUIPicture.activeSelf)
             {
                 GameManager.Instance.HunterUIPicture.SetActive(true);
-                text.text = _hunter.GetComponent<PlayerNetwork>().Pseudo;
             }
-            
+
+            text.text = _hunter.GetComponent<PlayerNetwork>().Pseudo;
         }
     }
 
