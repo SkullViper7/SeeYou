@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class PlayerMain : MonoBehaviour
 {
@@ -74,6 +75,9 @@ public class PlayerMain : MonoBehaviour
     [SerializeField]
     private GameObject preyGunView;
 
+    [SerializeField] VisualEffect _smoke;
+    [SerializeField] GameObject _smokePrefab;
+
     private void Start()
     {
         // InitPlayer();
@@ -123,6 +127,8 @@ public class PlayerMain : MonoBehaviour
         }
 
         playerPartToDesactivate.SetActive(false);
+        _smokePrefab.SetActive(true);
+        _smoke.Play();
         IsDead = true;
         playerInputs.playerInput.SwitchCurrentActionMap("Dead");
         GetComponent<CapsuleCollider>().enabled = false;
